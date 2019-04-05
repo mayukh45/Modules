@@ -1,0 +1,1 @@
+print("\n".join(["lol"+str(i) for i in range(5)]))
