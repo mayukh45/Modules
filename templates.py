@@ -48,7 +48,7 @@ assign rd_data = mem_data[rd_addr];
 arbiter_body_template = """
 //Rotate -> Priority -> Rotate
 
-module round_robin_arbiter (
+module round_robin_arbiter_NUMCLIENTS (
 	rst_n,
 	clk,
 	req,
@@ -128,7 +128,7 @@ assign refresh_weights = //REFRESH_WEIGHT
 """
 
 cam_body_template = """
-module AH_cam ( 
+module AH_cam_CAMDEPTH_CAMWIDTH_SNOOPWIDTH ( 
 rst_an,
 clk,
 wr_data,
@@ -167,17 +167,17 @@ output wr_ready;
 //snoop happens at the LSBs. It is expected that for snoop to happen
 // in upper bits, write will be swizzled into LSB locations.
 
-input [SNOOPWIDTH- 1:0] snoop_in; // SNOOPWIDTH lte CAMWIDTH
+input [SNOOPWIDTH - 1:0] snoop_in; // SNOOPWIDTH lte CAMWIDTH
 input snoop_valid;
 
 output snoop_match;
-output [CAMWIDTH - 1 :0] snoop_data; // CAMWIDTH here
+output [CAMWIDTH - 1:0] snoop_data; // CAMWIDTH here
  
 
 wire [ENCODEDDEPTH - 1:0] internal_wr_ptr; // asume CAMDEPTH = 64, then wr-ptr-width is log2(CAMDEPTH).
 req  [ENCODEDDEPTH:0] wr_loc_counter; // It's log2(CAMDEPTH) +1 from the above
 
-REQUEST_DECLARATION
+//REQUEST_DECLARATION
 
 // ============================================================================
 // CAM working principle --
@@ -247,9 +247,9 @@ assign recir_loc_ready	= ~wr_location_counter[ENCODEDDEPTH + 1] ? 1'b0 : wr_vali
 always @ (posedge clk or negedge rst_an)
 if (!rst_an) begin
 
-CAM_LOCATIONS
+//CAM_LOCATIONS
 end else begin
-CAM_WRITE
+//CAM_WRITE
 end
 
 
@@ -258,16 +258,16 @@ end
 
 wire assign snoop_match = freedup_loc_ready) & (
 
-SNOOP_CAM 
+//SNOOP_CAM 
 
 );
 
 wire assign snoop_data = CAMWIDTH'd0 |
-ASSIGN_SNOOP
+//ASSIGN_SNOOP
 ;
 
 wire assign freeup_loc = ENCODEDDEPTH'd0 |
-ASSIGN_FREEUP
+//ASSIGN_FREEUP
 ;
 
 wire assign freedup_loc_valid = snoop_match;
@@ -307,65 +307,29 @@ snoopable_fifo_template = """
 module FIFO_FIFOWIDTH_FIFODEPTH_SNOOPWIDTH_snoopable (
 
 clk,
-
 rstn,
-
-
-
 wr_valid,
-
 wr_ready,
-
 wr_data,
-
-
-
 rd_valid,
-
 rd_ready,
-
 rd_data,
-
-
-
 snoop_data,
-
 snoop_valid,
-
 snoop_match
-
-
-
 );
 
-
-
 input rstn,
-
 intput clk,
-
-
-
 input [FIFOWIDTH - 1:0] wr_data; //FIFOWIDTH
-
 input wr_valid;
-
 input wr_ready;
 
-
-
 out [FIFOWIDTH - 1:0] rd_data; //FIFOWIDTH
-
 input rd_valid;
-
 input rd_ready;
-
-
-
 input [SNOOPWIDTH - 1:0] snoop_data; // SNOOPWIDTH
-
 input snoop_valid;
-
 input snoop_match;
 
 
@@ -424,15 +388,9 @@ always @ (posedge clk or negedge rstn)
 
 begin
 
-       if(rstn) begin
+       if(!rstn) begin
 
-fifo_loc0 <= FIFOWIDTH'd0;
-
-fifo_loc1 <= FIFOWIDTH'd0;
-
-fifo_loc2 <= FIFOWIDTH'd0;
-
-fifo_loc3 <= FIFOWIDTH'd0;
+//ASSIGN_LOC
 
        end else begin
 
@@ -445,19 +403,12 @@ fifo_loc3 <= FIFOWIDTH'd0;
 
 end
 
-
-
 wr_ready = ! ( (wr_pointer[ENCODEDDEPTH] ^ rd_pointer[ENCODEDDEPTH]) && (wr_pointer[ENCODEDDEPTH - 1:0] == rd_pointer[ENCODEDDEPTH - 1:0]) );
 
 rd_valid = !(rd_pointer[ENCODEDDEPTH:0] == rd_pointer[ENCODEDDEPTH:0]);
 
-
-
 assign rd_data = FIFOWIDTH'd0 |
 //ASSIGN_READ
-
-
-            
 
 
 assing snoop_match = 1'b0 |
@@ -465,9 +416,6 @@ assing snoop_match = 1'b0 |
 
 
 // snoop_match isn't used now - it can be in future.
-
-
-
 
 endmodule
 """
@@ -509,10 +457,10 @@ wire [VECWIDTH - 1:0] npacket_lane;
 
 always(@posedge clk or negedge rstn) begin
 if (!rstn) begin
-packet_lane <= VECWIDTH'd0; // log2(WIDEWIDTH/NARROWWIDTH)
+    packet_lane <= VECWIDTH'd0; // log2(WIDEWIDTH/NARROWWIDTH)
 //COLLATED
 end else begin
-packet_lane <= npacket_lane;
+    packet_lane <= npacket_lane;
 //NCOLLATED
 end
 end

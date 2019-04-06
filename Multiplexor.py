@@ -1,6 +1,6 @@
 from templates import mux_body_template
 from math import ceil, log2
-
+import sys
 
 class Multiplexor:
     def __init__(self, portwidth, numclients, isdemux, isbinary):
@@ -42,9 +42,9 @@ class Multiplexor:
 
     def assign_data(self):
         if not self.isDemux:
-            code = "wire assign out_data = "+str(self.PortWidth)+"'d0 |" + " | ".join(["(mux_select"+("["+str(i)+"]" if not self.isBinary else "= "+str(int(ceil(log2(self.NumClients))))+"'d"+str(i)+"") +"? in_data"+str(i)+" : "+str(self.PortWidth)+"'d0)" for i in range(self.NumClients)])
+            code = "wire assign out_data = "+str(self.PortWidth)+"'d0 |" + " |\n ".join(["(mux_select"+("["+str(i)+"]" if not self.isBinary else "= "+str(int(ceil(log2(self.NumClients))))+"'d"+str(i)+"") +"? in_data"+str(i)+" : "+str(self.PortWidth)+"'d0)" for i in range(self.NumClients)])
         else:
-            code = "\n".join(["wire assign out_data"+str(i)+" = demux_select"+("["+str(i)+"]" if not self.isBinary else "= "+str(int(ceil(log2(self.NumClients))))+"'d"+str(i))+"? in_data : 25'd0;" for i in range(self.NumClients)])
+            code = "\n".join(["wire assign out_data"+str(i)+" = demux_select"+("["+str(i)+"]" if not self.isBinary else "=="+str(int(ceil(log2(self.NumClients))))+"'d"+str(i))+"? in_data : 25'd0;" for i in range(self.NumClients)])
 
         self.body = self.body.replace("//ASSIGN_DATA", code)
 
@@ -53,4 +53,4 @@ class Multiplexor:
         return self.body
 
 
-print(Multiplexor(25, 7, False, False))
+print(Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4]))

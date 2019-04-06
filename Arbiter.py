@@ -7,7 +7,7 @@ class Arbiter:
 
     def __init__(self, numclients, weight=None):
         self.NumClients = numclients
-        self.EncodedNumClients = ceil(log2(numclients))
+        self.EncodedNumClients = int(ceil(log2(numclients)))
         self.arbiter_body = None
         self.weight = weight
 
