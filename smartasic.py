@@ -59,6 +59,13 @@ class BasicModule:
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
+    def get_wire_reg_str(self):
+        pass
+
+    def write(self, changeable, iterations):
+        return "\n".join(["" for i in range(iterations)])
+
+
 
 class FIFO(BasicModule):
 
@@ -114,4 +121,4 @@ class FIFO(BasicModule):
     def __str__(self):
         return self.get_fifo_v()
 
-
+print(FIFO())

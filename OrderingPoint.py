@@ -1,6 +1,7 @@
 from templates import ordering_point_template
 import sys
 
+
 class OrderingPoint:
     def __init__(self, numclients):
         self.NumClients = numclients
