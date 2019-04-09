@@ -524,7 +524,101 @@ module AH_ordering_point_NUMCLIENTS (
 
 //WIRE_ASSIGN
 
+"""
+
+lruArbiter_body = """
+module lru_arbiter (
+        clk,
+        rstn,
+        req,
+        gnt_busy,
+        gnt
+);
 
 
+input clk, rstn
+input [NUMCLIENTS - 1:0] req;
+input [NUMCLIENTS - 1:0] gnt_busy;
+output [NUMCLIENTS - 1:0] gnt;
 
+
+reg [NUMCLIENTS - 1:0] req0_used_status;
+reg [NUMCLIENTS - 1:0] req1_used_status;
+reg [NUMCLIENTS - 1:0] req2_used_status;
+reg [NUMCLIENTS - 1:0] req3_used_status;
+
+always @(posedge clk, negedge rstn) begin
+        if(~rstn) begin
+        //REQ_STATUS
+        req0_used_status <= 4'd4;
+        req1_used_status <= 4'd3;
+        req2_used_status <= 4'd2;
+        req3_used_status <= 4'd1;
+        end
+        else begin
+                if(gnt[0]& !gnt_busy) begin
+                        req0_used_status <= 4'b1;
+                        req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status;
+                        req2_used_status <= req2_used_status<req0_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                        req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                end
+                if(gnt[1] & !gnt_busy) begin
+                        req1_used_status <= 4'b1;
+                        req0_used_status <= req0_used_status<req1_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        req2_used_status <= req2_used_status<req1_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                        req3_used_status <= req3_used_status<req1_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                end
+                if(gnt[2]& !gnt_busy) begin
+                        req2_used_status <= 4'b1;
+                        req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status ;
+                        req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                end
+                if(gnt[3] & !gnt_busy) begin
+                        req3_used_status <= 4'b1;
+                        req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        req1_used_status <= req1_used_status<req1_used_status ? req1_used_status + 1'b1 : req1_used_status ;
+                        req2_used_status <= req2_used_status<req2_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                end
+
+        end
+end
+
+always @(req, gnt_busy) begin
+        gnt_pre[3:0] = 4'd0;
+        req_int [3:0]= req[3:0] & {4{gnt_busy}};
+        if(req[0]) begin
+                gnt_pre[0] = (req0_used_status==4) ? 1'b1 :
+                             ((req1 & (req1_used_status > req0_used_status)) ? 1'b0 :
+                             ((req2 & (req2_used_status > req0_used_status)) ? 1'b0 :
+                             ((req3 & (req3_used_status > req0_used_status)) ? 1'b0 :
+                             1'b1;
+                 end
+        if(req[1]) begin
+                gnt_pre[1] = (req1_used_status==4) ? 1'b1 :
+                             ((req0 & (req0_used_status > req1_used_status)) ? 1'b0 :
+                             ((req2 & (req2_used_status > req1_used_status)) ? 1'b0 :
+                             ((req3 & (req3_used_status > req1_used_status)) ? 1'b0 :
+                             1'b1;
+                 end
+
+        if(req[2]) begin
+                gnt_pre[2] = (req2_used_status==4) ? 1'b1 :
+                             ((req1 & (req1_used_status > req2_used_status)) ? 1'b0 :
+                             ((req0 & (req0_used_status > req2_used_status)) ? 1'b0 :
+                             ((req3 & (req3_used_status > req2_used_status)) ? 1'b0 :
+                             1'b1;
+                 end
+        if(req[3]) begin
+                gnt_pre[3] = (req3_used_status==4) ? 1'b1 :
+                             ((req0 & (req0_used_status > req3_used_status)) ? 1'b0 :
+                             ((req2 & (req2_used_status > req3_used_status)) ? 1'b0 :
+                             ((req1 & (req1_used_status > req3_used_status)) ? 1'b0 :
+                             1'b1;
+                 end
+end
+
+assign gnt[NUMCLIENTS - 1:0] = gnt_pre[NUMCLIENTS - 1:0];
+
+endmodule
 """

@@ -48,7 +48,7 @@ class Pipe:
                 "\n\tend\nend\nassign rd_data["+str(self.Width-1)+":0] = (skid_flop_wr_ready) ? wr_data["+str(self.Width-1)+":0] : skid_flop_wr_data["+str(self.Width-1)+":0];\n"
 
         self.body = self.body.replace("//SKID", code)
-        self.body = self.body.replace("SKID_REGISTERS" , register)
+        self.body = self.body.replace("SKID_REGISTERS", register)
 
     def get_body(self):
         self.body = pipe_body_template
