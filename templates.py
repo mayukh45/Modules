@@ -510,7 +510,7 @@ assign wr_ready = rd_ready;
 assign rd_valid = wr_valid;
 assign rd_data = wr_data;
 
-
+endmodule
 """
 
 ordering_point_template ="""

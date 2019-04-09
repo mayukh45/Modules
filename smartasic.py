@@ -1,19 +1,17 @@
-
 import os
-
 from enum import Enum
 from math import log2
 from templates import module_template
 from templates import fifo_body_template
 
 
-class Port():
+class Port:
 
     class Direction(Enum):
         INPUT  = "input"
         OUTPUT = "output"
         INOUT  = "inout" 
-
+        print(Enum)
     def __init__(self, name, direction, width):
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
@@ -34,7 +32,7 @@ class Port():
 
 
 
-class BasicModule():
+class BasicModule:
     
     def __init__(self, name):
         self.name = name
@@ -77,7 +75,7 @@ class FIFO(BasicModule):
     def __init__(self, name, width, depth, clk_type, flow_ctrl):
         if not isinstance(clk_type, FIFO.ClockType):
             raise TypeError('clk_type must be an instance of FIFO.ClockType')
-        if not isinstance(flow_ctrl, FIFO.FlowControl):
+         if not isinstance(flow_ctrl, FIFO.FlowControl):
             raise TypeError('flow_ctrl  must be an instance of FIFO.FlowControl')
         super(FIFO, self).__init__(name)
         self.width = width
