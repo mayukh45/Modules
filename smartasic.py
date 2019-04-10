@@ -60,11 +60,24 @@ class BasicModule():
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
-    def get_reg_str(self, indent, width, name, iterations):
-        return "\n{0}".format(indent).join(["reg [{0}:0] {1}"+str(i)+";".format(width, name) for i in range(iterations)])
+    def get_reg_str(self, type, indent, width, name, iterations):
+        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, name, type) for i in range(iterations)])
 
-    def write(self, changeable, iterations):
-        return "\n".join([changeable for i in range(iterations)])
+    def assign_snoop_match(self, module_name, snoop, SnoopWidth, iterations, issomething, delimiter):
+        return "\n"+delimiter.join(["(({0}["+str(SnoopWidth-1)+":0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop) for i in range(iterations)])
+
+    def snoop_last(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
+        return "\n" + delimiter.join(["( ({0} == {1}"+str(i)+"["+str(snoopwidth-1)+":0]) ? {1}"+str(i)+" : "+str(camwidth)+"'d0 )".format(snoop,module_name) for i in range(camdepth)])
+
+    def assign_read(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
+        return "\n"+delimiter.join(["( (rd_pointer["+str(encodeddepth)+":0] == "+str(encodeddepth+1)+"'d"
+                ""+str(i)+") ? "+module_name+str(i)+" : "+str(fifowidth)+"'d0)" for i in range(fifodepth)])
+
+    def write_loc(self, delimiter, module_name, encodeddepth, fifodepth):
+        return "\n\t"+delimiter.join([module_name+str(i)+" <= (wr_pointer["+str(encodeddepth-2)+":0] == "+str(encodeddepth)+"'d"+str(i)+") ? wr_data : "+module_name+str(i)+";" for i in range(fifodepth)])
+
+    def assign_loc(self, delimiter, module_name, fifowidth, fifodepth):
+        return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
 
 
 class FIFO(BasicModule):
