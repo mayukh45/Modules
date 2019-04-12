@@ -555,6 +555,7 @@ always @(posedge clk, negedge rstn) begin
         req2_used_status <= 4'd2;
         req3_used_status <= 4'd1;
         end
+	//STATUS_USED
         else begin
                 if(gnt[0]& !gnt_busy) begin
                         req0_used_status <= 4'b1;
@@ -582,6 +583,7 @@ always @(posedge clk, negedge rstn) begin
                 end
 
         end
+	//GNT_STATUS
 end
 
 always @(req, gnt_busy) begin
