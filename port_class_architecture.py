@@ -1,8 +1,7 @@
 # =====================================================================================================================================
 # Port class SW architecture
 # =====================================================================================================================================
-
-Methods -
+class BusParser:
 
 
      # =====================================================================================================================================
@@ -23,11 +22,12 @@ Methods -
      # During object init,              world_view string is                                 loaded to both prefix and prefloat keys (btw, these keys are not there  in original yaml, so required to created.)
      # =====================================================================================================================================
      def __init__ (self, bus_name, world_view):
-     
+          pass
      # =====================================================================================================================================
      # prints the loaded bus object hash at any point of time. This method can be used during debug.
     
      def print (self, bus_name):
+
     
      # =====================================================================================================================================
      # dumps the bus back in yaml format. This method should be part of all the module classes that uses buses (all most all of them.)
@@ -61,7 +61,9 @@ Methods -
      # Ultimately when a bunch of objects are modules are instantiated in a class, the prefloat value wires will be used to dump all the wires
 
      def prefixop(self, expression, prefix):
+         pass
      def prefloatop(self, expression, prefloat):
+         pass
 
      
 
@@ -69,10 +71,6 @@ Methods -
 
  # =====================================================================================================================================
  # port-map opertor -- 
-
-
- def map(self, ):
-
 
 
 
