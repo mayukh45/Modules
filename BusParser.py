@@ -64,8 +64,8 @@ class BusParser:
         self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefloat(temp,prefloat)})
 
     def change_prefix(self, u, pf):
-        for k, v in u.items():
-            if isinstance(v, collections.Mapping):
+        for k in u.keys():
+            if isinstance(u.get(k), collections.Mapping):
                 u[k] = self.change_prefix(u.get(k), pf)
 
             else:
@@ -73,8 +73,8 @@ class BusParser:
         return u
 
     def change_prefloat(self, u, pf):
-        for k, v in u.items():
-            if isinstance(v, collections.Mapping):
+        for k in u.keys():
+            if isinstance(u.get(k), collections.Mapping):
                 u[k] = self.change_prefix(u.get(k), pf)
 
             else:
