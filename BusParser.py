@@ -6,7 +6,7 @@ class BusParser:
     def __init__(self, filename):
         self.dict = yaml.load(open(filename).read())
 
-    def query(self, query, arg, width = None):
+    def query(self, query, arg, width=None):
         heiarchy = query.split(".")
         temp = self.dict.copy()
         for levels in heiarchy:
