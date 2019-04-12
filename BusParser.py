@@ -3,8 +3,8 @@ import collections
 
 
 class BusParser:
-    def __init__(self, bus_name, world_view):
-        self.dict = yaml.load(open(bus_name+"yaml").read())
+    def __init__(self, filepath, bus_name, world_view):
+        self.dict = yaml.load(open(filepath).read())
         self.prefixop(bus_name,world_view)
         self.prefloatop(bus_name,world_view)
 
