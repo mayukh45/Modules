@@ -75,7 +75,7 @@ class BusParser:
     def change_prefloat(self, u, pf):
         for k in list(u.keys()):
             if isinstance(u.get(k), collections.Mapping):
-                u[k] = self.change_prefix(u.get(k), pf)
+                u[k] = self.change_prefloat(u.get(k), pf)
 
             else:
                 u['prefloat'] = pf
