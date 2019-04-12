@@ -542,14 +542,17 @@ input [NUMCLIENTS - 1:0] gnt_busy;
 output [NUMCLIENTS - 1:0] gnt;
 
 
-reg [NUMCLIENTS - 1:0] req0_used_status;
-reg [NUMCLIENTS - 1:0] req1_used_status;
-reg [NUMCLIENTS - 1:0] req2_used_status;
-reg [NUMCLIENTS - 1:0] req3_used_status;
+##reg [NUMCLIENTS - 1:0] req0_used_status;
+##reg [NUMCLIENTS - 1:0] req1_used_status;
+##reg [NUMCLIENTS - 1:0] req2_used_status;
+##reg [NUMCLIENTS - 1:0] req3_used_status;
+//REG_STATUS
+
+
+
 
 always @(posedge clk, negedge rstn) begin
         if(~rstn) begin
-        //REQ_STATUS
         req0_used_status <= 4'd4;
         req1_used_status <= 4'd3;
         req2_used_status <= 4'd2;
@@ -558,28 +561,28 @@ always @(posedge clk, negedge rstn) begin
 	//STATUS_USED
         else begin
                 if(gnt[0]& !gnt_busy) begin
-                        req0_used_status <= 4'b1;
-                        req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status;
-                        req2_used_status <= req2_used_status<req0_used_status ? req2_used_status + 1'b1 : req2_used_status ;
-                        req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                        ##req0_used_status <= 4'b1;
+                        ##req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status;
+                        ##req2_used_status <= req2_used_status<req0_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                        ##req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
                 end
                 if(gnt[1] & !gnt_busy) begin
-                        req1_used_status <= 4'b1;
-                        req0_used_status <= req0_used_status<req1_used_status ? req0_used_status + 1'b1 : req0_used_status;
-                        req2_used_status <= req2_used_status<req1_used_status ? req2_used_status + 1'b1 : req2_used_status ;
-                        req3_used_status <= req3_used_status<req1_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                       ## req1_used_status <= 4'b1;
+                       ## req0_used_status <= req0_used_status<req1_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        ##req2_used_status <= req2_used_status<req1_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                        ##req3_used_status <= req3_used_status<req1_used_status ? req3_used_status + 1'b1 : req3_used_status ;
                 end
                 if(gnt[2]& !gnt_busy) begin
-                        req2_used_status <= 4'b1;
-                        req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
-                        req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status ;
-                        req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
+                        ##req2_used_status <= 4'b1;
+                       # # req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        ##req1_used_status <= req1_used_status<req0_used_status ? req1_used_status + 1'b1 : req1_used_status ;
+                        ##req3_used_status <= req3_used_status<req0_used_status ? req3_used_status + 1'b1 : req3_used_status ;
                 end
                 if(gnt[3] & !gnt_busy) begin
-                        req3_used_status <= 4'b1;
-                        req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
-                        req1_used_status <= req1_used_status<req1_used_status ? req1_used_status + 1'b1 : req1_used_status ;
-                        req2_used_status <= req2_used_status<req2_used_status ? req2_used_status + 1'b1 : req2_used_status ;
+                        ##req3_used_status <= 4'b1;
+                        ##req0_used_status <= req0_used_status<req0_used_status ? req0_used_status + 1'b1 : req0_used_status;
+                        ##req1_used_status <= req1_used_status<req1_used_status ? req1_used_status + 1'b1 : req1_used_status ;
+                        ##req2_used_status <= req2_used_status<req2_used_status ? req2_used_status + 1'b1 : req2_used_status ;
                 end
 
         end
@@ -619,6 +622,7 @@ always @(req, gnt_busy) begin
                              1'b1;
                  end
 end
+	//GNT_REQUEST
 
 assign gnt[NUMCLIENTS - 1:0] = gnt_pre[NUMCLIENTS - 1:0];
 

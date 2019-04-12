@@ -1,4 +1,3 @@
-
 import os
 from enum import Enum
 from math import log2
@@ -6,13 +5,13 @@ from templates import module_template
 from templates import fifo_body_template
 
 
-class Port():
+class Port:
 
     class Direction(Enum):
         INPUT  = "input"
         OUTPUT = "output"
         INOUT  = "inout" 
-
+        print(Enum)
     def __init__(self, name, direction, width):
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
@@ -33,7 +32,7 @@ class Port():
 
 
 
-class BasicModule():
+class BasicModule:
     
     def __init__(self, name):
         self.name = name
@@ -60,6 +59,13 @@ class BasicModule():
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
+<<<<<<< HEAD
+    def get_reg_str(self, indent, width, name, iterations):
+        return "\n{0}".format(indent).join(["reg [{0}:0] {1}"+str(i)+";".format(width, name) for i in range(iterations)])
+
+    def write(self, changeable, iterations):
+        return "\n".join([changeable for i in range(iterations)])
+=======
     def get_reg_str(self, type, indent, width, name, iterations):
         return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, name, type) for i in range(iterations)])
 
@@ -78,6 +84,7 @@ class BasicModule():
 
     def assign_loc(self, delimiter, module_name, fifowidth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
+>>>>>>> 5b0cbb7a74278cd46bf2545653c9b9d1760cb600
 
 
 class FIFO(BasicModule):
@@ -95,7 +102,7 @@ class FIFO(BasicModule):
     def __init__(self, name, width, depth, clk_type, flow_ctrl):
         if not isinstance(clk_type, FIFO.ClockType):
             raise TypeError('clk_type must be an instance of FIFO.ClockType')
-        if not isinstance(flow_ctrl, FIFO.FlowControl):
+         if not isinstance(flow_ctrl, FIFO.FlowControl):
             raise TypeError('flow_ctrl  must be an instance of FIFO.FlowControl')
         super(FIFO, self).__init__(name)
         self.width = width
