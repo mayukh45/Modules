@@ -87,5 +87,6 @@ class BusParser:
                 u[k] = self.change_prefloat(u.get(k), names)
 
             else:
+                print("wtf" + str(u[k]))
                 names.append(u[k])
         return set(names)
