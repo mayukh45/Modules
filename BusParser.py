@@ -83,9 +83,9 @@ class BusParser:
 
     def port_names(self, u, names):
         for k in list(u.keys()):
-            if list(u[k].keys())[0] != "direction":
-                u[k] = self.port_names(u.get(k), names)
+            if u[k][list(u[k].keys())[0]] != "direction":
+                u[k] = self.change_prefloat(u.get(k), names)
 
             else:
-                names.append(tuple(k,u[k])) 
+                names.append(u[k])
         return set(names)
