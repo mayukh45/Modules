@@ -80,3 +80,12 @@ class BusParser:
             else:
                 u['prefloat'] = pf
         return u
+
+    def port_names(self, u, names):
+        for k, v in u.items():
+            if isinstance(v, collections.Mapping):
+                u[k] = self.port_names(u.get(k), names)
+
+            else:
+                names.append(u.keys())
+        return names
