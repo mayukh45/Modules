@@ -10,7 +10,7 @@ class Port:
     class Direction(Enum):
         INPUT  = "input"
         OUTPUT = "output"
-        INOUT  = "inout" 
+        INOUT  = "inout"
         print(Enum)
     def __init__(self, name, direction, width):
         if not isinstance(direction, Port.Direction):
@@ -33,7 +33,7 @@ class Port:
 
 
 class BasicModule:
-    
+
     def __init__(self, name):
         self.name = name
         self.clk = Port("clk", Port.Direction.INPUT, 1)
@@ -41,7 +41,7 @@ class BasicModule:
 
     def get_port_str(self):
         port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
-        port_decl_str = "" 
+        port_decl_str = ""
         port_name_str = ""
         for port in port_objs:
             port_decl_str += str(port)
@@ -59,33 +59,31 @@ class BasicModule:
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
-<<<<<<< HEAD
-    def get_reg_str(self, indent, width, name, iterations):
-        return "\n{0}".format(indent).join(["reg [{0}:0] {1}"+str(i)+";".format(width, name) for i in range(iterations)])
+
 
     def write(self, changeable, iterations):
         return "\n".join([changeable for i in range(iterations)])
-=======
+
     def get_reg_str(self, type, indent, width, name, iterations):
         return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, name, type) for i in range(iterations)])
 
-    def assign_snoop_match(self, module_name, snoop, SnoopWidth, iterations, issomething, delimiter):
+    def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
         return "\n"+delimiter.join(["(({0}["+str(SnoopWidth-1)+":0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop) for i in range(iterations)])
 
-    def snoop_last(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
+    def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
         return "\n" + delimiter.join(["( ({0} == {1}"+str(i)+"["+str(snoopwidth-1)+":0]) ? {1}"+str(i)+" : "+str(camwidth)+"'d0 )".format(snoop,module_name) for i in range(camdepth)])
 
-    def assign_read(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
+    defsnoop_get_wr_ptr():
+
+    def read_loc(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
         return "\n"+delimiter.join(["( (rd_pointer["+str(encodeddepth)+":0] == "+str(encodeddepth+1)+"'d"
                 ""+str(i)+") ? "+module_name+str(i)+" : "+str(fifowidth)+"'d0)" for i in range(fifodepth)])
 
     def write_loc(self, delimiter, module_name, encodeddepth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= (wr_pointer["+str(encodeddepth-2)+":0] == "+str(encodeddepth)+"'d"+str(i)+") ? wr_data : "+module_name+str(i)+";" for i in range(fifodepth)])
 
-    def assign_loc(self, delimiter, module_name, fifowidth, fifodepth):
+    def write_loc_rstn(self, delimiter, module_name, fifowidth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
->>>>>>> 5b0cbb7a74278cd46bf2545653c9b9d1760cb600
-
 
 class FIFO(BasicModule):
 
@@ -113,12 +111,12 @@ class FIFO(BasicModule):
         self.wr_ready = Port("wr_ready", Port.Direction.OUTPUT, 1)
         self.wr_data  = Port("wr_data",  Port.Direction.INPUT,  self.width)
         self.rd_valid = Port("rd_valid", Port.Direction.OUTPUT, 1)
-        self.rd_ready = Port("rd_ready", Port.Direction.INPUT,  1) 
+        self.rd_ready = Port("rd_ready", Port.Direction.INPUT,  1)
         self.rd_data  = Port("rd_data",  Port.Direction.OUTPUT, self.width)
 
     def update(self):
         self.__init__(self.name, self.width, self.depth, self.clk_type, self.flow_ctrl)
-    
+
     def update_width(self, width):
         self.__init__(self.name, width, self.depth, self.clk_type, self.flow_ctrl)
 

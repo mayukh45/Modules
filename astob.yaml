@@ -1,0 +1,57 @@
+##========================================================================================
+##========================================================================================
+## Start of BASIC ACCESS  Interface Bus specification 
+#
+##========================================================================================
+##========================================================================================
+
+astob:
+          wr:
+                 wr_data:
+                           direction: input
+                           width : 18
+                           type: fluid
+
+
+                 wr_valid:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+
+                 wr_ready:
+                           direction: output
+                           width : 1
+                           type: nonfluid
+
+
+          rd:
+                rd_data:
+                           direction: output
+                           width : 18
+                           type: fluid
+
+                rd_valid:
+                           direction: output
+                           width : 1
+                           type: nonfluid
+
+                rd_ready:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+
+          snoop:
+                snoop_data:
+                           direction: input
+                           width : 18
+                           type: fluid
+
+                snoop_valid:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+
+                snoop_match:
+                           direction: input
+                           width : 1
+                           type: nonfluid

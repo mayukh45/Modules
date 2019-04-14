@@ -12,7 +12,7 @@ endmodule
 
 fifo_body_template = """
 // *****************************************************************************
-// Body of Module 
+// Body of Module
 // *****************************************************************************
 reg [ENCODEDDEPTH:0] wr_ptr, rd_ptr;
 
@@ -21,25 +21,25 @@ begin
 	if(!rstn) wr_ptr <= 0;
 	else if(wr_valid & !wr_busy)  wr_ptr <= (rd_valid & !rd_busy)? wr_ptr : wr_ptr+1;
 	else if(rd_valid & !rd_busy)  wr_ptr <= wr_ptr -1 ;
-end 
+end
 assign wr_busy = (wr_ptr == $fifo_depth)
 assign rd_valid = (wr_ptr != 0);
 
 reg [ENCODEDDEPTH - 1 :0] addr;
 reg [ENCODEDDEPTH - 1 :0] rd_addr;
 always @(posedge clk, negedge rstn)
-begin 
+begin
 	if(!rstn) addr <= 0;
-	else if(wr_valid & !wr_busy) 
+	else if(wr_valid & !wr_busy)
 		addr <= addr+1;
 end
 wire [FIFOWIDTH-1:0] mem_data[FIFODEPTH - 1 :0];
 assign mem_data[addr][FIFOWIDTH-1:0] = wr_data[FIFOWIDTH-1:0]
 
 always @(posedge clk, negedge rstn)
-begin 
+begin
 	if(!rstn) rd_addr <=0;
-	else if	(rd_valid & !rd_busy) 
+	else if	(rd_valid & !rd_busy)
 	    rd_addr <= rd_addr +1;
 end
 assign rd_data = mem_data[rd_addr];
@@ -59,12 +59,12 @@ module round_robin_arbiter_NUMCLIENTS (
 
 input		rst_n;
 input		clk;
-input	[NUMCLIENTS - 1:0]	req; 
+input	[NUMCLIENTS - 1:0]	req;
 output	[NUMCLIENTS - 1:0]	grant;
 
 //INPUT_WEIGHT_VECTORS
 
-reg	[ENCODEDNUMCLIENTS - 1:0]	rotate_ptr;  
+reg	[ENCODEDNUMCLIENTS - 1:0]	rotate_ptr;
 reg	[NUMCLIENTS - 1:0]	shift_req;
 reg	[NUMCLIENTS - 1:0]	shift_grant;
 reg	[NUMCLIENTS - 1:0]	grant_comb;
@@ -104,7 +104,7 @@ always @ (posedge clk or negedge rst_n)
 begin
 	if (!rst_n)
 		rotate_ptr[ENCODEDNUMCLIENTS - 1:0] <= ENCODEDNUMCLIENTS'b0;
-	else 
+	else
 		case (1'b1) // synthesis parallel_case
 			//ROTATION
 		endcase
@@ -115,20 +115,20 @@ end
 weight_update_template = """
 always @ (posedge clk or negedge rst_an)
 begin
-if (!rst_an) begin 
+if (!rst_an) begin
 //WEIGHT_BIT
-       end else begin 
+       end else begin
 //WEIGHT_NEGATION
        end
 end
 
-assign refresh_weights = //REFRESH_WEIGHT 
+assign refresh_weights = //REFRESH_WEIGHT
 
 //ASSIGN_WEIGHT
 """
 
 cam_body_template = """
-module AH_cam_CAMDEPTH_CAMWIDTH_SNOOPWIDTH ( 
+module AH_cam_CAMDEPTH_CAMWIDTH_SNOOPWIDTH (
 rst_an,
 clk,
 wr_data,
@@ -139,7 +139,7 @@ snoop_in,
 snoop_valid,
 snoop_match,
 snoop_data
- 
+
 );
 
 // ============================================================================
@@ -172,7 +172,7 @@ input snoop_valid;
 
 output snoop_match;
 output [CAMWIDTH - 1:0] snoop_data; // CAMWIDTH here
- 
+
 
 wire [ENCODEDDEPTH - 1:0] internal_wr_ptr; // asume CAMDEPTH = 64, then wr-ptr-width is log2(CAMDEPTH).
 req  [ENCODEDDEPTH:0] wr_loc_counter; // It's log2(CAMDEPTH) +1 from the above
@@ -258,7 +258,7 @@ end
 
 wire assign snoop_match = freedup_loc_ready) & (
 
-//SNOOP_CAM 
+//SNOOP_CAM
 
 );
 
@@ -336,7 +336,7 @@ input snoop_match;
 
 reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
 
-reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1 
+reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1
 
 
 //REG_DECLARATIONS
@@ -497,7 +497,7 @@ output wr_ready;
 input  [WIDEWIDTH - 1:0] wr_data;
 output rd_valid;
 input  rd_ready;
-output [WIDEWIDTH - 1:0] rd_data;        
+output [WIDEWIDTH - 1:0] rd_data;
 reg rd_valid
 //SKID_REGISTERS
 
@@ -622,9 +622,5 @@ end
 
 assign gnt[NUMCLIENTS - 1:0] = gnt_pre[NUMCLIENTS - 1:0];
 
-<<<<<<< HEAD
-"""
-=======
 endmodule
 """
->>>>>>> 4006e27d0108573ad2367bef47ea28d7408e5b8e
