@@ -1,6 +1,5 @@
-import collections
-d = {'dir' : 1 , "lol" :{"dir" : 1 , "wtf":{"negro" : 2 , "dir" : 3}}}
+class ABC:
+    def __init__(self):
+        print(self.__class__.__name__)
 
-
-
-print(d.__annotations__)
+ABC()

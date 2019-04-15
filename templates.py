@@ -45,6 +45,92 @@ end
 assign rd_data = mem_data[rd_addr];
 // *****************************************************************************
 """
+snoopable_fifo_template = """
+
+reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
+
+reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1
+
+
+//REG_DECLARATIONS
+
+
+
+
+always @ (posedge clk or negedge rstn)
+
+begin
+
+       if(rstn) begin
+
+             wr_pointer <= ENCODEDDEPTH + 1'd0;
+
+       end else begin
+
+     wr_pointer <= ( (wr_pointer[ENCODEDDEPTH] ^ rd_pointer[ENCODEDDEPTH]) && (wr_pointer[ENCODEDDEPTH - 1:0] == rd_pointer[ENCODEDDEPTH - 1:0]) ) ? wr_pointer :
+
+wr_valid ? ( wr_pointer + 1'b1) : wr_pointer;
+
+       end
+
+end
+
+
+
+always @ (posedge clk or negedge rstn)
+
+begin
+
+       if(rstn) begin
+
+             rd_pointer <= ENCODEDDEPTH + 1'd0;
+
+       end else begin
+
+     rd_pointer <= (rd_pointer[ENCODEDDEPTH:0] == rd_pointer[ENCODEDDEPTH:0]) ? rd_pointer : rd_ready ? (rd_pointer + 1'b1) : rd_pointer;
+
+       end
+
+end
+
+
+
+
+
+always @ (posedge clk or negedge rstn)
+
+begin
+
+       if(!rstn) begin
+
+//ASSIGN_LOC
+
+       end else begin
+
+//LOC_WRITE
+
+
+
+
+       end
+
+end
+
+wr_ready = ! ( (wr_pointer[ENCODEDDEPTH] ^ rd_pointer[ENCODEDDEPTH]) && (wr_pointer[ENCODEDDEPTH - 1:0] == rd_pointer[ENCODEDDEPTH - 1:0]) );
+
+rd_valid = !(rd_pointer[ENCODEDDEPTH:0] == rd_pointer[ENCODEDDEPTH:0]);
+
+assign rd_data = FIFOWIDTH'd0 |
+//ASSIGN_READ
+
+
+assing snoop_match = 1'b0 |
+//ASSIGN_SNOOP_MATCH
+
+
+// snoop_match isn't used now - it can be in future.
+
+"""
 arbiter_body_template = """
 //Rotate -> Priority -> Rotate
 
@@ -297,128 +383,6 @@ endmodule
 
 """
 
-snoopable_fifo_template = """
-// 20 - FIFOWIDTH
-// 32 - FIFODEPTH
-// 10 - SNOOPWIDTH
-// FIFONAME carries these 3 string. It can carry
-// other stuffs as srv (sync/ready-valid)
-
-module FIFO_FIFOWIDTH_FIFODEPTH_SNOOPWIDTH_snoopable (
-
-clk,
-rstn,
-wr_valid,
-wr_ready,
-wr_data,
-rd_valid,
-rd_ready,
-rd_data,
-snoop_data,
-snoop_valid,
-snoop_match
-);
-
-input rstn,
-intput clk,
-input [FIFOWIDTH - 1:0] wr_data; //FIFOWIDTH
-input wr_valid;
-input wr_ready;
-
-out [FIFOWIDTH - 1:0] rd_data; //FIFOWIDTH
-input rd_valid;
-input rd_ready;
-input [SNOOPWIDTH - 1:0] snoop_data; // SNOOPWIDTH
-input snoop_valid;
-input snoop_match;
-
-
-
-reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
-
-reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1
-
-
-//REG_DECLARATIONS
-
-
-
-
-always @ (posedge clk or negedge rstn)
-
-begin
-
-       if(rstn) begin
-
-             wr_pointer <= ENCODEDDEPTH + 1'd0;
-
-       end else begin
-
-     wr_pointer <= ( (wr_pointer[ENCODEDDEPTH] ^ rd_pointer[ENCODEDDEPTH]) && (wr_pointer[ENCODEDDEPTH - 1:0] == rd_pointer[ENCODEDDEPTH - 1:0]) ) ? wr_pointer :
-
-wr_valid ? ( wr_pointer + 1'b1) : wr_pointer;
-
-       end
-
-end
-
-
-
-always @ (posedge clk or negedge rstn)
-
-begin
-
-       if(rstn) begin
-
-             rd_pointer <= ENCODEDDEPTH + 1'd0;
-
-       end else begin
-
-     rd_pointer <= (rd_pointer[ENCODEDDEPTH:0] == rd_pointer[ENCODEDDEPTH:0]) ? rd_pointer : rd_ready ? (rd_pointer + 1'b1) : rd_pointer;
-
-       end
-
-end
-
-
-
-
-
-always @ (posedge clk or negedge rstn)
-
-begin
-
-       if(!rstn) begin
-
-//ASSIGN_LOC
-
-       end else begin
-
-//LOC_WRITE
-
-
-
-
-       end
-
-end
-
-wr_ready = ! ( (wr_pointer[ENCODEDDEPTH] ^ rd_pointer[ENCODEDDEPTH]) && (wr_pointer[ENCODEDDEPTH - 1:0] == rd_pointer[ENCODEDDEPTH - 1:0]) );
-
-rd_valid = !(rd_pointer[ENCODEDDEPTH:0] == rd_pointer[ENCODEDDEPTH:0]);
-
-assign rd_data = FIFOWIDTH'd0 |
-//ASSIGN_READ
-
-
-assing snoop_match = 1'b0 |
-//ASSIGN_SNOOP_MATCH
-
-
-// snoop_match isn't used now - it can be in future.
-
-endmodule
-"""
 
 packet_converter_template = """
 module AH_NAME (

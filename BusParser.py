@@ -3,10 +3,13 @@ import collections
 
 
 class BusParser:
-    def __init__(self, filepath, bus_name, world_view):
+    def __init__(self, filepath, bus_name):
         self.dict = yaml.load(open(filepath).read())
-        self.prefixop(bus_name,world_view)
-        self.prefloatop(bus_name,world_view)
+        self.BusName = bus_name
+
+    def add_world_view(self, world_view):
+        self.prefixop(self.BusName, world_view)
+        self.prefloatop(self.BusName, world_view)
 
     def wid_op(self, exp, width):
         heiarchy = exp.split(".")
@@ -54,7 +57,6 @@ class BusParser:
 
         self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefix(temp,prefix)})
 
-
     def prefloatop(self, exp, prefloat):
         heiarchy = exp.split(".")
         temp = self.dict.copy()
@@ -86,7 +88,7 @@ class BusParser:
             if list(u[k].keys())[0] != "direction":
                 u[k] = self.port_names(u.get(k), names)
 
-            else :
+            else:
                 if not any([u == i for i in names]):
                     names.append(u)
-        return (names)
+        return names

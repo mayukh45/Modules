@@ -1,15 +1,19 @@
 from templates import snoopable_fifo_template
 from math import log2, ceil
 import sys
+from smartasic import BasicModule,Port
 
 
-class SnoopableFIFO:
-    def __init__(self, fifowidth, fifodepth, snoopwidth):
+class SnoopableFIFO(BasicModule):
+    def __init__(self, fifowidth, fifodepth, snoopwidth, bus_name,path_of_yaml):
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
+        self.name = "AH_"+self.__class__.__name__+str(fifowidth)+"_"+str(fifowidth)+"_"+str(snoopwidth)
+        super().__init__(self.name)
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
+        self.add_ports_from_bus(path_of_yaml, bus_name)
 
     def get_body(self):
         self.body = snoopable_fifo_template
@@ -21,36 +25,16 @@ class SnoopableFIFO:
         self.body = self.body.replace("FIFOWIDTH", str(self.FifoWidth))
         self.body = self.body.replace("FIFODEPTH", str(self.FifoDepth))
         self.body = self.body.replace("SNOOPWIDTH", str(self.SnoopWidth))
-        self.declare_register()
-        self.write_loc()
-        self.assign_read()
-        self.assign_loc()
-        self.assign_snoop_match()
-
-    def declare_register(self):
-        code = "\n"+"\n".join(["reg ["+str(self.FifoWidth-1)+":0] fifo_loc"+str(i)+";" for i in range(self.FifoDepth)])
-        self.body = self.body.replace("//REG_DECLARATIONS", code)
-
-    def write_loc_rstn(self):
-        code = "\n\t"+"\n\t".join(["fifo_loc"+str(i)+" <= "+str(self.FifoWidth)+"'d0;" for i in range (self.FifoDepth)])
-        self.body = self.body.replace("//ASSIGN_LOC", code)
-
-    def write_loc(self):
-        code = "\n\t"+"\n\t".join(["fifo_loc"+str(i)+" <= (wr_pointer["+str(self.EncodedDepth-2)+":0] == "+str(self.EncodedDepth)+"'d"+str(i)+") ? wr_data : fifo_loc"+str(i)+";" for i in range(self.FifoDepth)])
-        self.body = self.body.replace("//LOC_WRITE", code)
-
-    def read_loc(self):
-        code = "\n"+" |\n ".join(["( (rd_pointer["+str(self.EncodedDepth)+":0] == "+str(self.EncodedDepth+1)+"'d"
-                ""+str(i)+") ? fifo_loc"+str(i)+" : "+str(self.FifoWidth)+"'d0)" for i in range(self.FifoDepth)])
-
-        self.body = self.body.replace("//ASSIGN_READ", code)
-
-    def snoop_match_noinv(self):
-        code = "\n"+"|\n ".join(["((fifo_loc["+str(self.SnoopWidth-1)+":0] == snoop_data) ? 1'b1 : 1'b0)" for i in range(self.FifoDepth)])
-        self.body = self.body.replace("//ASSIGN_SNOOP_MATCH", code)
+        self.body = self.body.replace("//REG_DECLARATIONS", self.get_reg_str("reg", "", self.FifoWidth, "fifo_loc", self.FifoDepth))
+        self.body = self.body.replace("//ASSIGN_LOC", self.write_loc_rstn("\n\t", "fifo_loc", self.FifoWidth, self.FifoDepth))
+        self.body = self.body.replace("//LOC_WRITE", self.write_loc("\n\t","fifo_loc",self.EncodedDepth,self.FifoDepth))
+        self.body = self.body.replace("//ASSIGN_READ",self.read_loc(self.EncodedDepth,"fifo_loc",self.FifoWidth,self.FifoDepth,"|\n"))
+        self.body = self.body.replace("//ASSIGN_SNOOP_MATCH", self.snoop_match_noinv("fifo_loc","snoop_data",self.SnoopWidth,self.FifoDepth,"|\n"))
 
     def __str__(self):
+        modulecode = self.get_header()
         self.get_body()
-        return self.body
+        modulecode = modulecode.replace("BODY", self.body())
+        return modulecode
 
 print(SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])))

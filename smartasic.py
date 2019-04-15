@@ -3,7 +3,7 @@ from enum import Enum
 from math import log2
 from templates import module_template
 from templates import fifo_body_template
-
+from BusParser import BusParser
 
 class Port:
 
@@ -12,6 +12,7 @@ class Port:
         OUTPUT = "output"
         INOUT  = "inout"
         print(Enum)
+
     def __init__(self, name, direction, width):
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
@@ -36,20 +37,36 @@ class BasicModule:
 
     def __init__(self, name):
         self.name = name
-        self.clk = Port("clk", Port.Direction.INPUT, 1)
-        self.rst = Port("rstn", Port.Direction.INPUT, 1)
+        self.Ports = []
+        self.add_port("clk", Port.Direction.INPUT, 1)
+        self.add_port("rstn", Port.Direction.INPUT, 1)
+
+    def add_port(self, name, direction, width):
+        self.Ports.append(Port(name, direction, width))
 
     def get_port_str(self):
-        port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
+        """port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
         port_decl_str = ""
         port_name_str = ""
-        for port in port_objs:
+        for port in port_objs:                                                                                                      port_decl_str += str(
             port_decl_str += str(port)
             port_decl_str += "\n"
             port_name_str += port.name
             port_name_str += ", "
-        port_name_str = port_name_str.strip().strip(",")
+            port_name_str = port_name_str.strip().strip(",")
         return port_name_str, port_decl_str
+        """
+
+        port_decl_str = "\n".join([str(port) for port in self.Ports])
+        port_name_str = "\n,".join([port.name for port in self.Ports])
+        return port_name_str, port_decl_str
+
+    def add_ports_from_bus(self, filepath, bus_name):
+        parser = BusParser(filepath, bus_name)
+        ports = parser.port_names(parser.dict, [])
+        for port in ports:
+            port_name = list(port.keys())[0]
+            self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
 
     def get_header(self):
         mytemplate = module_template
@@ -59,13 +76,8 @@ class BasicModule:
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
-
-
-    def write(self, changeable, iterations):
-        return "\n".join([changeable for i in range(iterations)])
-
-    def get_reg_str(self, type, indent, width, name, iterations):
-        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, name, type) for i in range(iterations)])
+    def get_reg_str(self, type, indent, width, module_name, iterations):
+        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, module_name, type) for i in range(iterations)])
 
     def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
         return "\n"+delimiter.join(["(({0}["+str(SnoopWidth-1)+":0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop) for i in range(iterations)])
@@ -73,7 +85,8 @@ class BasicModule:
     def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
         return "\n" + delimiter.join(["( ({0} == {1}"+str(i)+"["+str(snoopwidth-1)+":0]) ? {1}"+str(i)+" : "+str(camwidth)+"'d0 )".format(snoop,module_name) for i in range(camdepth)])
 
-    defsnoop_get_wr_ptr():
+    def snoop_get_wr_ptr(self):
+        pass
 
     def read_loc(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
         return "\n"+delimiter.join(["( (rd_pointer["+str(encodeddepth)+":0] == "+str(encodeddepth+1)+"'d"
@@ -100,7 +113,7 @@ class FIFO(BasicModule):
     def __init__(self, name, width, depth, clk_type, flow_ctrl):
         if not isinstance(clk_type, FIFO.ClockType):
             raise TypeError('clk_type must be an instance of FIFO.ClockType')
-         if not isinstance(flow_ctrl, FIFO.FlowControl):
+        if not isinstance(flow_ctrl, FIFO.FlowControl):
             raise TypeError('flow_ctrl  must be an instance of FIFO.FlowControl')
         super(FIFO, self).__init__(name)
         self.width = width
@@ -121,7 +134,7 @@ class FIFO(BasicModule):
         self.__init__(self.name, width, self.depth, self.clk_type, self.flow_ctrl)
 
     def update_height(self, height):
-        self.__init__(self.name, self.width, depth, self.clk_type, self.flow_ctrl)
+        self.__init__(self.name, self.width, height, self.clk_type, self.flow_ctrl)
 
     def get_body(self):
         encoded_depth = int(log2(self.depth))
