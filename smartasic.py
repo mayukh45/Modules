@@ -14,8 +14,10 @@ class Port:
         print(Enum)
 
     def __init__(self, name, direction, width):
+        """
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
+            """
         if width < 1:
             raise TypeError('width should be > 0')
         self.name = name
