@@ -39,8 +39,8 @@ class BasicModule:
     def __init__(self, name):
         self.name = name
         self.Ports = []
-        self.add_port("clk", Port.Direction.INPUT, 1)
-        self.add_port("rstn", Port.Direction.INPUT, 1)
+        self.add_port("clk", "input", 1)
+        self.add_port("rstn", "input", 1)
 
     def add_port(self, name, direction, width):
         self.Ports.append(Port(name, direction, width))

@@ -9,7 +9,7 @@ class SnoopableFIFO(BasicModule):
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
-        self.name = "AH_"+self.__class__.__name__+str(fifowidth)+"_"+str(fifowidth)+"_"+str(snoopwidth)
+        self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifowidth)+"_"+str(snoopwidth)
         super().__init__(self.name)
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
