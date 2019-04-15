@@ -37,4 +37,4 @@ class SnoopableFIFO(BasicModule):
         modulecode = modulecode.replace("BODY", self.body())
         return modulecode
 
-print(SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])))
+print(SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5]))
