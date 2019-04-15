@@ -11,7 +11,6 @@ class Port:
         INPUT  = "input"
         OUTPUT = "output"
         INOUT  = "inout"
-        print(Enum)
 
     def __init__(self, name, direction, width):
         """
