@@ -102,7 +102,7 @@ class BasicModule:
     def write_to_file(self , verilog):
         with open(Path.home()+"/Documents/smartasic2/dumpverilog"+self.name+".v","w") as f:
             f.write(verilog)
-            
+
 
 
 class FIFO(BasicModule):
