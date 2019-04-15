@@ -4,7 +4,7 @@ from math import log2
 from templates import module_template
 from templates import fifo_body_template
 from BusParser import BusParser
-
+from pathlib import Path
 class Port:
 
     class Direction(Enum):
@@ -98,6 +98,12 @@ class BasicModule:
 
     def write_loc_rstn(self, delimiter, module_name, fifowidth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
+
+    def write_to_file(self , verilog):
+        with open(Path.home()+"/Documents/smartasic2/dumpverilog"+self.name+".v","w") as f:
+            f.write(verilog)
+            
+
 
 class FIFO(BasicModule):
 
