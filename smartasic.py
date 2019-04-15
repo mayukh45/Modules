@@ -78,13 +78,13 @@ class BasicModule:
         return mytemplate
 
     def get_reg_str(self, type, indent, width, module_name, iterations):
-        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}"+str(i)+";".format(width, module_name, type) for i in range(iterations)])
+        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])
 
     def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
-        return "\n"+delimiter.join(["(({0}["+str(SnoopWidth-1)+":0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop) for i in range(iterations)])
+        return "\n"+delimiter.join(["(({0}[{2}:0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop,SnoopWidth-1) for i in range(iterations)])
 
     def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
-        return "\n" + delimiter.join(["( ({0} == {1}"+str(i)+"["+str(snoopwidth-1)+":0]) ? {1}"+str(i)+" : "+str(camwidth)+"'d0 )".format(snoop,module_name) for i in range(camdepth)])
+        return "\n" + delimiter.join(["( ({0} == {1}".format(snoop,module_name)+str(i)+"["+str(snoopwidth-1)+":0]) ? {0}".format(module_name)+str(i)+" : "+str(camwidth)+"'d0 )" for i in range(camdepth)])
 
     def snoop_get_wr_ptr(self):
         pass
