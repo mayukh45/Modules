@@ -26,9 +26,9 @@ class Port:
 
     def get_declaration(self):
         if self.width == 1:
-            return "{0} {1};".format(self.direction.value, self.name)
+            return "{0} {1};".format(self.direction, self.name)
         else:
-            return "{0} [{1}:0] {2};".format(self.direction.value, self.width - 1, self.name)
+            return "{0} [{1}:0] {2};".format(self.direction, self.width - 1, self.name)
 
     def __str__(self):
         return self.get_declaration()
