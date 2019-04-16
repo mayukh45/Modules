@@ -214,50 +214,11 @@ assign refresh_weights = //REFRESH_WEIGHT
 """
 
 cam_body_template = """
-module AH_cam_CAMDEPTH_CAMWIDTH_SNOOPWIDTH (
-rst_an,
-clk,
-wr_data,
-wr_valid,
-wr_ready,
-
-snoop_in,
-snoop_valid,
-snoop_match,
-snoop_data
-
-);
-
-// ============================================================================
-// Below are the main parameters which are used for CAM functionality.
-//
-// CAMWIDTH --> width of storage - similar to FIFO storage
-// CAMDEPTH --> Number of rows the CAM can fit
-// ENCODEDDEPTH --> log2 of the CAM depth, the write/read pointers and snoop
-// marker all have this width.
-//
-// SNOOPWIDTH --> width of snoop-in port. This is always lte CAMWIDTH
-
-// ============================================================================
-
-
-
-input rst_an;
-input clk;
-
-input [CAMWIDTH - 1:0] wr_data;  //POINT --> CAMWIDTH
-output wr_valid;
-output wr_ready;
 
 // ============================================================================
 //snoop happens at the LSBs. It is expected that for snoop to happen
 // in upper bits, write will be swizzled into LSB locations.
 
-input [SNOOPWIDTH - 1:0] snoop_in; // SNOOPWIDTH lte CAMWIDTH
-input snoop_valid;
-
-output snoop_match;
-output [CAMWIDTH - 1:0] snoop_data; // CAMWIDTH here
 
 
 wire [ENCODEDDEPTH - 1:0] internal_wr_ptr; // asume CAMDEPTH = 64, then wr-ptr-width is log2(CAMDEPTH).
@@ -344,7 +305,7 @@ end
 
 wire assign snoop_match = freedup_loc_ready) & (
 
-//SNOOP_CAM
+//SNOOP_MATCH
 
 );
 
@@ -360,8 +321,6 @@ wire assign freedup_loc_valid = snoop_match;
 
 
 endmodule
-
-
 
 """
 

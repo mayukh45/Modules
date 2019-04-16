@@ -78,8 +78,8 @@ class BasicModule:
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
 
-    def get_reg_str(self, type, indent, width, module_name, iterations):
-        return "\n{0}".format(indent).join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])
+    def get_reg_str(self, type, delimiter, width, module_name, iterations):
+        return "\n"+delimiter.join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])
 
     def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
         return "\n"+delimiter.join(["(({0}[{2}:0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop,SnoopWidth-1) for i in range(iterations)])
@@ -87,8 +87,8 @@ class BasicModule:
     def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
         return "\n" + delimiter.join(["( ({0} == {1}".format(snoop,module_name)+str(i)+"["+str(snoopwidth-1)+":0]) ? {0}".format(module_name)+str(i)+" : "+str(camwidth)+"'d0 )" for i in range(camdepth)])
 
-    def snoop_get_wr_ptr(self):
-        pass
+    def snoop_get_wr_ptr(self,delimiter,module_name,snoop,snoopwidth,encodeddepth,camdepth):
+        return delimiter.join(["( ({0} == {1}".format(snoop,module_name) + str(i) + "[" + str(snoopwidth - 1) + ":0]) ?"+module_name + str(i) + " : " + str(encodeddepth) + "'d" + str(i) + " )" for i in range(camdepth)])
 
     def read_loc(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
         return "\n"+delimiter.join(["( (rd_pointer["+str(encodeddepth)+":0] == "+str(encodeddepth+1)+"'d"
@@ -100,7 +100,11 @@ class BasicModule:
     def write_loc_rstn(self, delimiter, module_name, fifowidth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
 
-    def write_to_file(self , verilog):
+    def cam_write(self,delimiter,module_name,camdepth,encodeddepth):
+        return "\n\t" + delimiter.join([module_name + str(i) + " <= (internal_wr_en & (internal_wr_ptr == " + str(encodeddepth) + ""
+            "'d" + str(i) + ") ) ? wr_data : "+module_name + str(i) + ";" for i in range(camdepth)])
+
+    def write_to_file(self, verilog):
         with open(str(Path.home())+"/Documents/smartasic2/dumpverilog/"+self.name+".v","w") as f:
             f.write(verilog)
 

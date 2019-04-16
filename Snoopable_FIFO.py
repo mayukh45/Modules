@@ -25,7 +25,7 @@ class SnoopableFIFO(BasicModule):
         self.body = self.body.replace("FIFOWIDTH", str(self.FifoWidth))
         self.body = self.body.replace("FIFODEPTH", str(self.FifoDepth))
         self.body = self.body.replace("SNOOPWIDTH", str(self.SnoopWidth))
-        self.body = self.body.replace("//REG_DECLARATIONS", self.get_reg_str("reg", "", self.FifoWidth, "fifo_loc", self.FifoDepth))
+        self.body = self.body.replace("//REG_DECLARATIONS", self.get_reg_str("reg", "\n", self.FifoWidth, "fifo_loc", self.FifoDepth))
         self.body = self.body.replace("//ASSIGN_LOC", self.write_loc_rstn("\n\t", "fifo_loc", self.FifoWidth, self.FifoDepth))
         self.body = self.body.replace("//LOC_WRITE", self.write_loc("\n\t","fifo_loc",self.EncodedDepth,self.FifoDepth))
         self.body = self.body.replace("//ASSIGN_READ",self.read_loc(self.EncodedDepth,"fifo_loc",self.FifoWidth,self.FifoDepth,"|\n"))
