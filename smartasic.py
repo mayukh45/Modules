@@ -100,7 +100,7 @@ class BasicModule:
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
 
     def write_to_file(self , verilog):
-        with open(Path.home()+"/Documents/smartasic2/dumpverilog"+self.name+".v","w") as f:
+        with open(str(Path.home())+"/Documents/smartasic2/dumpverilog/"+self.name+".v","w") as f:
             f.write(verilog)
 
 
