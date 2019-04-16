@@ -222,9 +222,9 @@ cam_body_template = """
 
 
 wire [ENCODEDDEPTH - 1:0] internal_wr_ptr; // asume CAMDEPTH = 64, then wr-ptr-width is log2(CAMDEPTH).
-req  [ENCODEDDEPTH:0] wr_loc_counter; // It's log2(CAMDEPTH) +1 from the above
+reg [ENCODEDDEPTH:0] wr_loc_counter; // It's log2(CAMDEPTH) +1 from the above
 
-//REQUEST_DECLARATION
+//REG_DECLARATION
 
 // ============================================================================
 // CAM working principle --

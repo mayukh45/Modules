@@ -24,7 +24,7 @@ class CAM(BasicModule):
         self.body = self.body.replace("CAMWIDTH", str(self.CamWidth))
         self.body = self.body.replace("SNOOPWIDTH - 1", str(self.SnoopWidth - 1))
         self.body = self.body.replace("SNOOPWIDTH", str(self.SnoopWidth))
-        self.body = self.body.replace("//REQUEST_DECLARATION" , self.get_reg_str("req","\n",self.CamWidth,"cam_loc",self.CamDepth))
+        self.body = self.body.replace("//REG_DECLARATION" , self.get_reg_str("reg","\n",self.CamWidth,"cam_loc",self.CamDepth))
         self.body = self.body.replace("//CAM_LOCATIONS" , self.write_loc_rstn("\n\t", "cam_loc", self.CamWidth, self.CamWidth))
         self.body = self.body.replace("//ASSIGN_SNOOP", self.snoop_inv("\n", self.SnoopWidth,"snoop_in", "cam_loc",self.CamDepth,self.CamWidth))
         self.body = self.body.replace("//CAM_WRITE",self.cam_write("\n\t","cam_loc",self.CamDepth,self.EncodedDepth))
