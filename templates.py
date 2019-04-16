@@ -320,7 +320,7 @@ wire assign freeup_loc = ENCODEDDEPTH'd0 |
 wire assign freedup_loc_valid = snoop_match;
 
 
-endmodule
+
 
 """
 
