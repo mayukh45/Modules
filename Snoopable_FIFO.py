@@ -5,7 +5,7 @@ from smartasic import BasicModule,Port
 
 
 class SnoopableFIFO(BasicModule):
-    def __init__(self, fifowidth, fifodepth, snoopwidth, bus_name,path_of_yaml):
+    def __init__(self, fifowidth, fifodepth, snoopwidth, bus_name, path_of_yaml):
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
@@ -31,12 +31,15 @@ class SnoopableFIFO(BasicModule):
         self.body = self.body.replace("//ASSIGN_READ",self.read_loc(self.EncodedDepth,"fifo_loc",self.FifoWidth,self.FifoDepth,"|\n"))
         self.body = self.body.replace("//ASSIGN_SNOOP_MATCH", self.snoop_match_noinv("fifo_loc","snoop_data",self.SnoopWidth,self.FifoDepth,"|\n"))
 
-    def __str__(self):
+    def get_verilog(self):
         modulecode = self.get_header()
         self.get_body()
         modulecode = modulecode.replace("BODY", self.body)
-        self.write_to_file(modulecode)
         return modulecode
+
+    def __str__(self):
+        self.write_to_file(self.get_verilog())
+        return self.get_verilog()
 
 
 print(SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5]))

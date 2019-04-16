@@ -5,6 +5,8 @@ from templates import module_template
 from templates import fifo_body_template
 from BusParser import BusParser
 from pathlib import Path
+
+
 class Port:
 
     class Direction(Enum):
@@ -31,7 +33,6 @@ class Port:
 
     def __str__(self):
         return self.get_declaration()
-
 
 
 class BasicModule:
@@ -103,6 +104,11 @@ class BasicModule:
         with open(Path.home()+"/Documents/smartasic2/dumpverilog"+self.name+".v","w") as f:
             f.write(verilog)
 
+    def remove_port(self, port_name):
+        for port in self.Ports:
+            if port.name == port_name:
+                self.Ports.remove(port)
+                return
 
 
 class FIFO(BasicModule):
