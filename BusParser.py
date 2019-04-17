@@ -21,7 +21,6 @@ class BusParser:
             raise Exception("The width of this signal cannot be changed")
         else:
             temp['width'] = width
-            self.dict.update({heiarchy[len(heiarchy) - 1]: temp})
 
     def flip_op(self, exp):
         heiarchy = exp.split(".")
@@ -31,8 +30,8 @@ class BusParser:
 
         print(heiarchy[len(heiarchy)-1])
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.flip(temp)})
-        print(list(self.dict.keys()))
+        self.flip(temp)
+
     def flip(self, u):
         for k, v in u.items():
             if isinstance(v, collections.Mapping):
@@ -57,7 +56,7 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefix(temp,prefix)})
+        self.change_prefix(temp,prefix)
 
     def prefloatop(self, exp, prefloat):
         heiarchy = exp.split(".")
@@ -65,7 +64,8 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefloat(temp,prefloat)})
+        self.change_prefloat(temp,prefloat)
+
 
     def change_prefix(self, u, pf):
         for k in list(u.keys()):
@@ -94,3 +94,11 @@ class BusParser:
                 if not any([u == i for i in names]):
                     names.append(u)
         return names
+
+    def remove_sub_dict(self,exp):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy)-1):
+            temp = temp[heiarchy[i]]
+
+        del temp[heiarchy[len(heiarchy)-1]]
