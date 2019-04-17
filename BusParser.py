@@ -29,7 +29,7 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.flip(temp)})
+
 
     def flip(self, u):
         for k, v in u.items():
@@ -55,7 +55,7 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefix(temp,prefix)})
+
 
     def prefloatop(self, exp, prefloat):
         heiarchy = exp.split(".")
@@ -63,7 +63,7 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.change_prefloat(temp,prefloat)})
+
 
     def change_prefix(self, u, pf):
         for k in list(u.keys()):
@@ -92,3 +92,14 @@ class BusParser:
                 if not any([u == i for i in names]):
                     names.append(u)
         return names
+
+    def remove_sub_dict(self, exp):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy)-1):
+            temp = temp[heiarchy[i]]
+
+        del temp[heiarchy[len(heiarchy) - 1]]
+        
+
+

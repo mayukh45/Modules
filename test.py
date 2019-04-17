@@ -1,5 +1,4 @@
-class ABC:
-    def __init__(self):
-        print(self.__class__.__name__)
-
-ABC()
+a = {"A": {"B" : {"c":3}}}
+temp = a.copy()
+temp = a["A"]["B"] = {2:"negro"}
+print(a)
