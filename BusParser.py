@@ -29,8 +29,10 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.dict.update({heiarchy[len(heiarchy) - 1]: self.flip(temp)})
+        print(heiarchy[len(heiarchy)-1])
 
+        self.dict.update({heiarchy[len(heiarchy) - 1]: self.flip(temp)})
+        print(list(self.dict.keys()))
     def flip(self, u):
         for k, v in u.items():
             if isinstance(v, collections.Mapping):
