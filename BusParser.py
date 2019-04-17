@@ -100,6 +100,6 @@ class BusParser:
             temp = temp[heiarchy[i]]
 
         del temp[heiarchy[len(heiarchy) - 1]]
-        
+
 
 
