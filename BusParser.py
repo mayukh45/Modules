@@ -101,3 +101,12 @@ class BusParser:
             temp = temp[heiarchy[i]]
 
         del temp[heiarchy[len(heiarchy)-1]]
+
+    def add_super_node(self,exp,node):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+        sub_dict = temp[heiarchy[len(heiarchy)-1]]
+        del temp[heiarchy[len(heiarchy) - 1]]
+        temp[heiarchy[len(heiarchy)-1]][node] = sub_dict
