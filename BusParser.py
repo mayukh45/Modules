@@ -45,7 +45,7 @@ class BusParser:
         print(self.dict)
 
     def dyaml(self, filename):
-        with open(filename) as f:
+        with open(filename,"w") as f:
             f.write(yaml.dump(self.dict))
 
         f.close()
@@ -100,7 +100,7 @@ class BusParser:
         for i in range(len(heiarchy)-1):
            # print(temp)
             temp = temp[heiarchy[i]]
-        print("1"*50)
+        
         #print(temp)
         del temp[heiarchy[len(heiarchy)-1]]
 
@@ -114,5 +114,5 @@ class BusParser:
         temp = self.dict.copy()
         for i in range(len(heiarchy)-2):
             temp = temp [heiarchy[i]]
-        print(temp)
+        #print(temp)
         temp[heiarchy[len(heiarchy)-2]][node]={heiarchy[len(heiarchy)-1]:sub_dict}
