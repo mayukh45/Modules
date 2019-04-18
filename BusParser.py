@@ -94,7 +94,7 @@ class BusParser:
                     names.append(u)
         return names
 
-    def remove_sub_dict(self,exp):
+    def remove_sub_dict(self, exp):
         heiarchy = exp.split(".")
         temp = self.dict.copy()
         for i in range(len(heiarchy)-1):
@@ -120,5 +120,32 @@ class BusParser:
         else:
             print("1"*52)
             temp[heiarchy[len(heiarchy)-2]][node].update({heiarchy[len(heiarchy)-1]:sub_dict})
+
+    def rename(self,exp,new_name):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+        sub_dict = temp[heiarchy[len(heiarchy) - 1]]
+        del temp[heiarchy[len(heiarchy) - 1]]
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+
+        temp[new_name] = sub_dict
+
+    def copy(self,exp,new_name):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+
+        temp.update({new_name: temp[heiarchy[len(heiarchy) - 1]]})
+
+
+
+
+
+
 
 
