@@ -115,4 +115,9 @@ class BusParser:
         for i in range(len(heiarchy)-2):
             temp = temp [heiarchy[i]]
         #print(temp)
-        temp[heiarchy[len(heiarchy)-2]][node]={heiarchy[len(heiarchy)-1]:sub_dict}
+        if not node in list(temp[heiarchy[len(heiarchy)-2]].keys()):
+            temp[heiarchy[len(heiarchy)-2]][node]={heiarchy[len(heiarchy)-1]:sub_dict}
+        else:
+            temp = temp[heiarchy[len(heiarchy)-2]][node]
+            temp[heiarchy[len(heiarchy)-1]]:sub_dict
+
