@@ -119,6 +119,6 @@ class BusParser:
             temp[heiarchy[len(heiarchy)-2]][node] = {heiarchy[len(heiarchy)-1]:sub_dict}
         else:
             print("1"*52)
-            temp[heiarchy[len(heiarchy)-2][node].update({heiarchy[len(heiarchy)-1]:sub_dict})
+            temp[heiarchy[len(heiarchy)-2]][node].update({heiarchy[len(heiarchy)-1]:sub_dict})
 
 
