@@ -155,6 +155,14 @@ class BusParser:
         sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy) - 1]])
         temp.update(sub_dict)
 
+    def add_sub_dict(self,exp,sub_dict):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+
+        temp.update({heiarchy[len(heiarchy) - 1] : sub_dict})
+        
 
 
 
