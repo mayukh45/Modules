@@ -146,6 +146,17 @@ class BusParser:
         sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy)-1]])
         temp.update({new_name: sub_dict})
 
+    def remove_node(self, exp):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for i in range(len(heiarchy) - 1):
+            temp = temp[heiarchy[i]]
+
+        sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy) - 1]])
+        temp.update(sub_dict)
+
+
+
 
 
 
