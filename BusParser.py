@@ -1,5 +1,6 @@
 import yaml
 import collections
+import copy
 
 
 class BusParser:
@@ -111,7 +112,7 @@ class BusParser:
         temp = self.dict.copy()
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
-        sub_dict = temp[heiarchy[len(heiarchy)-1]]
+        sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy)-1]])
         del temp[heiarchy[len(heiarchy) - 1]]
         temp = self.dict.copy()
         for i in range(len(heiarchy)-2):
@@ -120,7 +121,7 @@ class BusParser:
         if not node in list(temp[heiarchy[len(heiarchy)-2]].keys()):
             temp[heiarchy[len(heiarchy)-2]][node] = {heiarchy[len(heiarchy)-1]:sub_dict}
         else:
-            print("1"*52)
+            #print("1"*52)
             temp[heiarchy[len(heiarchy)-2]][node].update({heiarchy[len(heiarchy)-1]:sub_dict})
 
     def rename(self,exp,new_name):
@@ -128,7 +129,7 @@ class BusParser:
         temp = self.dict.copy()
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
-        sub_dict = temp[heiarchy[len(heiarchy) - 1]]
+        sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy) - 1]])
         del temp[heiarchy[len(heiarchy) - 1]]
         temp = self.dict.copy()
         for i in range(len(heiarchy) - 1):
@@ -142,8 +143,8 @@ class BusParser:
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
 
-        print(temp[heiarchy[len(heiarchy)-1]])
-        temp.update({new_name: temp[heiarchy[len(heiarchy) - 1]]})
+        sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy)-1]])
+        temp.update({new_name: sub_dict})
 
 
 
