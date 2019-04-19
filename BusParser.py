@@ -45,8 +45,10 @@ class BusParser:
         print(self.dict)
 
     def dyaml(self, filename):
+        noalias_dumper = yaml.dumper.SafeDumper
+        noalias_dumper.ignore_aliases = lambda self , data : True
         with open(filename,"w") as f:
-            f.write(yaml.dump(self.dict))
+            f.write(yaml.dump(self.dict,default_flow_style = False,Dumper = noalias_dumper))
 
         f.close()
 
@@ -140,6 +142,7 @@ class BusParser:
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
 
+        print(temp[heiarchy[len(heiarchy)-1]])
         temp.update({new_name: temp[heiarchy[len(heiarchy) - 1]]})
 
 
