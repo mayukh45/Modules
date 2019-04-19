@@ -1,136 +1,27 @@
 astob:
-  egress0:
-    rd:
-      data:
-        direction: input
-        type: fluid
-        width: 18
-      ready:
-        direction: output
-        type: nonfluid
-        width: 1
-      valid:
-        direction: input
-        type: nonfluid
-        width: 1
-    wr:
-      data:
-        direction: output
-        type: fluid
-        width: 18
-      ready:
-        direction: input
-        type: nonfluid
-        width: 1
-      valid:
-        direction: output
-        type: nonfluid
-        width: 1
-  egress1:
-    rd:
-      data:
-        direction: input
-        type: fluid
-        width: 18
-      ready:
-        direction: output
-        type: nonfluid
-        width: 1
-      valid:
-        direction: input
-        type: nonfluid
-        width: 1
-    wr:
-      data:
-        direction: output
-        type: fluid
-        width: 18
-      ready:
-        direction: input
-        type: nonfluid
-        width: 1
-      valid:
-        direction: output
-        type: nonfluid
-        width: 1
-  egress2:
-    rd:
-      data:
-        direction: input
-        type: fluid
-        width: 18
-      ready:
-        direction: output
-        type: nonfluid
-        width: 1
-      valid:
-        direction: input
-        type: nonfluid
-        width: 1
-    wr:
-      data:
-        direction: output
-        type: fluid
-        width: 18
-      ready:
-        direction: input
-        type: nonfluid
-        width: 1
-      valid:
-        direction: output
-        type: nonfluid
-        width: 1
-  egress3:
-    rd:
-      data:
-        direction: input
-        type: fluid
-        width: 18
-      ready:
-        direction: output
-        type: nonfluid
-        width: 1
-      valid:
-        direction: input
-        type: nonfluid
-        width: 1
-    wr:
-      data:
-        direction: output
-        type: fluid
-        width: 18
-      ready:
-        direction: input
-        type: nonfluid
-        width: 1
-      valid:
-        direction: output
-        type: nonfluid
-        width: 1
-  ingress:
-    rd:
-      data:
-        direction: output
-        type: fluid
-        width: 18
-      ready:
-        direction: input
-        type: nonfluid
-        width: 1
-      valid:
-        direction: output
-        type: nonfluid
-        width: 1
-    wr:
-      data:
-        direction: input
-        type: fluid
-        width: 18
-      ready:
-        direction: output
-        type: nonfluid
-        width: 1
-      valid:
-        direction: input
-        type: nonfluid
-        width: 1
+  rd:
+    data:
+      direction: input
+      type: fluid
+      width: 18
+    ready:
+      direction: output
+      type: nonfluid
+      width: 1
+    valid:
+      direction: input
+      type: nonfluid
+      width: 1
+  wr:
+    data:
+      direction: output
+      type: fluid
+      width: 18
+    ready:
+      direction: input
+      type: nonfluid
+      width: 1
+    valid:
+      direction: output
+      type: nonfluid
+      width: 1

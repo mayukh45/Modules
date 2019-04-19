@@ -152,7 +152,9 @@ class BusParser:
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
 
+        #del temp[heiarchy[len(heiarchy)-1]]
         sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy) - 1]])
+        del temp[heiarchy[len(heiarchy)-1]]
         temp.update(sub_dict)
 
 
