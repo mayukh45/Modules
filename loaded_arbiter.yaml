@@ -1,0 +1,13 @@
+arbiter:
+  gnt:
+    direction: output
+    type: fluid
+    width: 32
+  gnt_busy:
+    direction: input
+    type: fluid
+    width: 32
+  req:
+    direction: input
+    type: fluid
+    width: 32
