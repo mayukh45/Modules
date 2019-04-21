@@ -63,7 +63,22 @@ class BasicModule:
         port_name_str = "\n,".join([port.name for port in self.Ports])
         return port_name_str, port_decl_str
 
-    def add_ports_from_bus(self, filepath, bus_name):
+   #==================================================================================================================================================== 
+   # IMPORTANT - This base class method instantiates a busparser class aj object and will contain the port as dictionary object within busparser object.
+   #
+   # This method should be overwirren in subclasses whenever necessary. Use case of overwritting is as follows - 
+   #
+   # While writing a new class for a new Verilog Module, we should always look inside refbuses folder and see if there's an existing yaml
+   # that matches the dictionary closely or somewhat closely.
+   # Then we should use available busparser method to operate on the dictionary and reach the desired dictionary for the target vlass.
+   # Ultimately a list is extracted from the dictionary object and used to create ports for each leaf. In get header method it reflects the output
+   # in Verilog world.
+   #
+   # Finally, the rationale behind keeping this as dictionary is that it's a systematic data-structure and can be used through multiple hierarchies
+   # systematically. 
+   #==================================================================================================================================================== 
+   
+   def add_ports_from_bus(self, filepath, bus_name):
         parser = BusParser(filepath, bus_name)
         ports = parser.port_names(parser.dict, [])
         for port in ports:
@@ -77,6 +92,15 @@ class BasicModule:
         mytemplate = mytemplate.replace("PORTLIST", portlist)
         mytemplate = mytemplate.replace("PORTDECLARATION", portdecl)
         return mytemplate
+
+   #==================================================================================================================================================== 
+   # IMPORTANT :- These base class methods downstream are useful building blocks for many verilog code - they offer stuffs including.
+   # looping for wr, rd, snoop, snoop-invalidate, register declaration, wire declaration etc many things.
+   # The idea is to use these methods as much as possible and if required create a new method on similar lines and push to base class.
+   # 
+   # Method name should be kept generic and arguments used judiciously so that it can be maintained cleanly as the framework grows.
+   #==================================================================================================================================================== 
+
 
     def get_reg_str(self, type, delimiter, width, module_name, iterations):
         return "\n"+delimiter.join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])

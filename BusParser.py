@@ -8,6 +8,11 @@ class BusParser:
         self.dict = yaml.load(open(filepath).read())
         self.BusName = bus_name
 
+    #=============================================================================================================================================
+    # Used to craate an useful net name for each signal for example cpu_2_peripheral0_* bus. It overloads the prefix and prefloat directly
+    # 
+    #=============================================================================================================================================
+    
     def add_world_view(self, world_view):
         self.prefixop(self.BusName, world_view)
         self.prefloatop(self.BusName, world_view)
