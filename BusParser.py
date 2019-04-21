@@ -1,6 +1,7 @@
 import yaml
 import collections
 import copy
+import queue
 
 
 class BusParser:
@@ -250,8 +251,27 @@ class BusParser:
             temp = temp[heiarchy[i]]
 
         temp.update({heiarchy[len(heiarchy) - 1] : sub_dict})
-        
 
+    def get_path(self, u, busname, key):
+        qu = queue.Queue(maxsize=1000)
+        qu.put(busname)
+        while not qu.empty():
+            path = qu.get()
+            temp_dict = self.get_subdict(path, u)
+            if isinstance(temp_dict, collections.Mapping):
+                for k in temp_dict.keys():
+                    if k == key:
+                        return path + "." + k
+                    print(path + "." + k)
+                    qu.put(path + "." + k)
+
+    def get_subdict(self,exp, u):
+        heiarchy = exp.split(".")
+        temp = u.copy()
+        print(temp)
+        for levels in heiarchy:
+            temp = temp[levels]
+        return temp
 
 
 
