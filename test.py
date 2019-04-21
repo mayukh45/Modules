@@ -3,27 +3,22 @@ import collections
 import queue
 
 
-def get_path(u, busname, key):
+def port_names(u, names):
+    """
 
-    qu = queue.Queue(maxsize=1000)
-    qu.put(busname)
-    while not qu.empty():
-        path = qu.get()
-        temp_dict = get_subdict(path,u)
-        if isinstance(temp_dict, collections.Mapping):
-            for k in temp_dict.keys():
-                if k == key:
-                    return path+"."+k
-                print(path+"."+k)
-                qu.put(path+"."+k)
+    :param u: Takes the dictionary
+    :param names: A list which contains the port names , empty at the beginning as names is built recursively.
+    :return: names.
+    """
+    for k in list(u.keys()):
+        if list(u[k].keys())[0] != "direction":
+            u[k] = port_names(u.get(k), names)
 
-def get_subdict(exp,u):
-    heiarchy = exp.split(".")
-    temp = u.copy()
-    print(temp)
-    for levels in heiarchy:
-        temp = temp[levels]
-    return temp
+        else:
+            if not any([u[k] == i for i in names]):
+                names.append(u[k])
+    return names
 
-print(get_path(a,"astob","rd"))
+
+print(port_names(a,[]))
 
