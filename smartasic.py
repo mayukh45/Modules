@@ -40,6 +40,8 @@ class BasicModule:
      def __init__(self, name):
         self.name = name
         self.Ports = []
+        self.results = []
+        self.port_list = []
         self.add_port("clk", "input", 1)
         self.add_port("rstn", "input", 1)
 
@@ -90,7 +92,34 @@ class BasicModule:
          # parser.wid_op(bus_name,self.Num_Clients)
          ports=self.get_all_key_value_pairs(parser.dict)
 
+     def get_all_key_value_pairs(self, data):
+         def inner(data):
+             if isinstance(data, dict):
+                 # print("I found a dictionary")
+                 for k, v in data.items():
+                     if (isinstance(v, dict) or
+                             isinstance(v, list) or
+                             isinstance(v, tuple)
+                         ):
+                         # print("I am going to dive one level recursion here.")
 
+                         if 'direction' in v.keys():
+                             # TODO: I need to find the values of 'width', 'direction' and of course
+                             # 'signal' here. If I can print them, I can just call self.add_port method
+                             # here with them.
+                             self.add_port(k, v['direction'], v['width'])
+                             #  print("I have found direction, must be at a signal.")
+                             self.port_list.append(k)
+
+                         inner(v)
+                     else:
+                         self.results.append((k, v))
+             elif isinstance(data, list) or isinstance(data, tuple):
+                 for item in data:
+                     inner(item)
+
+         inner(data)
+         return self.results
 
 
      def get_header(self):
@@ -114,7 +143,7 @@ class BasicModule:
         return "\n"+delimiter.join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])
 
      def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
-        return "\n"+delimiter.join(["(({0}[{2}:0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop,SnoopWidth-1) for i in range(iterations)])
+        return "\n"+delimiter.join(["(({0}[{2}:0]{3} == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop,SnoopWidth-1,i) for i in range(iterations)])
 
      def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
         return "\n" + delimiter.join(["( ({0} == {1}".format(snoop,module_name)+str(i)+"["+str(snoopwidth-1)+":0]) ? {0}".format(module_name)+str(i)+" : "+str(camwidth)+"'d0 )" for i in range(camdepth)])
