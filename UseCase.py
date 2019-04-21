@@ -1,5 +1,7 @@
 from BusParser import BusParser
+import copy
 trial = BusParser("astob.yaml" ,"astob")
+temp = copy.deepcopy(trial.dict["astob"]["snoop"])
 trial.remove_sub_dict("astob.snoop")
 trial.add_super_node("astob.wr","ingress")
 trial.add_super_node("astob.rd","ingress")
@@ -16,3 +18,5 @@ trial.remove_sub_dict("astob.egress3")
 #trial.dyaml("trial1.yaml")
 trial.remove_node("astob.ingress")
 trial.dyaml("trial1.yaml")
+trial.add_sub_dict("astob.snoop",temp)
+trial.dyaml("**astob.yaml")
