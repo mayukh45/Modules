@@ -406,4 +406,4 @@ class FIFO(BasicModule):
         return self.get_fifo_v()
 
 
->>>>>>> f5560d4e393c0dca912c6ba46e63443be7433141
+
