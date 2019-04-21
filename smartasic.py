@@ -78,12 +78,20 @@ class BasicModule:
    # systematically. 
    #==================================================================================================================================================== 
    
+     ###def add_ports_from_bus(self, filepath, bus_name):
+     ###   parser = BusParser(filepath, bus_name)
+     ###   ports = parser.port_names(parser.dict, [])
+     ###   for port in ports:
+     ###       port_name = list(port.keys())[0]
+     ###       self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
+
      def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
-        ports = parser.port_names(parser.dict, [])
-        for port in ports:
-            port_name = list(port.keys())[0]
-            self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
+         parser = BusParser(filepath, bus_name)
+         # parser.wid_op(bus_name,self.Num_Clients)
+         ports=self.get_all_key_value_pairs(parser.dict)
+
+
+
 
      def get_header(self):
         mytemplate = module_template

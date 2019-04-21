@@ -11,9 +11,9 @@ class BusParser:
 
     #=============================================================================================================================================
     # Used to craate an useful net name for each signal for example cpu_2_peripheral0_* bus. It overloads the prefix and prefloat directly
-    # 
+    #
     #=============================================================================================================================================
-    
+
     def add_world_view(self, world_view):
         """Adds world view like usb2cpu to the ports"""
         self.prefixop(self.BusName, world_view)
@@ -262,13 +262,13 @@ class BusParser:
                 for k in temp_dict.keys():
                     if k == key:
                         return path + "." + k
-                    print(path + "." + k)
+                 #   print(path + "." + k)
                     qu.put(path + "." + k)
 
     def get_subdict(self,exp, u):
         heiarchy = exp.split(".")
         temp = u.copy()
-        print(temp)
+      #  print(temp)
         for levels in heiarchy:
             temp = temp[levels]
         return temp
