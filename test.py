@@ -2,23 +2,10 @@ a = {'astob': {'rd': {'data': {'direction': 'output', 'type': 'fluid', 'width': 
 import collections
 import queue
 
+class B:
+    def __init__(self,a):
+        self.A = a
 
-def port_names(u, names):
-    """
-
-    :param u: Takes the dictionary
-    :param names: A list which contains the port names , empty at the beginning as names is built recursively.
-    :return: names.
-    """
-    for k in list(u.keys()):
-        if list(u[k].keys())[0] != "direction":
-            u[k] = port_names(u.get(k), names)
-
-        else:
-            if not any([u[k] == i for i in names]):
-                names.append(u[k])
-    return names
-
-
-print(port_names(a,[]))
-
+b = B(2)
+b.__init__(3)
+print(b.A)

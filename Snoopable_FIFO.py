@@ -1,19 +1,20 @@
 from templates import snoopable_fifo_template
 from math import log2, ceil
 import sys
-from smartasic import BasicModule,Port
+from smartasic import BasicModule
+from BusParser import BusParser
 
 
-class SnoopableFIFO(BasicModule):
+class SnoopableFIFO(BasicModule, BusParser):
     def __init__(self, fifowidth, fifodepth, snoopwidth, bus_name, path_of_yaml):
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
-        super().__init__(self.name)
+        BasicModule.__init__(self.name)
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
-        self.add_ports_from_bus(path_of_yaml, bus_name)
+        BusParser.__init__(path_of_yaml, bus_name)
 
     def get_body(self):
         self.body = snoopable_fifo_template
@@ -30,6 +31,9 @@ class SnoopableFIFO(BasicModule):
         self.body = self.body.replace("//LOC_WRITE", self.write_loc("\n\t","fifo_loc",self.EncodedDepth,self.FifoDepth))
         self.body = self.body.replace("//ASSIGN_READ",self.read_loc(self.EncodedDepth,"fifo_loc",self.FifoWidth,self.FifoDepth,"|\n"))
         self.body = self.body.replace("//ASSIGN_SNOOP_MATCH", self.snoop_match_noinv("fifo_loc","snoop_data",self.SnoopWidth,self.FifoDepth,"|\n"))
+
+    def refresh_ports(self, isToClear):
+        self.add_ports_from_bus(self.dict, isToClear)
 
     def get_verilog(self):
         modulecode = self.get_header()

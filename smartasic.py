@@ -3,7 +3,7 @@ from enum import Enum
 from math import log2
 from templates import module_template
 from templates import fifo_body_template
-from BusParser import BusParser
+
 from pathlib import Path
 
 
@@ -37,7 +37,7 @@ class Port:
 
 class BasicModule:
 
-     def __init__(self, name):
+    def __init__(self, name):
         self.name = name
         self.Ports = []
         self.results = []
@@ -45,10 +45,10 @@ class BasicModule:
         self.add_port("clk", "input", 1)
         self.add_port("rstn", "input", 1)
 
-     def add_port(self, name, direction, width):
+    def add_port(self, name, direction, width):
         self.Ports.append(Port(name, direction, width))
 
-     def get_port_str(self):
+    def get_port_str(self):
         """port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
         port_decl_str = ""
         port_name_str = ""
@@ -87,12 +87,13 @@ class BasicModule:
      ###       port_name = list(port.keys())[0]
      ###       self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
 
-     def add_ports_from_bus(self, filepath, bus_name):
-         parser = BusParser(filepath, bus_name)
-         # parser.wid_op(bus_name,self.Num_Clients)
-         ports=self.get_all_key_value_pairs(parser.dict)
+    def add_ports_from_bus(self, bus_dict, emptyPorts=None):
+        if emptyPorts is not None:
+             self.Ports.clear()
 
-     def get_all_key_value_pairs(self, data):
+        ports = self.get_all_key_value_pairs(bus_dict)
+
+    def get_all_key_value_pairs(self, data):
          def inner(data):
              if isinstance(data, dict):
                  # print("I found a dictionary")
@@ -122,7 +123,7 @@ class BasicModule:
          return self.results
 
 
-     def get_header(self):
+    def get_header(self):
         mytemplate = module_template
         mytemplate = mytemplate.replace("MODULENAME", self.name)
         portlist, portdecl = self.get_port_str()
@@ -139,37 +140,37 @@ class BasicModule:
    #====================================================================================================================================================
 
 
-     def get_reg_str(self, type, delimiter, width, module_name, iterations):
+    def get_reg_str(self, type, delimiter, width, module_name, iterations):
         return "\n"+delimiter.join(["{2} [{0}:0] {1}".format(width, module_name, type)+str(i)+";" for i in range(iterations)])
 
-     def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
+    def snoop_match_noinv(self, module_name, snoop, SnoopWidth, iterations, delimiter):
         return "\n"+delimiter.join(["(({0}{3}[{2}:0] == {1}) ? 1'b1 : 1'b0)".format(module_name,snoop,SnoopWidth-1,i) for i in range(iterations)])
 
-     def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
+    def snoop_inv(self, delimiter, snoopwidth, snoop, module_name, camdepth, camwidth):
         return "\n" + delimiter.join(["( ({0} == {1}".format(snoop,module_name)+str(i)+"["+str(snoopwidth-1)+":0]) ? {0}".format(module_name)+str(i)+" : "+str(camwidth)+"'d0 )" for i in range(camdepth)])
 
-     def snoop_get_wr_ptr(self,delimiter,module_name,snoop,snoopwidth,encodeddepth,camdepth):
+    def snoop_get_wr_ptr(self,delimiter,module_name,snoop,snoopwidth,encodeddepth,camdepth):
         return delimiter.join(["( ({0} == {1}".format(snoop,module_name) + str(i) + "[" + str(snoopwidth - 1) + ":0]) ?"+module_name + str(i) + " : " + str(encodeddepth) + "'d" + str(i) + " )" for i in range(camdepth)])
 
-     def read_loc(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
+    def read_loc(self, encodeddepth, module_name, fifowidth, fifodepth, delimiter):
         return "\n"+delimiter.join(["( (rd_pointer["+str(encodeddepth)+":0] == "+str(encodeddepth+1)+"'d"
                 ""+str(i)+") ? "+module_name+str(i)+" : "+str(fifowidth)+"'d0)" for i in range(fifodepth)])
 
-     def write_loc(self, delimiter, module_name, encodeddepth, fifodepth):
+    def write_loc(self, delimiter, module_name, encodeddepth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= (wr_pointer["+str(encodeddepth-2)+":0] == "+str(encodeddepth)+"'d"+str(i)+") ? wr_data : "+module_name+str(i)+";" for i in range(fifodepth)])
 
-     def write_loc_rstn(self, delimiter, module_name, fifowidth, fifodepth):
+    def write_loc_rstn(self, delimiter, module_name, fifowidth, fifodepth):
         return "\n\t"+delimiter.join([module_name+str(i)+" <= "+str(fifowidth)+"'d0;" for i in range (fifodepth)])
 
-     def cam_write(self,delimiter,module_name,camdepth,encodeddepth):
+    def cam_write(self,delimiter,module_name,camdepth,encodeddepth):
         return "\n\t" + delimiter.join([module_name + str(i) + " <= (internal_wr_en & (internal_wr_ptr == " + str(encodeddepth) + ""
             "'d" + str(i) + ") ) ? wr_data : "+module_name + str(i) + ";" for i in range(camdepth)])
 
-     def write_to_file(self, verilog):
+    def write_to_file(self, verilog):
         with open(str(Path.home())+"/Documents/smartasic2/dumpverilog/"+self.name+".v","w") as f:
             f.write(verilog)
 
-     def remove_port(self, port_name):
+    def remove_port(self, port_name):
         for port in self.Ports:
             if port.name == port_name:
                 self.Ports.remove(port)

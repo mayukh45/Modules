@@ -14,6 +14,50 @@ class BusParser:
     #
     #=============================================================================================================================================
 
+    def wid_op_flat(self, key, width):
+        """Wrapper function for non heiarchical operations"""
+        self.wid_op(self.get_path(key),width)
+
+    def flip_op_flat(self, key):
+        """Wrapper function for non heiarchical operations"""
+        self.flip_op(self.get_path(key))
+
+    def prefixop_flat(self, key, prefix):
+        """Wrapper function for non heiarchical operations"""
+        self.prefixop(self.get_path(key), prefix)
+
+    def prefloatop_flat(self, key, prefloat):
+        """Wrapper function for non heiarchical operations"""
+        self.prefloatop(self.get_path(key),prefloat)
+
+    def remove_sub_dict_flat(self, key):
+        """Wrapper function for non heiarchical operations"""
+        self.remove_sub_dict(self.get_path(key))
+
+    def add_super_node_flat(self, key, node):
+        """Wrapper function for non heiarchical operations"""
+        self.add_super_node(self.get_path(key), node)
+
+    def rename_flat(self, key, new_name):
+        """Wrapper function for non heiarchical operations"""
+        self.rename(self.get_path(key),new_name)
+
+    def copy_flat(self, key, new_name):
+        """Wrapper function for non heiarchical operations"""
+        self.copy(self.get_path(key), new_name)
+
+    def remove_node_flat(self, key):
+        """Wrapper function for non heiarchical operations"""
+        self.remove_node(self.get_path(key))
+
+    def add_sub_dict_flat(self, key, sub_dict):
+        """Wrapper function for non heiarchical operations"""
+        self.add_sub_dict(self.get_path(key),sub_dict)
+
+    def get_subdict_flat(self, key, u):
+        """Wrapper function for non heiarchical operations"""
+        self.get_subdict(self.get_path(key),u)
+
     def add_world_view(self, world_view):
         """Adds world view like usb2cpu to the ports"""
         self.prefixop(self.BusName, world_view)
@@ -134,14 +178,9 @@ class BusParser:
                 u['prefloat'] = pf
         return u
 
-    def port_names(self, u, names):
-        """
-
-        :param u: Takes the dictionary
-        :param names: A list which contains the port names , empty at the beginning as names is built recursively.
-        :return: names.
-        """
-        for k in list(u.keys()):
+    """
+    def port_names(self, u, names)
+            for k in list(u.keys()):
             if list(u[k].keys())[0] != "direction":
                 u[k] = self.port_names(u.get(k), names)
 
@@ -149,7 +188,7 @@ class BusParser:
                 if not any([u == i for i in names]):
                     names.append(u)
         return names
-
+    """
     def remove_sub_dict(self, exp):
         """
 
@@ -252,12 +291,17 @@ class BusParser:
 
         temp.update({heiarchy[len(heiarchy) - 1] : sub_dict})
 
-    def get_path(self, u, busname, key):
+    def get_path(self, key):
+        """
+        Returns heiarchical path of a key
+        :param key: a unique key of the dictionary.
+        :return: Returns a string which denotes the heiarchical path of the key.
+        """
         qu = queue.Queue(maxsize=1000)
-        qu.put(busname)
+        qu.put(self.BusName)
         while not qu.empty():
             path = qu.get()
-            temp_dict = self.get_subdict(path, u)
+            temp_dict = self.get_subdict(path, self.dict)
             if isinstance(temp_dict, collections.Mapping):
                 for k in temp_dict.keys():
                     if k == key:
@@ -265,7 +309,13 @@ class BusParser:
                  #   print(path + "." + k)
                     qu.put(path + "." + k)
 
-    def get_subdict(self,exp, u):
+    def get_subdict(self,exp,u):
+        """
+
+        :param exp: Heiarchy of the subdict to be fetched
+        :param u: original dictionary
+        :return: None
+        """
         heiarchy = exp.split(".")
         temp = u.copy()
       #  print(temp)
