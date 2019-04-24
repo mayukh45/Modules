@@ -197,12 +197,12 @@ class BusParser:
         """
         heiarchy = exp.split(".")
         temp = self.dict.copy()
-        for i in range(len(heiarchy)):
+        for i in range(len(heiarchy)-1):
            # print(temp)
             temp = temp[heiarchy[i]]
 
-        print(temp)
-        del temp
+        del temp[heiarchy[len(heiarchy)-1]]
+
 
     def add_super_node(self,exp,node):
         """
