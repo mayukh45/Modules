@@ -14,13 +14,13 @@ class BusParser:
     #
     #=============================================================================================================================================
 
-    def wid_op_flat(self, key, width):
+    def widop_flat(self, key, width):
         """Wrapper function for non heiarchical operations"""
-        self.wid_op(self.get_path(key),width)
+        self.widop(self.get_path(key),width)
 
-    def flip_op_flat(self, key):
+    def flipop_flat(self, key):
         """Wrapper function for non heiarchical operations"""
-        self.flip_op(self.get_path(key))
+        self.flipop(self.get_path(key))
 
     def prefixop_flat(self, key, prefix):
         """Wrapper function for non heiarchical operations"""
@@ -63,7 +63,7 @@ class BusParser:
         self.prefixop(self.BusName, world_view)
         self.prefloatop(self.BusName, world_view)
 
-    def wid_op(self, exp, width):
+    def widop(self, exp, width):
         """Changes width of a fluid port"""
         heiarchy = exp.split(".")
         temp = self.dict.copy()
@@ -75,20 +75,20 @@ class BusParser:
         else:
             temp['width'] = width
 
-    def flip_op(self, exp):
+    def flipop(self, exp):
         """Flips all the ports of a subtdict provided by heiarchy"""
         heiarchy = exp.split(".")
         temp = self.dict.copy()
         for levels in heiarchy:
             temp = temp[levels]
 
-        print(heiarchy[len(heiarchy)-1])
+        #print(heiarchy[len(heiarchy)-1])
 
         self.flip(temp)
 
     def flip(self, u):
         """
-        Used by flip_op
+        Used by flipop
         :param u:
         :return: flipped subdict
         """
@@ -201,8 +201,8 @@ class BusParser:
            # print(temp)
             temp = temp[heiarchy[i]]
 
-        #print(temp)
-        del temp[heiarchy[len(heiarchy)-1]]
+        print(temp)
+        del temp
 
     def add_super_node(self,exp,node):
         """

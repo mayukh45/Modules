@@ -16,6 +16,25 @@ class CAM(BasicModule):
         self.body = None
         self.add_ports_from_bus(path_of_yaml, bus_name)
 
+    #=======================================================
+    # overwrite the add_ports_from_bus method here.
+    # Create the instance of busparser class.
+    # Then use the wid_op method to change the port width req, gnt, gnt_busy signals.
+    #=======================================================
+    def add_ports_from_bus(self, filepath, bus_name):
+        parser = BusParser(filepath, bus_name)
+        #1. assuming that we are loading arbiter.yaml
+        #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
+        #3. Do this for all the signals that are required.
+        #print(parser.dict)
+
+        parser.wid_op_flat("req",self.Num_Clients)
+        parser.wid_op_flat("gnt",self.Num_Clients)
+        parser.wid_op_flat("gnt_busy",self.Num_Clients)
+
+        #print(parser.dict)
+
+
     def get_body(self):
         self.body = cam_body_template
         self.body = self.body.replace("ENCODEDDEPTH - 1", str(self.EncodedDepth-1))
