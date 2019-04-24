@@ -11,10 +11,10 @@ class SnoopableFIFO(BasicModule, BusParser):
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
-        BasicModule.__init__(self.name)
+        BasicModule.__init__(self,self.name)
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
-        BusParser.__init__(path_of_yaml, bus_name)
+        BusParser.__init__(self,path_of_yaml, bus_name)
 
     def get_body(self):
         self.body = snoopable_fifo_template
