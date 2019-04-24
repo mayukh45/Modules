@@ -87,7 +87,8 @@ class BasicModule:
      ###       port_name = list(port.keys())[0]
      ###       self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
 
-    def integrated_bus_op
+    #TODO TODO TODO
+    def integrated_bus_op():
         # Operate on the dict object in derived classes.
         # call the add_ports_from_bus at end to push those changes into Ports string.
         # And this method gets called in get_headers method

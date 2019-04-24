@@ -28,10 +28,13 @@ class CAM(BasicModule):
         #3. Do this for all the signals that are required.
         #print(parser.dict)
 
-        parser.wid_op_flat("req",self.Num_Clients)
-        parser.wid_op_flat("gnt",self.Num_Clients)
-        parser.wid_op_flat("gnt_busy",self.Num_Clients)
+        parser.wid_op_flat("wdata",self.camwidth)
+        parser.wid_op_flat("rdata",self.camwidth)
+        parser.wid_op_flat("sdata",self.camwidth)
 
+        parser.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.snoopwidth}})
+        
+        #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
         #print(parser.dict)
 
 

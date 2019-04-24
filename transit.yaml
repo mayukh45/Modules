@@ -17,7 +17,7 @@ astob:
         width: 10
   rd:
     hier10:
-      rdata:
+      readmatch:
         direction: output
         type: fluid
         width: 10
@@ -31,18 +31,30 @@ astob:
       type: nonfluid
       width: 1
   snoop:
-    hello: world
-    sdata:
-      direction: input
-      prefix: usb2usb
-      prefloat: usb2cpu
-      type: fluid
-      width: 18
-    smatch:
-      direction: input
+    direction: output
+    hello:
+      direction: output
+    snoopmatch:
+      direction: output
       type: nonfluid
       width: 1
     svalid:
-      direction: input
+      direction: output
       type: nonfluid
       width: 1
+    type: fluid
+    width: 18
+  snoop_test:
+    direction: output
+    hello:
+      direction: output
+    snoopmatch:
+      direction: output
+      type: nonfluid
+      width: 1
+    svalid:
+      direction: output
+      type: nonfluid
+      width: 1
+    type: fluid
+    width: 18
