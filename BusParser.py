@@ -286,10 +286,10 @@ class BusParser:
         """
         heiarchy = exp.split(".")
         temp = self.dict.copy()
-        for i in range(len(heiarchy) - 1):
+        for i in range(len(heiarchy)):
             temp = temp[heiarchy[i]]
 
-        temp.update({heiarchy[len(heiarchy) - 1] : sub_dict})
+        temp.update(sub_dict)
 
     def get_path(self, key):
         """
