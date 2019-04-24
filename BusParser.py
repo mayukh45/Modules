@@ -197,7 +197,7 @@ class BusParser:
         """
         heiarchy = exp.split(".")
         temp = self.dict.copy()
-        for i in range(len(heiarchy)-1):
+        for i in range(len(heiarchy)):
            # print(temp)
             temp = temp[heiarchy[i]]
 

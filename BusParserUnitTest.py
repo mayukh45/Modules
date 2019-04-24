@@ -6,17 +6,13 @@ temp = copy.deepcopy(trial.dict["astob"]["snoop"])
 trial.dyaml("loaded.yaml")
 
 trial.wid_op_flat("wdata", 10)
-trial.wid_op_flat("rdata" ,10)
+trial.wid_op_flat("rdata",10)
 trial.remove_node_flat("hier1")
 trial.dyaml("trial3.yaml")
-trial.add_sub_dict_flat("snoop" , {"hello" : "world"})
-print(trial.get_path("sdata"))
-trial.prefixop_flat("sdata","usb2usb")
-trial.prefixop_flat("sdata", "usb2cpu")
+trial.add_sub_dict_flat("snoop", {"hello" : "world"})
+#print(trial.get_path("sdata"))
 trial.flip_op_flat("wvalid")
-
-
-trial.dyaml("trial.yaml")
+trial.dyaml("transition.yaml")
 
 
 
