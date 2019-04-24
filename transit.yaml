@@ -31,7 +31,6 @@ astob:
       type: nonfluid
       width: 1
   snoop:
-    direction: output
     hello:
       direction: output
     snoopmatch:
@@ -42,10 +41,7 @@ astob:
       direction: output
       type: nonfluid
       width: 1
-    type: fluid
-    width: 18
   snoop_test:
-    direction: output
     hello:
       direction: output
     snoopmatch:
@@ -56,5 +52,3 @@ astob:
       direction: output
       type: nonfluid
       width: 1
-    type: fluid
-    width: 18

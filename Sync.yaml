@@ -1,7 +1,4 @@
 astob:
-  direction: output
-  hello:
-    direction: output
   hier0:
     wr:
       hier00:
@@ -35,9 +32,8 @@ astob:
         type: nonfluid
         width: 1
   snoop:
-    direction: input
     sdata:
-      direction: output
+      direction: input
       type: fluid
       width: 18
     smatch:
@@ -48,15 +44,3 @@ astob:
       direction: input
       type: nonfluid
       width: 1
-    type: fluid
-    width: 18
-  snoopmatch:
-    direction: output
-    type: nonfluid
-    width: 1
-  svalid:
-    direction: output
-    type: nonfluid
-    width: 1
-  type: fluid
-  width: 18

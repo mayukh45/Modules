@@ -15,6 +15,27 @@ class SnoopableFIFO(BasicModule, BusParser):
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
         BusParser.__init__(self,path_of_yaml, bus_name)
+        self.add_ports_from_bus(path_of_yaml, bus_name)
+
+    #=======================================================
+    # overwrite the add_ports_from_bus method here.
+    # Create the instance of busparser class.
+    # Then use the wid_op method to change the port width req, gnt, gnt_busy signals.
+    #=======================================================
+
+    def add_ports_from_bus(self, filepath, bus_name):
+        parser = BusParser(filepath, bus_name)
+        #1. assuming that we are loading arbiter.yaml
+        #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
+        #3. Do this for all the signals that are required.
+        #print(parser.dict)
+        
+        parser.widop_flat("wdata",self.FifoWidth)
+        parser.widop_flat("rdata",self.FifoWidth)
+        parser.widop_flat("sdata",self.FifoWidth)
+        
+        #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
+        #print(parser.dict)
 
     def get_body(self):
         self.body = snoopable_fifo_template

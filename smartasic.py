@@ -93,7 +93,7 @@ class BasicModule:
         # call the add_ports_from_bus at end to push those changes into Ports string.
         # And this method gets called in get_headers method
 
-    def add_ports_from_bus(self, bus_dict, emptyPorts=None):
+    #def add_ports_from_bus(self, bus_dict, emptyPorts=None):
 
         ## Override the method in all the classes. Tinker with the bus dict here.
 
