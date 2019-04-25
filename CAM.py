@@ -2,9 +2,10 @@ from math import ceil, log2
 from templates import cam_body_template
 import sys
 from smartasic import BasicModule
+from BusParser import BusParser
 
 
-class CAM(BasicModule):
+class CAM(BusParser, BasicModule):
 
     def __init__(self, camdepth, camwidth, snoopwidth, bus_name, path_of_yaml):
         self.CamDepth = camdepth
@@ -12,8 +13,9 @@ class CAM(BasicModule):
         self.SnoopWidth = snoopwidth
         self.CamWidth = camwidth
         self.name = "AH_" + self.__class__.__name__ + "_" + str(camdepth) + "_" + str(camwidth) + "_" + str(snoopwidth)
-        super().__init__(self.name)
+        BasicModule.__init__(self,self.name)
         self.body = None
+        BusParser.__init__(self,path_of_yaml, bus_name)
         self.add_ports_from_bus(path_of_yaml, bus_name)
 
     #=======================================================
@@ -28,15 +30,15 @@ class CAM(BasicModule):
         #3. Do this for all the signals that are required.
         #print(parser.dict)
 
-        parser.wid_op_flat("wdata",self.camwidth)
-        parser.wid_op_flat("rdata",self.camwidth)
-        parser.wid_op_flat("sdata",self.camwidth)
+        parser.widop_flat("wdata",self.CamWidth)
+        parser.widop_flat("rdata",self.CamWidth)
+        parser.widop_flat("sdata",self.CamWidth)
 
-        parser.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.snoopwidth}})
+        parser.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
         
         #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
         #print(parser.dict)
-
+        self.get_all_key_value_pairs(parser.dict) 
 
     def get_body(self):
         self.body = cam_body_template

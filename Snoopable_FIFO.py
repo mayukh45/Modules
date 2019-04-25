@@ -36,6 +36,7 @@ class SnoopableFIFO(BasicModule, BusParser):
         
         #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
         #print(parser.dict)
+        self.get_all_key_value_pairs(parser.dict) 
 
     def get_body(self):
         self.body = snoopable_fifo_template
