@@ -322,11 +322,12 @@ class BusParser:
             temp = temp[levels]
         return temp
 
-    def add_connection(self, exp, destination):
+    def add_connectionop(self, exp, linked_to, connection_name):
         """
 
         :param exp: The heiarchy of the node to which connection is to be made.
-        :param destination: The class object to which the invoking object will be connected
+        :param linked_to: The class object to which the invoking object will be connected
+        :param connection_name: The name of the created connection
         :return: None
         """
         heiarchy = exp.split(".")
@@ -334,8 +335,17 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        temp.update({"dest" : destination.name})
+        self.add_connection(temp, linked_to,connection_name)
 
+    def add_connection(self, u, linked_to, connection_name):
+
+        for k in list(u.keys()):
+            if isinstance(u.get(k), collections.Mapping):
+                u[k] = self.add_connection(u.get(k), linked_to, connection_name)
+
+            else:
+                u.update({"linkded_to": linked_to.name, "cname": connection_name})
+        return u
 
 
 
