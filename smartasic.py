@@ -88,7 +88,7 @@ class BasicModule:
      ###       self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
 
     #TODO TODO TODO
-    def integrated_bus_op():
+    #def integrated_bus_op():
         # Operate on the dict object in derived classes.
         # call the add_ports_from_bus at end to push those changes into Ports string.
         # And this method gets called in get_headers method
@@ -98,10 +98,9 @@ class BasicModule:
         ## Override the method in all the classes. Tinker with the bus dict here.
 
 
-        if emptyPorts is not None:
-             self.Ports.clear()
+      ##     self.Ports.clear()
 
-        ports = self.get_all_key_value_pairs(bus_dict)
+        #ports = self.get_all_key_value_pairs(bus_dict)
 
     def get_all_key_value_pairs(self, data):
          def inner(data):
@@ -131,6 +130,9 @@ class BasicModule:
 
          inner(data)
          return self.results
+
+    def get_object_declaration_str(self, bus_dict):
+        pass
 
 
     def get_header(self):

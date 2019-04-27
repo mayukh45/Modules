@@ -14,7 +14,7 @@ class SnoopableFIFO(BasicModule, BusParser):
         BasicModule.__init__(self,self.name)
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
-        BusParser.__init__(self,path_of_yaml, bus_name)
+        BusParser.__init__(self, path_of_yaml, bus_name)
         self.add_ports_from_bus()
 
     #=======================================================
