@@ -15,30 +15,27 @@ class CAM(BusParser, BasicModule):
         self.name = "AH_" + self.__class__.__name__ + "_" + str(camdepth) + "_" + str(camwidth) + "_" + str(snoopwidth)
         BasicModule.__init__(self,self.name)
         self.body = None
-        BusParser.__init__(self,path_of_yaml, bus_name)
-        self.add_ports_from_bus(path_of_yaml, bus_name)
+        BusParser.__init__(self, path_of_yaml, bus_name)
+        self.add_ports_from_bus()
 
     #=======================================================
     # overwrite the add_ports_from_bus method here.
     # Create the instance of busparser class.
     # Then use the wid_op method to change the port width req, gnt, gnt_busy signals.
     #=======================================================
-    def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
+    def add_ports_from_bus(self):
+
         #1. assuming that we are loading arbiter.yaml
         #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
         #3. Do this for all the signals that are required.
         #print(parser.dict)
 
-        parser.widop_flat("wdata",self.CamWidth)
-        parser.widop_flat("rdata",self.CamWidth)
-        parser.widop_flat("sdata",self.CamWidth)
+        self.widop_flat("wdata",self.CamWidth)
+        self.widop_flat("rdata",self.CamWidth)
+        self.widop_flat("sdata",self.CamWidth)
 
-        parser.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
-        
-        #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
-        #print(parser.dict)
-        self.get_all_key_value_pairs(parser.dict) 
+        self.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
+        self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
         self.body = cam_body_template
