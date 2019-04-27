@@ -42,8 +42,6 @@ class BasicModule:
         self.Ports = []
         self.results = []
         self.port_list = []
-        self.add_port("clk", "input", 1)
-        self.add_port("rstn", "input", 1)
 
     def add_port(self, name, direction, width):
         self.Ports.append(Port(name, direction, width))
@@ -130,6 +128,11 @@ class BasicModule:
 
          inner(data)
          return self.results
+
+    def add_ports_from_bus(self):
+        self.Ports.clear()
+        self.add_port("clk", "input", 1)
+        self.add_port("rstn", "input", 1)
 
     def get_object_declaration_str(self, bus_dict):
         pass

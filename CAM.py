@@ -29,7 +29,7 @@ class CAM(BusParser, BasicModule):
         #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
         #3. Do this for all the signals that are required.
         #print(parser.dict)
-
+        BasicModule.add_ports_from_bus()
         self.widop_flat("wdata",self.CamWidth)
         self.widop_flat("rdata",self.CamWidth)
         self.widop_flat("sdata",self.CamWidth)

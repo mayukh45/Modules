@@ -29,9 +29,7 @@ class SnoopableFIFO(BasicModule, BusParser):
         #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
         #3. Do this for all the signals that are required.
         #print(parser.dict)
-        self.Ports.clear()
-        self.add_port("clk", "input", 1)
-        self.add_port("rstn", "input", 1)
+        BasicModule.add_ports_from_bus()
         self.widop_flat("wdata",self.FifoWidth)
         self.widop_flat("rdata",self.FifoWidth)
         self.widop_flat("sdata",self.FifoWidth)
