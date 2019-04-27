@@ -323,9 +323,15 @@ class BusParser:
             temp = temp[levels]
         return temp
 
+    def add_connection(self, exp, destination):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for levels in heiarchy:
+            temp = temp[levels]
 
+        temp.update({"dest" : destination.__class__.__name__})
 
-
+    
 
 
 
