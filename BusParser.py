@@ -323,12 +323,18 @@ class BusParser:
         return temp
 
     def add_connection(self, exp, destination):
+        """
+
+        :param exp: The heiarchy of the node to which connection is to be made.
+        :param destination: The class object to which the invoking object will be connected
+        :return: None
+        """
         heiarchy = exp.split(".")
         temp = self.dict.copy()
         for levels in heiarchy:
             temp = temp[levels]
 
-        temp.update({"dest" : destination.__class__.__name__})
+        temp.update({"dest" : destination.name})
 
 
 
