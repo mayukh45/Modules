@@ -318,7 +318,6 @@ class BusParser:
         """
         heiarchy = exp.split(".")
         temp = u.copy()
-      #  print(temp)
         for levels in heiarchy:
             temp = temp[levels]
         return temp
@@ -331,7 +330,7 @@ class BusParser:
 
         temp.update({"dest" : destination.__class__.__name__})
 
-    
+
 
 
 
