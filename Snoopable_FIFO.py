@@ -15,7 +15,7 @@ class SnoopableFIFO(BasicModule, BusParser):
         self.body = None
         self.EncodedDepth = int(ceil(log2(fifodepth)))
         BusParser.__init__(self,path_of_yaml, bus_name)
-        self.add_ports_from_bus(path_of_yaml, bus_name)
+        self.add_ports_from_bus()
 
     #=======================================================
     # overwrite the add_ports_from_bus method here.
@@ -23,20 +23,19 @@ class SnoopableFIFO(BasicModule, BusParser):
     # Then use the wid_op method to change the port width req, gnt, gnt_busy signals.
     #=======================================================
 
-    def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
+    def add_ports_from_bus(self):
+
         #1. assuming that we are loading arbiter.yaml
         #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
         #3. Do this for all the signals that are required.
         #print(parser.dict)
-        
-        parser.widop_flat("wdata",self.FifoWidth)
-        parser.widop_flat("rdata",self.FifoWidth)
-        parser.widop_flat("sdata",self.FifoWidth)
-        
-        #parser_sndata_sub_dict = copy.deepcopy(parser.dict["snoop"]["snoop_data"])
-        #print(parser.dict)
-        self.get_all_key_value_pairs(parser.dict) 
+        self.Ports.clear()
+        self.add_port("clk", "input", 1)
+        self.add_port("rstn", "input", 1)
+        self.widop_flat("wdata",self.FifoWidth)
+        self.widop_flat("rdata",self.FifoWidth)
+        self.widop_flat("sdata",self.FifoWidth)
+        self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
         self.body = snoopable_fifo_template
@@ -53,9 +52,6 @@ class SnoopableFIFO(BasicModule, BusParser):
         self.body = self.body.replace("//LOC_WRITE", self.write_loc("\n\t", "fifo_loc",self.EncodedDepth,self.FifoDepth))
         self.body = self.body.replace("//ASSIGN_READ",self.read_loc(self.EncodedDepth,"fifo_loc",self.FifoWidth,self.FifoDepth,"|\n"))
         self.body = self.body.replace("//ASSIGN_SNOOP_MATCH", self.snoop_match_noinv("fifo_loc","snoop_data",self.SnoopWidth,self.FifoDepth,"|\n"))
-
-    def refresh_ports(self, isToClear):
-        self.add_ports_from_bus(self.dict, isToClear)
 
     def get_verilog(self):
         modulecode = self.get_header()
