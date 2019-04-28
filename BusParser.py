@@ -354,7 +354,8 @@ class BusParser:
                 for k, v in data.items():
                     if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
                         if 'direction' in v.keys():
-                             v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"cname": "_".join(self.get_path(k).split("."))[1:]})
+                            v.update({"heiarchy": "_".join(self.get_path(k).split("."))[1:]})
 
                         inner(v)
 
