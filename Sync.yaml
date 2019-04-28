@@ -1,46 +1,62 @@
 astob:
-  hier0:
-    wr:
-      hier00:
-        hier000:
-          wready:
-            direction: output
+    hier0:
+        wr:
+            hier00:
+                hier000:
+                    wready:
+                        cname: hier0_wr_hier00_hier000_wready
+                        direction: output
+                        heiarchy: hier0_wr_hier00_hier000_wready
+                        type: nonfluid
+                        width: 1
+                wvalid:
+                    cname: hier0_wr_hier00_wvalid
+                    direction: input
+                    heiarchy: hier0_wr_hier00_wvalid
+                    type: nonfluid
+                    width: 1
+            wdata:
+                cname: hier0_wr_wdata
+                direction: input
+                heiarchy: hier0_wr_wdata
+                type: fluid
+                width: 18
+    hier1:
+        rd:
+            hier10:
+                rdata:
+                    cname: hier1_rd_hier10_rdata
+                    direction: output
+                    heiarchy: hier1_rd_hier10_rdata
+                    type: fluid
+                    width: 18
+            hier11:
+                rready:
+                    cname: hier1_rd_hier11_rready
+                    direction: input
+                    heiarchy: hier1_rd_hier11_rready
+                    type: nonfluid
+                    width: 1
+            rvalid:
+                cname: hier1_rd_rvalid
+                direction: output
+                heiarchy: hier1_rd_rvalid
+                type: nonfluid
+                width: 1
+    snoop:
+        sdata:
+            direction: input
+            type: fluid
+            width: 18
+        smatch:
+            cname: snoop_smatch
+            direction: input
+            heiarchy: snoop_smatch
             type: nonfluid
             width: 1
-        wvalid:
-          direction: input
-          type: nonfluid
-          width: 1
-      wdata:
-        direction: input
-        type: fluid
-        width: 18
-  hier1:
-    rd:
-      hier10:
-        rdata:
-          direction: output
-          type: fluid
-          width: 18
-      hier11:
-        rready:
-          direction: input
-          type: nonfluid
-          width: 1
-      rvalid:
-        direction: output
-        type: nonfluid
-        width: 1
-  snoop:
-    sdata:
-      direction: input
-      type: fluid
-      width: 18
-    smatch:
-      direction: input
-      type: nonfluid
-      width: 1
-    svalid:
-      direction: input
-      type: nonfluid
-      width: 1
+        svalid:
+            cname: snoop_svalid
+            direction: input
+            heiarchy: snoop_svalid
+            type: nonfluid
+            width: 1

@@ -1,0 +1,133 @@
+astob:
+  egress0:
+    rd:
+      data:
+        direction: input
+        type: fluid
+        width: 18
+      ready:
+        direction: output
+        type: nonfluid
+        width: 1
+      valid:
+        direction: input
+        type: nonfluid
+        width: 1
+    wr:
+      data:
+        direction: output
+        type: fluid
+        width: 18
+      ready:
+        direction: input
+        type: nonfluid
+        width: 1
+      valid:
+        direction: output
+        type: nonfluid
+        width: 1
+  egress1:
+    rd:
+      data:
+        direction: input
+        type: fluid
+        width: 18
+      ready:
+        direction: output
+        type: nonfluid
+        width: 1
+      valid:
+        direction: input
+        type: nonfluid
+        width: 1
+    wr:
+      data:
+        direction: output
+        type: fluid
+        width: 18
+      ready:
+        direction: input
+        type: nonfluid
+        width: 1
+      valid:
+        direction: output
+        type: nonfluid
+        width: 1
+  egress2:
+    rd:
+      data:
+        direction: input
+        type: fluid
+        width: 18
+      ready:
+        direction: output
+        type: nonfluid
+        width: 1
+      valid:
+        direction: input
+        type: nonfluid
+        width: 1
+    wr:
+      data:
+        direction: output
+        type: fluid
+        width: 18
+      ready:
+        direction: input
+        type: nonfluid
+        width: 1
+      valid:
+        direction: output
+        type: nonfluid
+        width: 1
+  egress3:
+    pkt:
+      data:
+        direction: input
+        type: fluid
+        width: 18
+        cname:"egress3_ds_pkt_data"
+      ready:
+        direction: output
+        type: nonfluid
+        width: 1
+        cname:"egress3_ds_pkt_ready"
+      valid:
+        direction: input
+        type: nonfluid
+        width: 1
+        cname:"egress3_ds_pkt_valid_pre"
+       
+iname --> egress3_pkt_data
+iname --> egress3_pkt_valid
+iname --> egress3_pkt_ready
+
+
+
+  ingress:
+    rd:
+      data:
+        direction: input
+        type: fluid
+        width: 18
+      ready:
+        direction: output
+        type: nonfluid
+        width: 1
+      valid:
+        direction: input
+        type: nonfluid
+        width: 1
+    wr:
+      data:
+        direction: output
+        type: fluid
+        width: 18
+      ready:
+        direction: input
+        type: nonfluid
+        width: 1
+      valid:
+        direction: output
+        type: nonfluid
+        width: 1
