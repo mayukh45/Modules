@@ -3,7 +3,7 @@ from enum import Enum
 from math import log2
 from templates import module_template
 from templates import fifo_body_template
-
+from BusParser import BusParser
 from pathlib import Path
 
 
@@ -78,28 +78,6 @@ class BasicModule:
    # systematically.
    #====================================================================================================================================================
 
-     ###def add_ports_from_bus(self, filepath, bus_name):
-     ###   parser = BusParser(filepath, bus_name)
-     ###   ports = parser.port_names(parser.dict, [])
-     ###   for port in ports:
-     ###       port_name = list(port.keys())[0]
-     ###       self.add_port(port_name, port[port_name]['direction'], port[port_name]['width'])
-
-    #TODO TODO TODO
-    #def integrated_bus_op():
-        # Operate on the dict object in derived classes.
-        # call the add_ports_from_bus at end to push those changes into Ports string.
-        # And this method gets called in get_headers method
-
-    #def add_ports_from_bus(self, bus_dict, emptyPorts=None):
-
-        ## Override the method in all the classes. Tinker with the bus dict here.
-
-
-      ##     self.Ports.clear()
-
-        #ports = self.get_all_key_value_pairs(bus_dict)
-
     def get_all_key_value_pairs(self, data):
          def inner(data):
              if isinstance(data, dict):
@@ -116,6 +94,7 @@ class BasicModule:
                              # 'signal' here. If I can print them, I can just call self.add_port method
                              # here with them.
                              self.add_port(k, v['direction'], v['width'])
+
                              #  print("I have found direction, must be at a signal.")
                              self.port_list.append(k)
 
