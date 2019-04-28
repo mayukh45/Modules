@@ -3,7 +3,6 @@ from enum import Enum
 from math import log2
 from templates import module_template
 from templates import fifo_body_template
-from BusParser import BusParser
 from pathlib import Path
 
 
@@ -14,7 +13,7 @@ class Port:
         OUTPUT = "output"
         INOUT  = "inout"
 
-    def __init__(self, name, direction, width):
+    def __init__(self, name, direction, width, heiarchy, linked_to,  cname):
         """
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
@@ -24,6 +23,9 @@ class Port:
         self.name = name
         self.direction = direction
         self.width = width
+        self.heiarchy = heiarchy
+        self.linked_to = linked_to
+        self.connection_name = cname
 
     def get_declaration(self):
         if self.width == 1:
@@ -43,8 +45,8 @@ class BasicModule:
         self.results = []
         self.port_list = []
 
-    def add_port(self, name, direction, width):
-        self.Ports.append(Port(name, direction, width))
+    def add_port(self, name, direction, width, heiarchy, linked_to, cname):
+        self.Ports.append(Port(name, direction, width, heiarchy, linked_to, cname))
 
     def get_port_str(self):
         """port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
@@ -93,7 +95,7 @@ class BasicModule:
                              # TODO: I need to find the values of 'width', 'direction' and of course
                              # 'signal' here. If I can print them, I can just call self.add_port method
                              # here with them.
-                             self.add_port(k, v['direction'], v['width'])
+                             self.add_port(k, v['direction'], v['width'], v['heiarchy'], v['linked_to'], v['cname'])
 
                              #  print("I have found direction, must be at a signal.")
                              self.port_list.append(k)
@@ -113,9 +115,9 @@ class BasicModule:
         self.add_port("clk", "input", 1)
         self.add_port("rstn", "input", 1)
 
-    def get_object_declaration_str(self, bus_dict):
-        pass
-
+    def get_object_declaration_str(self, obj_name):
+        code = "\n".join([ports.heiarchy + "\t"*4 + ports.cname for ports in self.Ports])
+        return self.name + " " + obj_name + "({0})".format(code)
 
     def get_header(self):
         mytemplate = module_template
