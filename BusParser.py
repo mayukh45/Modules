@@ -2,7 +2,7 @@ import yaml
 import collections
 import copy
 import queue
-
+import re
 
 class BusParser:
     def __init__(self, filepath, bus_name):
@@ -323,7 +323,7 @@ class BusParser:
             temp = temp[levels]
         return temp
 
-    def add_connectionop(self, exp, linked_to, connection_name):
+    def add_connectionop(self, exp, linked_to, pattern_in_cname, replacement):
         """
 
         :param exp: The heiarchy of the node to which connection is to be made.
@@ -336,16 +336,16 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.add_connection(temp, linked_to, connection_name)
+        self.add_connection(temp, linked_to, pattern_in_cname, replacement)
 
-    def add_connection(self, u, linked_to, connection_name):
+    def add_connection(self, u, linked_to, pattern_in_cname, replacement):
 
         for k in list(u.keys()):
             if isinstance(u.get(k), collections.Mapping):
-                u[k] = self.add_connection(u.get(k), linked_to, connection_name)
+                u[k] = self.add_connection(u.get(k), linked_to, pattern_in_cname, replacement)
 
             else:
-                u.update({"linkded_to": linked_to.name, "cname": connection_name})
+                u.update({"linkded_to": linked_to.name, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
         return u
 
     def init_connections(self, data):
