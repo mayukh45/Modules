@@ -64,6 +64,12 @@ class BusParser:
         self.prefixop(self.BusName, world_view)
         self.prefloatop(self.BusName, world_view)
 
+    def add_connection_flat(self, key, new_cname):
+        self.add_connection(self.get_path(key), new_cname)
+
+    def smart_connection_flat(self, key, linked_to, pattern_in_cname, replacement):
+        self.smart_connectionop(self.get_path(key), linked_to, pattern_in_cname, replacement)
+
     def widop(self, exp, width):
         """Changes width of a fluid port"""
         heiarchy = exp.split(".")
@@ -323,7 +329,7 @@ class BusParser:
             temp = temp[levels]
         return temp
 
-    def add_connectionop(self, exp, linked_to, pattern_in_cname, replacement):
+    def smart_connectionop(self, exp, linked_to, pattern_in_cname, replacement):
         """
 
         :param exp: The heiarchy of the node to which connection is to be made.
@@ -336,13 +342,13 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.add_connection(temp, linked_to, pattern_in_cname, replacement)
+        self.smart_connection(temp, linked_to, pattern_in_cname, replacement)
 
-    def add_connection(self, u, linked_to, pattern_in_cname, replacement):
+    def smart_connection(self, u, linked_to, pattern_in_cname, replacement):
 
         for k in list(u.keys()):
             if isinstance(u.get(k), collections.Mapping):
-                u[k] = self.add_connection(u.get(k), linked_to, pattern_in_cname, replacement)
+                u[k] = self.smart_connection(u.get(k), linked_to, pattern_in_cname, replacement)
 
             else:
                 u.update({"linkded_to": linked_to.name, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
@@ -365,7 +371,13 @@ class BusParser:
 
         inner(data)
 
+    def add_connection(self, exp, connection_name):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for levels in heiarchy:
+            temp = temp[levels]
 
+        temp.update({"cname": connection_name})
 
 
 
