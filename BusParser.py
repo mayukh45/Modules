@@ -123,7 +123,7 @@ class BusParser:
         noalias_dumper = yaml.dumper.SafeDumper
         noalias_dumper.ignore_aliases = lambda self , data : True
         with open(filename,"w") as f:
-            f.write(yaml.dump(self.dict,default_flow_style = False,Dumper = noalias_dumper))
+            f.write(yaml.dump(self.dict,default_flow_style = False,Dumper = noalias_dumper,indent =4,width = 25))
 
         f.close()
 
@@ -351,7 +351,7 @@ class BusParser:
                 u[k] = self.smart_connection(u.get(k), linked_to, pattern_in_cname, replacement)
 
             else:
-                u.update({"linkded_to": linked_to.name, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
+                u.update({"linkded_to": linked_to.name if linked_to is not None else None, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
         return u
 
     def init_connections(self, data):
@@ -360,8 +360,8 @@ class BusParser:
                 for k, v in data.items():
                     if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
                         if 'direction' in v.keys():
-                            v.update({"cname": "_".join(self.get_path(k).split("."))[1:]})
-                            v.update({"heiarchy": "_".join(self.get_path(k).split("."))[1:]})
+                            v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
 
                         inner(v)
 

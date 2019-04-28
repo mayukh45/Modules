@@ -29,7 +29,7 @@ class CAM(BusParser, BasicModule):
         #2. parser.wid_op (num_clientm , a.b.c.d format pass the signal name)
         #3. Do this for all the signals that are required.
         #print(parser.dict)
-        BasicModule.add_ports_from_bus()
+        BasicModule.add_ports_from_bus(self)
         self.widop_flat("wdata",self.CamWidth)
         self.widop_flat("rdata",self.CamWidth)
         self.widop_flat("sdata",self.CamWidth)
@@ -63,4 +63,4 @@ class CAM(BusParser, BasicModule):
         return self.get_verilog()
 
 
-print(CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),sys.argv[4],sys.argv[5]))
+#print(CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),sys.argv[4],sys.argv[5]))
