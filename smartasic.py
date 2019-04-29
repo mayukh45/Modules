@@ -112,11 +112,11 @@ class BasicModule:
 
     def add_ports_from_bus(self):
         self.Ports.clear()
-        self.add_port("clk", "input", 1)
-        self.add_port("rstn", "input", 1)
+        self.add_port("clk", "input", 1,"clk", None, "clk")
+        self.add_port("rstn", "input", 1,"rstn", None, "rstn")
 
     def get_object_declaration_str(self, obj_name):
-        code = "\n".join([ports.heiarchy + "\t"*4 + ports.cname for ports in self.Ports])
+        code = "\n".join(["."+ports.heiarchy + "\t"*4 + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "({0})".format(code)
 
     def get_header(self):
