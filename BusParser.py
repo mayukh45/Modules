@@ -351,7 +351,7 @@ class BusParser:
                 u[k] = self.smart_connection(u.get(k), linked_to, pattern_in_cname, replacement)
 
             else:
-                u.update({"linkded_to": linked_to.name if linked_to is not None else None, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
+                u.update({"linked_to": linked_to.name if linked_to is not None else None, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
         return u
 
     def init_connections(self, data):
