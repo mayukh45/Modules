@@ -362,6 +362,7 @@ class BusParser:
                         if 'direction' in v.keys():
                             v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
                             v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"linked_to": None})
 
                         inner(v)
 

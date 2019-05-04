@@ -25,7 +25,7 @@ class Port:
         self.width = width
         self.heiarchy = heiarchy
         self.linked_to = linked_to
-        self.connection_name = cname
+        self.cname = cname
 
     def get_declaration(self):
         if self.width == 1:
@@ -116,8 +116,10 @@ class BasicModule:
         self.add_port("rstn", "input", 1,"rstn", None, "rstn")
 
     def get_object_declaration_str(self, obj_name):
-        code = "\n".join(["."+ports.heiarchy + "\t"*4 + "("+ports.cname+")" for ports in self.Ports])
-        return self.name + " " + obj_name + "({0})".format(code)
+        self.add_ports_from_bus()
+        code = "\n".join(["."+ports.heiarchy + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
+        return self.name + " " + obj_name + "(\n"+code+"\n)"
+
 
     def get_header(self):
         mytemplate = module_template
