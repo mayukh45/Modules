@@ -2,25 +2,26 @@ import yaml
 import collections
 import copy
 import queue
-
+import re
 
 class BusParser:
     def __init__(self, filepath, bus_name):
         self.dict = yaml.load(open(filepath).read())
         self.BusName = bus_name
+        self.init_connections(self.dict)
 
     #=============================================================================================================================================
     # Used to craate an useful net name for each signal for example cpu_2_peripheral0_* bus. It overloads the prefix and prefloat directly
     #
     #=============================================================================================================================================
 
-    def wid_op_flat(self, key, width):
+    def widop_flat(self, key, width):
         """Wrapper function for non heiarchical operations"""
-        self.wid_op(self.get_path(key),width)
+        self.widop(self.get_path(key),width)
 
-    def flip_op_flat(self, key):
+    def flipop_flat(self, key):
         """Wrapper function for non heiarchical operations"""
-        self.flip_op(self.get_path(key))
+        self.flipop(self.get_path(key))
 
     def prefixop_flat(self, key, prefix):
         """Wrapper function for non heiarchical operations"""
@@ -32,7 +33,7 @@ class BusParser:
 
     def remove_sub_dict_flat(self, key):
         """Wrapper function for non heiarchical operations"""
-        return self.remove_sub_dict(self.get_path(key))
+        self.remove_sub_dict(self.get_path(key))
 
     def add_super_node_flat(self, key, node):
         """Wrapper function for non heiarchical operations"""
@@ -63,10 +64,15 @@ class BusParser:
         self.prefixop(self.BusName, world_view)
         self.prefloatop(self.BusName, world_view)
 
-    def wid_op(self, exp, width):
+    def add_connection_flat(self, key, new_cname):
+        self.add_connection(self.get_path(key), new_cname)
+
+    def smart_connection_flat(self, key, linked_to, pattern_in_cname, replacement):
+        self.smart_connectionop(self.get_path(key), linked_to, pattern_in_cname, replacement)
+
+    def widop(self, exp, width):
         """Changes width of a fluid port"""
         heiarchy = exp.split(".")
-        # print(heiarchy)
         temp = self.dict.copy()
         for levels in heiarchy:
             temp = temp[levels]
@@ -75,23 +81,21 @@ class BusParser:
             raise Exception("The width of this signal cannot be changed")
         else:
             temp['width'] = width
-        return temp
 
-
-    def flip_op(self, exp):
+    def flipop(self, exp):
         """Flips all the ports of a subtdict provided by heiarchy"""
         heiarchy = exp.split(".")
         temp = self.dict.copy()
         for levels in heiarchy:
             temp = temp[levels]
 
-        # print(heiarchy[len(heiarchy)-1])
+        #print(heiarchy[len(heiarchy)-1])
 
-        return self.flip(temp)
+        self.flip(temp)
 
     def flip(self, u):
         """
-        Used by flip_op
+        Used by flipop
         :param u:
         :return: flipped subdict
         """
@@ -101,7 +105,6 @@ class BusParser:
 
             else:
                 u['direction'] = 'output' if u['direction'] == 'input' else 'input'
-                
         return u
 
     def print(self):
@@ -120,7 +123,7 @@ class BusParser:
         noalias_dumper = yaml.dumper.SafeDumper
         noalias_dumper.ignore_aliases = lambda self , data : True
         with open(filename,"w") as f:
-            f.write(yaml.dump(self.dict,default_flow_style = False,Dumper = noalias_dumper))
+            f.write(yaml.dump(self.dict,default_flow_style = False,Dumper = noalias_dumper,indent =4,width = 25))
 
         f.close()
 
@@ -205,8 +208,8 @@ class BusParser:
            # print(temp)
             temp = temp[heiarchy[i]]
 
-        #print(temp)
         del temp[heiarchy[len(heiarchy)-1]]
+
 
     def add_super_node(self,exp,node):
         """
@@ -276,7 +279,7 @@ class BusParser:
         for i in range(len(heiarchy) - 1):
             temp = temp[heiarchy[i]]
 
-        # del temp[heiarchy[len(heiarchy)-1]]
+        #del temp[heiarchy[len(heiarchy)-1]]
         sub_dict = copy.deepcopy(temp[heiarchy[len(heiarchy) - 1]])
         del temp[heiarchy[len(heiarchy)-1]]
         temp.update(sub_dict)
@@ -322,14 +325,60 @@ class BusParser:
         """
         heiarchy = exp.split(".")
         temp = u.copy()
-      #  print(temp)
         for levels in heiarchy:
             temp = temp[levels]
         return temp
 
+    def smart_connectionop(self, exp, linked_to, pattern_in_cname, replacement):
+        """
 
+        :param exp: The heiarchy of the node to which connection is to be made.
+        :param linked_to: The class object to which the invoking object will be connected
+        :param connection_name: The name of the created connection
+        :return: None
+        """
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for levels in heiarchy:
+            temp = temp[levels]
 
+        self.smart_connection(temp, linked_to, pattern_in_cname, replacement)
 
+    def smart_connection(self, u, linked_to, pattern_in_cname, replacement):
+
+        for k in list(u.keys()):
+            if isinstance(u.get(k), collections.Mapping):
+                u[k] = self.smart_connection(u.get(k), linked_to, pattern_in_cname, replacement)
+
+            else:
+                u.update({"linked_to": linked_to.name if linked_to is not None else None, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
+        return u
+
+    def init_connections(self, data):
+        def inner(data):
+            if isinstance(data, dict):
+                for k, v in data.items():
+                    if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
+                        if 'direction' in v.keys():
+                            v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"linked_to": None})
+
+                        inner(v)
+
+            elif isinstance(data, list) or isinstance(data, tuple):
+                for item in data:
+                    inner(item)
+
+        inner(data)
+
+    def add_connection(self, exp, connection_name):
+        heiarchy = exp.split(".")
+        temp = self.dict.copy()
+        for levels in heiarchy:
+            temp = temp[levels]
+
+        temp.update({"cname": connection_name})
 
 
 

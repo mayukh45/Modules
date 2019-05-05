@@ -7,21 +7,20 @@ from math import log2, ceil
 import sys
 
 
-class SnoopableFIFO(BasicModule):
+class SnoopableFIFO(BasicModule,BusParser):
     ## creating dictonary of variable
-    def Create_dic_of_variable(self):
-        self.variable_dict['FifoWidth']=self.FifoWidth
-        self.variable_dict['FifoDepth']=self.FifoDepth
-        self.variable_dict['SnoopWidth']=self.SnoopWidth
-        self.variable_dict['EncodedDepth']=self.EncodedDepth
+#    def Create_dic_of_variable(self):
+#        self.variable_dict['FifoWidth']=self.FifoWidth
+#        self.variable_dict['FifoDepth']=self.FifoDepth
+#       self.variable_dict['SnoopWidth']=self.SnoopWidth
+#        self.variable_dict['EncodedDepth']=self.EncodedDepth
 
-    def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
-        parser.wid_op_flat("wdata",self.FifoWidth)
-        parser.wid_op_flat("rdata",self.FifoWidth)
-        parser.wid_op_flat("sdata",self.FifoWidth)
-        self.get_all_key_value_pairs(parser.dict) 
-
+    def add_ports_from_bus(self):
+        BasicModule.add_ports_from_bus(self)
+        self.widop_flat("wdata", self.FifoWidth)
+        self.widop_flat("rdata", self.FifoWidth)
+        self.widop_flat("sdata", self.FifoWidth)
+        self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.snoopbody) # passing dictonary and snoopbody to split the body
@@ -46,17 +45,18 @@ class SnoopableFIFO(BasicModule):
         self.write_to_file(self.get_verilog())
         return self.get_verilog()
 
-    def __init__ (self, fifowidth, fifodepth, snoopwidth, path_of_yaml, bus_name):
+    def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml, bus_name):
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
-        super().__init__(self.name)
+        BasicModule.__init__(self, self.name)
         self.body = ""
         self.EncodedDepth = int(ceil(log2(fifodepth)))
         self.variable_dict={}
-        self.Create_dic_of_variable()
-        self.add_ports_from_bus(path_of_yaml, bus_name)
+#        self.Create_dic_of_variable()
+        BusParser.__init__(self, path_of_yaml, bus_name)
+        self.add_ports_from_bus()
         self.snoopbody="""
 reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
 
