@@ -8,9 +8,9 @@ import sys
 
 
 class CAM(BasicModule,BusParser):
-   
+
     #=======================================================================================================
-    #  
+    #
     #=======================================================================================================
     def add_ports_from_bus(self):
         self.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
@@ -24,9 +24,9 @@ class CAM(BasicModule,BusParser):
 
         self.variable_dict['CamWidth']=self.CamWidth
         self.variable_dict['SnoopWidth']=self.SnoopWidth
-        self.variable_dict['CamDepth']= self.CamDepth 
+        self.variable_dict['CamDepth']= self.CamDepth
         self.variable_dict['EncodedDepth']=self.EncodedDepth
-    
+
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.cambody)
         self.body+=dynamicgenerator.parse_body()
@@ -61,7 +61,7 @@ class CAM(BasicModule,BusParser):
         BusParser.__init__(self,path_of_yaml, bus_name)
         self.variable_dict={}
         self.Create_dic_of_variable()
-        self.add_ports_from_bus(path_of_yaml, bus_name)
+        self.add_ports_from_bus()
         self.cambody="""
 wire [ENCODEDDEPTH - 1:0] internal_wr_ptr;
 req  [ENCODEDDEPTH:0] wr_loc_counter;
