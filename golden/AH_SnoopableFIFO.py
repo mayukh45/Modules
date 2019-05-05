@@ -20,6 +20,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.widop_flat("wdata", self.FifoWidth)
         self.widop_flat("rdata", self.FifoWidth)
         self.widop_flat("sdata", self.FifoWidth)
+        self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):

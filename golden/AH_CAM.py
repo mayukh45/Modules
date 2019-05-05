@@ -18,6 +18,7 @@ class CAM(BasicModule,BusParser):
         self.widop_flat("sin",self.SnoopWidth)
         self.widop_flat("sdata",self.CamWidth)
         self.remove_sub_dict_flat("rd")
+        self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
 
     def Create_dic_of_variable(self):
