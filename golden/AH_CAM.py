@@ -7,19 +7,18 @@ from math import log2, ceil
 import sys
 
 
-class CAM(BasicModule):
+class CAM(BasicModule,BusParser):
    
     #=======================================================================================================
     #  
     #=======================================================================================================
-    def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
-        parser.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
-        parser.wid_op_flat("wdata",self.CamWidth)
-        parser.wid_op_flat("sin",self.SnoopWidth)
-        parser.wid_op_flat("sdata",self.CamWidth)
-        parser.remove_sub_dict_flat("rd")
-        self.get_all_key_value_pairs(parser.dict) 
+    def add_ports_from_bus(self):
+        self.add_sub_dict_flat("snoop" , {"sin" : {"direction" : "input" , "type" : "fluid" , "width" : self.SnoopWidth}})
+        self.widop_flat("wdata",self.CamWidth)
+        self.widop_flat("sin",self.SnoopWidth)
+        self.widop_flat("sdata",self.CamWidth)
+        self.remove_sub_dict_flat("rd")
+        self.get_all_key_value_pairs(self.dict)
 
     def Create_dic_of_variable(self):
 
@@ -57,8 +56,9 @@ class CAM(BasicModule):
         self.SnoopWidth = snoopwidth
         self.CamWidth = camwidth
         self.name = "AH_" + self.__class__.__name__ + "_" + str(camdepth) + "_" + str(camwidth) + "_" + str(snoopwidth)
-        super().__init__(self.name)
+        BasicModule.__init__(self,self.name)
         self.body = ""
+        BusParser.__init__(self,path_of_yaml, bus_name)
         self.variable_dict={}
         self.Create_dic_of_variable()
         self.add_ports_from_bus(path_of_yaml, bus_name)

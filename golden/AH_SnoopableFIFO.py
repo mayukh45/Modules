@@ -9,11 +9,11 @@ import sys
 
 class SnoopableFIFO(BasicModule,BusParser):
     ## creating dictonary of variable
-#    def Create_dic_of_variable(self):
-#        self.variable_dict['FifoWidth']=self.FifoWidth
-#        self.variable_dict['FifoDepth']=self.FifoDepth
-#       self.variable_dict['SnoopWidth']=self.SnoopWidth
-#        self.variable_dict['EncodedDepth']=self.EncodedDepth
+    def Create_dic_of_variable(self):
+        self.variable_dict['FifoWidth']=self.FifoWidth
+        self.variable_dict['FifoDepth']=self.FifoDepth
+        self.variable_dict['SnoopWidth']=self.SnoopWidth
+        self.variable_dict['EncodedDepth']=self.EncodedDepth
 
     def add_ports_from_bus(self):
         BasicModule.add_ports_from_bus(self)
@@ -54,7 +54,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.body = ""
         self.EncodedDepth = int(ceil(log2(fifodepth)))
         self.variable_dict={}
-#        self.Create_dic_of_variable()
+        self.Create_dic_of_variable()
         BusParser.__init__(self, path_of_yaml, bus_name)
         self.add_ports_from_bus()
         self.snoopbody="""
