@@ -120,6 +120,21 @@ class BasicModule:
         code = "\n".join(["."+ports.heiarchy + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
+    def populate_wire_and_ports(self, *args):
+        wire_dict = {}
+        port_dict = {}
+        for i in range(len(args)):
+            curr_obj = args[i]
+            for port in curr_obj.Ports:
+                is_connected = False
+                for j in range(len(args)):
+                    if any([port.cname == other_ports.cname for other_ports in args[j].Ports]):
+                        is_connected = True
+
+                if is_connected:
+                    wire_dict.update({})
+                else:
+                    port_dict.update({})
 
     def get_header(self):
         mytemplate = module_template
