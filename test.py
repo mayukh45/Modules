@@ -1,4 +1,16 @@
-a = {'astob': {'rd': {'data': {'direction': 'output', 'type': 'fluid', 'width': 18}, 'ready': {'direction': 'input', 'type': 'nonfluid', 'width': 1}, 'valid': {'direction': 'output', 'type': 'nonfluid', 'width': 1}}, 'snoop': {'data': {'direction': 'input', 'type': 'fluid', 'width': 18}, 'match': {'direction': 'input', 'type': 'nonfluid', 'width': 1}, 'valid': {'direction': 'input', 'type': 'nonfluid', 'width': 1}}, 'wr': {'data': {'direction': 'input', 'type': 'fluid', 'width': 18}, 'ready': {'direction': 'output', 'type': 'nonfluid', 'width': 1}, 'valid': {'direction': 'input', 'type': 'nonfluid', 'width': 1}}}}
-import re
+from enum import Enum
 
-print(re.sub("egress.","ds_pkt","egress0 egress1"))
+class A:
+    class Direction(Enum):
+        INPUT = "input"
+        OUTPUT = "output"
+        INOUT = "inout"
+
+    def __init__(self):
+        self.a = 2
+        self.b = 3
+    def lol(self):
+        return self.a - 5
+
+a = A()
+print(a.__dict__)

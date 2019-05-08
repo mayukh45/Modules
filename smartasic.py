@@ -120,6 +120,34 @@ class BasicModule:
         code = "\n".join(["."+ports.heiarchy + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
+    def populate_wire_and_ports(self, *args):
+        wire_dict = {}
+        port_dict = {}
+        for i in range(len(args)):
+            curr_obj = args[i]
+            for port in curr_obj.Ports:
+                is_connected = False
+                for j in range(len(args)):
+                    if any([port.cname == other_ports.cname for other_ports in args[j].Ports]):
+                        is_connected = True
+
+                if is_connected:
+                    self.create_dict_branch(port.heiarchy, wire_dict, port.__dict__)
+                else:
+                    self.create_dict_branch(port.heiarchy, port_dict, port.__dict__)
+
+    def create_dict_branch(self, exp, dictionary, signal):
+        heiarchy = exp.split("_")
+        j = 0
+        for j in range(len(heiarchy)):
+            if list(dictionary.keys()).count(dictionary[heiarchy[j]]) > 0:
+                dictionary = dictionary[heiarchy[j]]
+
+        for i in range(j, len(heiarchy) - 1):
+            dictionary[heiarchy[i]] = {heiarchy[i + 1]: None}
+            dictionary = dictionary[heiarchy[i]]
+
+        dictionary[heiarchy[len(heiarchy) - 1]] = signal
 
     def get_header(self):
         mytemplate = module_template

@@ -24,8 +24,8 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
-        dynamicgenerator=DynamicGenerator(self.variable_dict,self.snoopbody) # passing dictonary and snoopbody to split the body
-        self.body+=dynamicgenerator.parse_body()
+        dynamicgenerator = DynamicGenerator(self.variable_dict, self.snoopbody) # passing dictonary and snoopbody to split the body
+        self.body += dynamicgenerator.parse_body()
         self.body = self.body.replace("SNOOPWIDTH - 1", str(self.SnoopWidth -1))
         self.body = self.body.replace("ENCODEDDEPTH - 1", str(self.EncodedDepth - 1))
         self.body = self.body.replace("FIFOWIDTH - 1", str(self.FifoWidth - 1))
