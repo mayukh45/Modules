@@ -136,6 +136,7 @@ class BasicModule:
                 else:
                     port_dict.update({})
 
+
     def get_header(self):
         mytemplate = module_template
         mytemplate = mytemplate.replace("MODULENAME", self.name)
