@@ -4,7 +4,7 @@ from math import log2
 from templates import module_template
 from templates import fifo_body_template
 from pathlib import Path
-
+from BusParser import BusParser
 
 class Port:
 
@@ -132,9 +132,22 @@ class BasicModule:
                         is_connected = True
 
                 if is_connected:
-                    wire_dict.update({})
+                    self.create_dict_branch(port.heiarchy, wire_dict, port.__dict__)
                 else:
-                    port_dict.update({})
+                    self.create_dict_branch(port.heiarchy, port_dict, port.__dict__)
+
+    def create_dict_branch(self, exp, dictionary, signal):
+        heiarchy = exp.split("_")
+        j = 0
+        for j in range(len(heiarchy)):
+            if list(dictionary.keys()).count(dictionary[heiarchy[j]]) > 0:
+                dictionary = dictionary[heiarchy[j]]
+
+        for i in range(j, len(heiarchy) - 1):
+            dictionary[heiarchy[i]] = {heiarchy[i+1]: None}
+            dictionary = dictionary[heiarchy[i]]
+
+        dictionary[heiarchy[len(heiarchy) - 1]] = signal
 
     def get_header(self):
         mytemplate = module_template
