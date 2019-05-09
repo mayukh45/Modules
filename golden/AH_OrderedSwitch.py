@@ -15,9 +15,9 @@ class OrderedSwitch(BasicModule):
 
     def get_body(self):
         spf1 = SnoopableFIFO(10, 32, 10 ,  "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
-        spf1.smart_connectionop("astob", None,"wr_w","egress0_ds_pkt")
-        spf1.smart_connectionop("astob", None, "rd_r", "egress0_ds_pkt")
-        spf1.smart_connectionop("astob", None, "snoop_s", "egress0_ds_pkt")
+        spf1.smart_connectionop("astob", None,"wr_w","egress0_dspkt")
+        spf1.smart_connectionop("astob", None, "rd_r", "egress0_dspkt")
+        spf1.smart_connectionop("astob", None, "snoop_s", "egress0_dspkt")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
        # print(spf1.dict)
         spf2 = copy.deepcopy(spf1)
@@ -40,4 +40,4 @@ t.main()
 print(t.port_dict)
 print("1"*50)
 print(t.wire_dict)
-t.dyaml("why.dyaml")
+

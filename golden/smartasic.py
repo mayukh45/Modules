@@ -133,7 +133,7 @@ class BasicModule:
             print("CURR_DICT : "+str(curr_obj.dict))
             for port in curr_obj.Ports:
                 is_connected = False
-                print("PORTS : "+str(port.__dict__))
+                #print("PORTS : "+str(port.__dict__))
                 for j in range(len(args)):
                     if any([i!=j and port.cname == other_ports.cname  for other_ports in args[j].Ports]):
                         is_connected = True
@@ -149,7 +149,7 @@ class BasicModule:
         #print(dictionary)
         signal.__dict__['name'] = signal.__dict__['cname']
         heiarchy = exp.split("_")
-       # print("SIGNAL:"+str(signal.__dict__))
+        print("HIER : "+str(heiarchy))
         j = 0
         for j in range(len(heiarchy)):
             if list(dictionary.keys()).count(heiarchy[j]) > 0:
