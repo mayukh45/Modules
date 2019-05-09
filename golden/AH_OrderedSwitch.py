@@ -1,6 +1,6 @@
 import copy
 
-from golden.AH_SnoopableFIFO import SnoopableFIFO
+from AH_SnoopableFIFO import SnoopableFIFO
 from smartasic import BasicModule
 from BusParser import BusParser
 import sys
