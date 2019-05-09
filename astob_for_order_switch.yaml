@@ -1,0 +1,65 @@
+##========================================================================================
+##========================================================================================
+## Start of BASIC ACCESS  Interface Bus specification 
+#
+##========================================================================================
+##========================================================================================
+
+astob:
+          wr:
+                 wdata:
+                           direction: input
+                           width : 18
+                           type: fluid
+                           cname: "wr_wdata"
+
+                 wvalid:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+                           cname: "wr_wvalid"
+
+                 wready:
+                           direction: output
+                           width : 1
+                           type: nonfluid
+                           cname: "wr_wready"
+
+
+          rd:
+                rdata:
+                           direction: output
+                           width : 18
+                           type: fluid
+                           cname: "wr_wdata"
+
+                rvalid:
+                           direction: output
+                           width : 1
+                           type: nonfluid
+                           cname: "wr_wvalid"
+
+                rready:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+                           cname: "wr_wready"
+
+          snoop:
+                sdata:
+                           direction: input
+                           width : 18
+                           type: fluid
+                           cname: "snoop_sdata"
+
+                svalid:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+                           cname: "snoop_svalid"
+
+                smatch:
+                           direction: input
+                           width : 1
+                           type: nonfluid
+                           cname: "snoop_smatch"
