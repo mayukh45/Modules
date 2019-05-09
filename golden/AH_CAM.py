@@ -22,7 +22,6 @@ class CAM(BasicModule,BusParser):
         self.get_all_key_value_pairs(self.dict)
 
     def Create_dic_of_variable(self):
-
         self.variable_dict['CamWidth']=self.CamWidth
         self.variable_dict['SnoopWidth']=self.SnoopWidth
         self.variable_dict['CamDepth']= self.CamDepth
