@@ -1,0 +1,45 @@
+astob:
+  hier0:
+    wr:
+      hier00:
+        hier000:
+          wready:
+            direction: output
+            type: nonfluid
+            width: 1
+        wvalid:
+          direction: input
+          type: nonfluid
+          width: 1
+      wdata:
+        direction: input
+        type: fluid
+        width: 10
+  rd:
+    hier10:
+      rdata:
+        direction: output
+        type: fluid
+        width: 10
+    hier11:
+      rready:
+        direction: input
+        type: nonfluid
+        width: 1
+    rvalid:
+      direction: output
+      type: nonfluid
+      width: 1
+  snoop:
+    sdata:
+      direction: input
+      type: fluid
+      width: 18
+    smatch:
+      direction: input
+      type: nonfluid
+      width: 1
+    svalid:
+      direction: input
+      type: nonfluid
+      width: 1

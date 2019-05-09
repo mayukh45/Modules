@@ -1,0 +1,58 @@
+astob:
+  rd:
+    rdata:
+      cname: rd_rdata
+      direction: output
+      heiarchy: rd_rdata
+      type: fluid
+      width: 10
+    rready:
+      cname: rd_rready
+      direction: input
+      heiarchy: rd_rready
+      type: nonfluid
+      width: 1
+    rvalid:
+      cname: rd_rvalid
+      direction: output
+      heiarchy: rd_rvalid
+      type: nonfluid
+      width: 1
+  snoop:
+    sdata:
+      cname: snoop_sdata
+      direction: input
+      heiarchy: snoop_sdata
+      type: fluid
+      width: 10
+    smatch:
+      cname: snoop_smatch
+      direction: input
+      heiarchy: snoop_smatch
+      type: nonfluid
+      width: 1
+    svalid:
+      cname: snoop_svalid
+      direction: input
+      heiarchy: snoop_svalid
+      type: nonfluid
+      width: 1
+  wr:
+    wdata:
+      cname: wr_wdata
+      direction: input
+      heiarchy: wr_wdata
+      type: fluid
+      width: 10
+    wready:
+      cname: wr_wready
+      direction: output
+      heiarchy: wr_wready
+      type: nonfluid
+      width: 1
+    wvalid:
+      cname: wr_wvalid
+      direction: input
+      heiarchy: wr_wvalid
+      type: nonfluid
+      width: 1

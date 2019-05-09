@@ -1,0 +1,74 @@
+astob:
+    hier0:
+        wr:
+            hier00:
+                hier000:
+                    wready:
+                        cname: hier0_wr_hier00_hier000_wready
+                        direction: output
+                        heiarchy: hier0_wr_hier00_hier000_wready
+                        type: nonfluid
+                        width: 1
+                wvalid:
+                    cname: hier0_wr_hier00_wvalid
+                    direction: output
+                    heiarchy: hier0_wr_hier00_wvalid
+                    type: nonfluid
+                    width: 1
+            wdata:
+                cname: hier0_wr_wdata
+                direction: input
+                heiarchy: hier0_wr_wdata
+                type: fluid
+                width: 10
+    rd:
+        hier10:
+            readmatch:
+                cname: hier1_rd_hier10_rdata
+                direction: output
+                heiarchy: hier1_rd_hier10_rdata
+                type: fluid
+                width: 10
+        hier11:
+            rready:
+                cname: hier1_rd_hier11_rready
+                direction: input
+                heiarchy: hier1_rd_hier11_rready
+                type: nonfluid
+                width: 1
+        rvalid:
+            cname: hier1_rd_rvalid
+            direction: output
+            heiarchy: hier1_rd_rvalid
+            type: nonfluid
+            width: 1
+    snoop:
+        hello:
+            direction: output
+        snoopmatch:
+            cname: snoop_smatch
+            direction: output
+            heiarchy: snoop_smatch
+            type: nonfluid
+            width: 1
+        svalid:
+            cname: snoop_svalid
+            direction: output
+            heiarchy: snoop_svalid
+            type: nonfluid
+            width: 1
+    snoop_test:
+        hello:
+            direction: output
+        snoopmatch:
+            cname: snoop_smatch
+            direction: output
+            heiarchy: snoop_smatch
+            type: nonfluid
+            width: 1
+        svalid:
+            cname: snoop_svalid
+            direction: output
+            heiarchy: snoop_svalid
+            type: nonfluid
+            width: 1

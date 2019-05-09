@@ -1,0 +1,67 @@
+astob:
+  rd:
+    rdata:
+      cname: egress0_ds_pkt_data
+      direction: output
+      heiarchy: rd_rdata
+      linkded_to: null
+      type: fluid
+      width: 10
+    rready:
+      cname: egress0_ds_pkt_ready
+      direction: input
+      heiarchy: rd_rready
+      linkded_to: null
+      type: nonfluid
+      width: 1
+    rvalid:
+      cname: egress0_ds_pkt_valid
+      direction: output
+      heiarchy: rd_rvalid
+      linkded_to: null
+      type: nonfluid
+      width: 1
+  snoop:
+    sdata:
+      cname: egress0_ds_pkt_data
+      direction: input
+      heiarchy: snoop_sdata
+      linkded_to: null
+      type: fluid
+      width: 10
+    smatch:
+      cname: egress0_ds_pkt_match
+      direction: input
+      heiarchy: snoop_smatch
+      linkded_to: null
+      type: nonfluid
+      width: 1
+    svalid:
+      cname: egress0_ds_pkt_valid
+      direction: input
+      heiarchy: snoop_svalid
+      linkded_to: null
+      type: nonfluid
+      width: 1
+  wr:
+    wdata:
+      cname: egress0_ds_pkt_data
+      direction: input
+      heiarchy: wr_wdata
+      linkded_to: null
+      type: fluid
+      width: 10
+    wready:
+      cname: egress0_ds_pkt_ready
+      direction: output
+      heiarchy: wr_wready
+      linkded_to: null
+      type: nonfluid
+      width: 1
+    wvalid:
+      cname: egress0_ds_pkt_valid
+      direction: input
+      heiarchy: wr_wvalid
+      linkded_to: null
+      type: nonfluid
+      width: 1

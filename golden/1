@@ -1,0 +1,133 @@
+import os							import os
+from smartasic import BasicModule,Port				from smartasic import BasicModule,Port
+from DynamicGenerator import DynamicGenerator			from DynamicGenerator import DynamicGenerator
+from BusParser import BusParser					from BusParser import BusParser
+from pathlib import Path					from pathlib import Path
+from math import log2, ceil					from math import log2, ceil
+import sys							import sys
+
+
+class CAM(BasicModule):						class CAM(BasicModule):
+   								   
+    #========================================================	    #========================================================
+    #  								    #  
+    #========================================================	    #========================================================
+    def add_ports_from_bus(self, filepath, bus_name):		    def add_ports_from_bus(self, filepath, bus_name):
+        parser = BusParser(filepath, bus_name)			        parser = BusParser(filepath, bus_name)
+        parser.add_sub_dict_flat("snoop" , {"sin" : {"directi	        parser.add_sub_dict_flat("snoop" , {"sin" : {"directi
+        parser.wid_op_flat("wdata",self.CamWidth)		        parser.wid_op_flat("wdata",self.CamWidth)
+        parser.wid_op_flat("sin",self.SnoopWidth)		        parser.wid_op_flat("sin",self.SnoopWidth)
+        parser.wid_op_flat("sdata",self.CamWidth)		        parser.wid_op_flat("sdata",self.CamWidth)
+        parser.remove_sub_dict_flat("rd")			        parser.remove_sub_dict_flat("rd")
+        self.get_all_key_value_pairs(parser.dict) 		        self.get_all_key_value_pairs(parser.dict) 
+
+    def Create_dic_of_variable(self):				    def Create_dic_of_variable(self):
+
+        self.variable_dict['CamWidth']=self.CamWidth		        self.variable_dict['CamWidth']=self.CamWidth
+        self.variable_dict['SnoopWidth']=self.SnoopWidth	        self.variable_dict['SnoopWidth']=self.SnoopWidth
+        self.variable_dict['CamDepth']= self.CamDepth 		        self.variable_dict['CamDepth']= self.CamDepth 
+        self.variable_dict['EncodedDepth']=self.EncodedDepth	        self.variable_dict['EncodedDepth']=self.EncodedDepth
+    								    
+    def get_body(self):						    def get_body(self):
+        dynamicgenerator=DynamicGenerator(self.variable_dict,	        dynamicgenerator=DynamicGenerator(self.variable_dict,
+        self.body+=dynamicgenerator.parse_body()		        self.body+=dynamicgenerator.parse_body()
+        self.body = self.body.replace("ENCODEDDEPTH - 1", str	        self.body = self.body.replace("ENCODEDDEPTH - 1", str
+        self.body = self.body.replace("ENCODEDDEPTH", str(sel	        self.body = self.body.replace("ENCODEDDEPTH", str(sel
+        self.body = self.body.replace("CAMWIDTH - 1", str(sel	        self.body = self.body.replace("CAMWIDTH - 1", str(sel
+        self.body = self.body.replace("CAMWIDTH", str(self.Ca	        self.body = self.body.replace("CAMWIDTH", str(self.Ca
+        self.body = self.body.replace("SNOOPWIDTH - 1", str(s	        self.body = self.body.replace("SNOOPWIDTH - 1", str(s
+        self.body = self.body.replace("SNOOPWIDTH", str(self.	        self.body = self.body.replace("SNOOPWIDTH", str(self.
+        dynamicgenerator.silentremove()				        dynamicgenerator.silentremove()
+
+
+    def get_verilog(self):					    def get_verilog(self):
+        modulecode=self.get_header()				        modulecode=self.get_header()
+        self.get_body()						        self.get_body()
+        modulecode=modulecode.replace("BODY",self.body)		        modulecode=modulecode.replace("BODY",self.body)
+        return modulecode					        return modulecode
+
+    def main(self):						    def main(self):
+        self.write_to_file(self.get_verilog())			        self.write_to_file(self.get_verilog())
+        return self.get_verilog()				        return self.get_verilog()
+
+
+    def __init__(self, camdepth, camwidth, snoopwidth, path_o	    def __init__(self, camdepth, camwidth, snoopwidth, path_o
+        self.CamDepth = camdepth				        self.CamDepth = camdepth
+        self.EncodedDepth = ceil(log2(int(camdepth)))		        self.EncodedDepth = ceil(log2(int(camdepth)))
+        self.SnoopWidth = snoopwidth				        self.SnoopWidth = snoopwidth
+        self.CamWidth = camwidth				        self.CamWidth = camwidth
+        self.name = "AH_" + self.__class__.__name__ + "_" + s	        self.name = "AH_" + self.__class__.__name__ + "_" + s
+        super().__init__(self.name)				        super().__init__(self.name)
+        self.body = ""						        self.body = ""
+        self.variable_dict={}					        self.variable_dict={}
+        self.Create_dic_of_variable()				        self.Create_dic_of_variable()
+        self.add_ports_from_bus(path_of_yaml, bus_name)		        self.add_ports_from_bus(path_of_yaml, bus_name)
+        self.cambody="""					        self.cambody="""
+wire [ENCODEDDEPTH - 1:0] internal_wr_ptr;			wire [ENCODEDDEPTH - 1:0] internal_wr_ptr;
+req  [ENCODEDDEPTH:0] wr_loc_counter;				req  [ENCODEDDEPTH:0] wr_loc_counter;
+        /f_f/							        /f_f/
+code = "\\n".join(["req  ["+str(CamWidth-1)+":0] cam_loc"+str	code = "\\n".join(["req  ["+str(CamWidth-1)+":0] cam_loc"+str
+        /f_f/							        /f_f/
+        always @ (posedge clk or negedge rst_an)		        always @ (posedge clk or negedge rst_an)
+begin								begin
+if (!rst_an) begin						if (!rst_an) begin
+  wr_loc_counter <= ENCODEDDEPTH+1'd0; // log2(CAMDEPTH) +1	  wr_loc_counter <= ENCODEDDEPTH+1'd0; // log2(CAMDEPTH) +1
+       end else begin						       end else begin
+  wr_loc_counter <= wr_location_counter[ENCODEDDEPTH] ? wr_lo	  wr_loc_counter <= wr_location_counter[ENCODEDDEPTH] ? wr_lo
+       end							       end
+end								end
+AH_srvfifo_ENCODEDDEPTH_CAMDEPTH u_wrloc_recirfifo (		AH_srvfifo_ENCODEDDEPTH_CAMDEPTH u_wrloc_recirfifo (
+.wr_valid(freeup_loc)						.wr_valid(freeup_loc)
+,.wr_ready(freedup_loc_valid)					,.wr_ready(freedup_loc_valid)
+,.wr_data(freedup_loc_ready)					,.wr_data(freedup_loc_ready)
+
+,.rd_valid(recir_loc_valid)					,.rd_valid(recir_loc_valid)
+,.rd_ready(recir_loc_ready)					,.rd_ready(recir_loc_ready)
+,.rd_data(recir_loc)						,.rd_data(recir_loc)
+);								);
+
+assign internal_wr_en = wr_valid & (recir_loc_valid | ~wr_loc	assign internal_wr_en = wr_valid & (recir_loc_valid | ~wr_loc
+assign internal_wr_ptr = ~wr_location_counter[ENCODEDDEPTH + 	assign internal_wr_ptr = ~wr_location_counter[ENCODEDDEPTH + 
+
+assign wr_ready	= ~wr_location_counter[ENCODEDDEPTH + 1] ? 1'	assign wr_ready	= ~wr_location_counter[ENCODEDDEPTH + 1] ? 1'
+
+assign recir_loc_ready	= ~wr_location_counter[ENCODEDDEPTH +	assign recir_loc_ready	= ~wr_location_counter[ENCODEDDEPTH +
+
+always @ (posedge clk or negedge rst_an)			always @ (posedge clk or negedge rst_an)
+if (!rst_an) begin						if (!rst_an) begin
+
+/f_f/								/f_f/
+code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= "+str(CamW	code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= "+str(CamW
+/f_f/								/f_f/
+
+end else begin							end else begin
+/f_f/								/f_f/
+code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= (internal_	code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= (internal_
+"'d"+str(i)+") ) ? wr_data : cam_loc"+str(i)+";" for i in ran	"'d"+str(i)+") ) ? wr_data : cam_loc"+str(i)+";" for i in ran
+/f_f/								/f_f/
+
+end								end
+
+wire assign snoop_match = freedup_loc_ready) & (		wire assign snoop_match = freedup_loc_ready) & (
+
+/f_f/								/f_f/
+code = " |\\n ".join(["(snoop_in == cam_loc"+str(i)+"["+str(S	code = " |\\n ".join(["(snoop_in == cam_loc"+str(i)+"["+str(S
+/f_f/								/f_f/
+);								);
+
+wire assign snoop_data = CAMWIDTH'd0 |				wire assign snoop_data = CAMWIDTH'd0 |
+/f_f/								/f_f/
+code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str	code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str
+/f_f/								/f_f/
+;								;
+
+wire assign freeup_loc = ENCODEDDEPTH'd0 |			wire assign freeup_loc = ENCODEDDEPTH'd0 |
+/f_f/								/f_f/
+code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str	code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str
+/f_f/								/f_f/
+;								;
+
+wire assign freedup_loc_valid = snoop_match;			wire assign freedup_loc_valid = snoop_match;
+"""								"""
+cam=CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),	cam=CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),
+cam.main()							cam.main()

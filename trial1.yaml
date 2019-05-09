@@ -1,0 +1,27 @@
+astob:
+  rd:
+    data:
+      direction: input
+      type: fluid
+      width: 18
+    ready:
+      direction: output
+      type: nonfluid
+      width: 1
+    valid:
+      direction: input
+      type: nonfluid
+      width: 1
+  wr:
+    data:
+      direction: output
+      type: fluid
+      width: 18
+    ready:
+      direction: input
+      type: nonfluid
+      width: 1
+    valid:
+      direction: output
+      type: nonfluid
+      width: 1

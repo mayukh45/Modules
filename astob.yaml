@@ -7,51 +7,51 @@
 
 astob:
           wr:
-                 wr_data:
+                 data:
                            direction: input
                            width : 18
                            type: fluid
 
 
-                 wr_valid:
+                 valid:
                            direction: input
                            width : 1
                            type: nonfluid
 
-                 wr_ready:
+                 ready:
                            direction: output
                            width : 1
                            type: nonfluid
 
 
           rd:
-                rd_data:
+                data:
                            direction: output
                            width : 18
                            type: fluid
 
-                rd_valid:
+                valid:
                            direction: output
                            width : 1
                            type: nonfluid
 
-                rd_ready:
+                ready:
                            direction: input
                            width : 1
                            type: nonfluid
 
           snoop:
-                snoop_data:
+                data:
                            direction: input
                            width : 18
                            type: fluid
 
-                snoop_valid:
+                valid:
                            direction: input
                            width : 1
                            type: nonfluid
 
-                snoop_match:
+                match:
                            direction: input
                            width : 1
                            type: nonfluid
