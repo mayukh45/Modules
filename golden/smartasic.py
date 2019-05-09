@@ -134,7 +134,7 @@ class BasicModule:
                 if is_connected and port.name != 'clk' and port.name != 'rstn':
                     self.create_dict_branch(port.heiarchy, wire_dict, port)
                 elif port.name!='clk' and port.name !='rstn':
-                    self.create_dict_branch(port.heiarchy, port_dict, port)
+                    self.create_dict_branch(port.cname, port_dict, port)
         return port_dict , wire_dict
 
     def create_dict_branch(self, exp, dictionary, signal):
