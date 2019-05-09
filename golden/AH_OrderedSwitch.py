@@ -1,5 +1,5 @@
 import copy
-
+import yaml
 from AH_SnoopableFIFO import SnoopableFIFO
 from smartasic import BasicModule
 from BusParser import BusParser
@@ -15,9 +15,9 @@ class OrderedSwitch(BasicModule):
 
     def get_body(self):
         spf1 = SnoopableFIFO(10, 32, 10 ,  "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
-        spf1.smart_connectionop("astob", None,"wr_w","egress0_dspkt")
-        spf1.smart_connectionop("astob", None, "rd_r", "egress0_dspkt")
-        spf1.smart_connectionop("astob", None, "snoop_s", "egress0_dspkt")
+        spf1.smart_connectionop("astob", None,"wr_","egress0_dspkt_")
+        spf1.smart_connectionop("astob", None, "rd_", "egress0_dspkt_")
+        spf1.smart_connectionop("astob", None, "snoop_", "egress0_dspkt_")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
        # print(spf1.dict)
         spf2 = copy.deepcopy(spf1)
@@ -27,8 +27,8 @@ class OrderedSwitch(BasicModule):
         spf3.smart_connectionop("astob", None, "egress0", "egress2")
         spf4 = copy.deepcopy(spf1)
         spf4.smart_connectionop("astob", None, "egress0", "egress3")
-        print("BEFORE :" + str(spf1.dict))
-        self.port_dict , self.wire_dict = self.populate_wire_and_ports(spf1, spf2)#, spf3, spf4)
+    #    print("BEFORE :" + str(spf1.dict))
+        self.port_dict , self.wire_dict = self.populate_wire_and_ports(spf1,spf2)#, spf3, spf4)
 
     def main(self):
         self.get_body()
@@ -37,7 +37,7 @@ class OrderedSwitch(BasicModule):
 
 t = OrderedSwitch(10, 20, 30, 40, 50)
 t.main()
-print(t.port_dict)
+print(yaml.dump(t.port_dict))
 print("1"*50)
-print(t.wire_dict)
+#print(yaml.dump(t.wire_dict))
 

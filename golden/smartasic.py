@@ -123,44 +123,48 @@ class BasicModule:
     def populate_wire_and_ports(self, *args):
         wire_dict = {}
         port_dict = {}
-        print("AFTER :" + str(args[0].dict))
+       # print("AFTER :" + str(args[0].dict))
         for i in range(len(args)):
             curr_obj = args[i]
-            print("WTF :"+ str(curr_obj.dict))
+          #  print("WTF :"+ str(curr_obj.dict))
             curr_obj.Ports.clear()
             curr_obj.get_all_key_value_pairs(curr_obj.dict)
             #curr_obj.get_all_key_value_pairs(curr_obj.dict)
-            print("CURR_DICT : "+str(curr_obj.dict))
+         #   print("CURR_DICT : "+str(curr_obj.dict))
             for port in curr_obj.Ports:
                 is_connected = False
-                #print("PORTS : "+str(port.__dict__))
+                print("PORTS : "+str(port.__dict__))
                 for j in range(len(args)):
                     if any([i!=j and port.cname == other_ports.cname  for other_ports in args[j].Ports]):
                         is_connected = True
-
+                print("BEFORE : "+ str(port_dict))
                 if is_connected and port.name != 'clk' and port.name != 'rstn':
                     self.create_dict_branch(port.cname, wire_dict, port)
                 elif port.name!='clk' and port.name !='rstn':
                     self.create_dict_branch(port.cname, port_dict, port)
+                print("AFTER : "+ str(port_dict))
         return port_dict , wire_dict
 
     def create_dict_branch(self, exp, dictionary, signal):
         ##print("SIGNAL :"+str(signal))
-        #print(dictionary)
+       # print("BEFORE : "+str(dictionary))
         signal.__dict__['name'] = signal.__dict__['cname']
+        signal.__dict__['heiarchy'] = signal.__dict__['cname']
         heiarchy = exp.split("_")
         print("HIER : "+str(heiarchy))
         j = 0
         for j in range(len(heiarchy)):
             if list(dictionary.keys()).count(heiarchy[j]) > 0:
                 dictionary = dictionary[heiarchy[j]]
-
+            else:
+                break
+        print("J : "+str(j))
         for i in range(j, len(heiarchy) - 1):
             dictionary[heiarchy[i]] = {heiarchy[i+1]: None}
             dictionary = dictionary[heiarchy[i]]
 
         dictionary[heiarchy[len(heiarchy) - 1]] = signal.__dict__
-
+       # print("AFTER : "+ str(dictionary))
 
     def get_header(self):
         mytemplate = module_template
