@@ -117,18 +117,25 @@ class BasicModule:
 
     def get_object_declaration_str(self, obj_name):
         self.add_ports_from_bus()
-        code = "\n".join(["."+ports.heiarchy + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
+        code = "\n".join(["."+ports.name + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
     def populate_wire_and_ports(self, *args):
         wire_dict = {}
         port_dict = {}
+        print("AFTER :" + str(args[0].dict))
         for i in range(len(args)):
             curr_obj = args[i]
+            print("WTF :"+ str(curr_obj.dict))
+            curr_obj.Ports.clear()
+            curr_obj.get_all_key_value_pairs(curr_obj.dict)
+            #curr_obj.get_all_key_value_pairs(curr_obj.dict)
+            print("CURR_DICT : "+str(curr_obj.dict))
             for port in curr_obj.Ports:
                 is_connected = False
+                print("PORTS : "+str(port.__dict__))
                 for j in range(len(args)):
-                    if any([port.cname == other_ports.cname for other_ports in args[j].Ports]):
+                    if any([i!=j and port.cname == other_ports.cname  for other_ports in args[j].Ports]):
                         is_connected = True
 
                 if is_connected and port.name != 'clk' and port.name != 'rstn':
@@ -140,9 +147,9 @@ class BasicModule:
     def create_dict_branch(self, exp, dictionary, signal):
         ##print("SIGNAL :"+str(signal))
         #print(dictionary)
-        signal.name = signal.cname
+        signal.__dict__['name'] = signal.__dict__['cname']
         heiarchy = exp.split("_")
-        
+       # print("SIGNAL:"+str(signal.__dict__))
         j = 0
         for j in range(len(heiarchy)):
             if list(dictionary.keys()).count(heiarchy[j]) > 0:
