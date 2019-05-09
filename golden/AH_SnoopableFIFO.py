@@ -47,9 +47,11 @@ class SnoopableFIFO(BasicModule,BusParser):
         return self.get_verilog()
 
     def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml, bus_name):
+        
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
+        
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
         BasicModule.__init__(self, self.name)
         self.body = ""
@@ -143,5 +145,5 @@ code = "\\n"+"|\\n ".join(["((fifo_loc["+str(SnoopWidth-1)+":0] == snoop_data) ?
 """
 
 
-snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])
-snoopablefifo.main()
+#snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])
+#snoopablefifo.main()

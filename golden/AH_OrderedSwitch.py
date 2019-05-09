@@ -1,9 +1,10 @@
 import copy
 
-from AH_SnoopableFIFO import SnoopableFIFO
+from golden.AH_SnoopableFIFO import SnoopableFIFO
 from smartasic import BasicModule
 from BusParser import BusParser
-
+import sys
+print(sys.path)
 
 class OrderedSwitch(BasicModule):
     def __init__(self, number_of_egress,ds_packet_size, ups_packet_size, ds_decodable_field_width, ups_response_decodable_field_width):
@@ -13,10 +14,12 @@ class OrderedSwitch(BasicModule):
         self.wire_dict = {}
 
     def get_body(self):
-        spf1 = SnoopableFIFO(10, 32, 10 , "astob" , "/home/mayukhs/Documents/smarasic2/refbuses/astob.yaml")
+        spf1 = SnoopableFIFO(10, 32, 10 ,  "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
         spf1.smart_connectionop("astob", None,"wr_w","egress0_ds_pkt")
         spf1.smart_connectionop("astob", None, "rd_r", "egress0_ds_pkt")
         spf1.smart_connectionop("astob", None, "snoop_s", "egress0_ds_pkt")
+        spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
+        print(spf1.dict)
         spf2 = copy.deepcopy(spf1)
         spf2.smart_connectionop("astob", None, "egress0" , "egress1")
         spf3 = copy.deepcopy(spf1)
@@ -25,6 +28,14 @@ class OrderedSwitch(BasicModule):
         spf4.smart_connectionop("astob", None, "egress0", "egress3")
         self.port_dict , self.wire_dict = self.populate_wire_and_ports(spf1, spf2, spf3, spf4)
 
-        def main():
-            self.get_body()
-            
+    def main(self):
+        self.get_body()
+
+
+
+t = OrderedSwitch(10, 20, 30, 40, 50)
+t.main()
+print(t.port_dict)
+print("1"*50)
+print(t.wire_dict)
+
