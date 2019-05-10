@@ -11,17 +11,64 @@ import sys
 class Multiplexor(BasicModule,BusParser):
     ## creating dictonary of variable
     def Create_dic_of_variable(self):
-        self.variable_dict['portwidth']=self.PortWidth
-        self.variable_dict['numclients']=self.NumClients
-        self.variable_dict['isdemux']=self.IsDemux
-        self.variable_dict['isbinary']=self.IsBinary
+        self.variable_dict['PortWidth']=self.PortWidth
+        self.variable_dict['NumClients']=self.NumClients
+        self.variable_dict['IsDemux']=self.IsDemux
+        self.variable_dict['IsBinary']=self.IsBinary
+        self.variable_dict['EncodedDepth']=self.EncodedDepth
 
     #It's assumed that the original mux-demux yaml file will have 2 egress ports at least. The rest has to be added. 
     # Then the yaml is demux - so ingress and egress keys swap name if we need to provide a mux
     def add_ports_from_bus(self):
-        self.copy_flat("egress1", "egress"+str(i)) if(numclients > 2) for i in range(2, self.NumClients-1)
-        self.rename_flat("egress"+str(i), "ingress"+str(i)) if (self.IsDemux is None) for i in range self.NumClients
-        self.rename_flat("ingress", "egress") if self.IsDemux is none
+        #self.copy_flat("egress1", "egress"+str(i))
+        print(self.dict)
+        self.dyaml("1.yaml")
+        print("I am going to operate on this dict now")
+
+        if(self.NumClients > 2):
+            for i in range(2, self.NumClients-1):
+                self.copy_flat("egress1", "egress"+str(i))
+
+        print(self.dict)
+        self.dyaml("1_1.yaml")
+        print("I am going to operate on this dict (2)")
+        #self.rename("egress2.egr1_data" , "egress2.egr2_data" )
+
+        if(self.NumClients > 2):
+            for i in range(2, self.NumClients-1):
+                self.rename("demux.egress"+str(i)+".egr1_data" , "egr"+str(i)+"_data" )
+                self.rename("demux.egress"+str(i)+".egr1_valid", "egr"+str(i)+"_valid")
+                self.rename("demux.egress"+str(i)+".egr1_ready", "egr"+str(i)+"_ready")
+
+        print(self.dict)
+        print("I am going to operate on this dict again")
+        self.dyaml("2.yaml")
+        
+        if (self.IsDemux is None):
+            for i in range (self.NumClients):
+                self.rename_flat("egress"+str(i), "ingress"+str(i)) 
+                self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_data" , "ing"+str(i)+"_data" )
+                self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_valid", "ing"+str(i)+"_valid")
+                self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_ready", "ing"+str(i)+"_ready")
+
+        print(self.dict)
+        print("I am going to operate on this dict again(2)")
+        self.dyaml("3.yaml")
+        
+        if self.IsDemux is None:
+            self.rename_flat("ingress", "egress")
+            print(self.dict)
+            print("I am going to operate on this dict again(2)")
+            self.dyaml("3_3.yaml")
+            self.rename("demux.egress.ing_data" , "egr_data" )
+            self.rename("demux.egress.ing_valid", "egr_valid")
+            self.rename("demux.egress.ing_ready", "egr_ready")
+            
+            self.rename_flat("demux", "mux")
+        
+        print(self.dict)
+        self.dyaml("4.yaml")
+        print("I am done with this dict")
         self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
         
@@ -43,11 +90,13 @@ class Multiplexor(BasicModule,BusParser):
         return modulecode
 
     def main(self):
+        print("I am about to write a verilog file now")
         self.write_to_file(self.get_verilog())
+        print (self.get_verilog())
         return self.get_verilog()
 
 
-    def __init__(self, portwidth, numclients, isdemux, isbinary):
+    def __init__(self, portwidth, numclients, isdemux, isbinary, path_of_yaml, bus_name):
         self.PortWidth = portwidth
         self.NumClients = numclients
         self.IsDemux = isdemux
@@ -55,12 +104,10 @@ class Multiplexor(BasicModule,BusParser):
         self.IsBinary = isbinary
 
         self.curName = "mux" if self.IsDemux is None else "demux"
-        #if(isDemux)
-        #  self.curName = "demux" 
-        #else
-        #  self.curName = "mux"
 
-        self.name = "AH_"+self.curName+"_"+str(portwidth)+"_"+str(numclients)+"_"+str(isBinary)
+        self.name = "AH_"+self.curName+"_"+str(self.PortWidth)+"_"+str(self.NumClients)+"_"+str(self.IsBinary)
+        print("Just checking what is the file name..")
+        print (self.name)
         BasicModule.__init__(self, self.name)
         self.body = ""
         self.EncodedDepth = int(ceil(log2(numclients)))
@@ -74,33 +121,41 @@ class Multiplexor(BasicModule,BusParser):
 // Ingress and Egress are short circuited based on condition
 
 /f_f/
+code = ""
 
-if self.IsDemux:
-    code += "wire assign egress"+str(i)+"_ds_pkt       = (demux_select== "+str(self.EncodedDepth)"'d"+str(i)+") ? ingress_ds_pkt       : "+str(self.EncodedDepth)+"'d0;" for i in range(self.NumClients) 
-    code += "wire assign egress"+str(i)+"_ds_pkt_valid = (demux_select== "+str(self.EncodedDepth)"'d"+str(i)+") ? ingress_ds_pkt_valid : "+str(self.EncodedDepth)+"'d0;" for i in range(self.NumClients) 
-    code += ""
-    code += "wire assign ingress_ds_pkt_ready          ="
-    code += "                                           ((demux_select== "+str(self.EncodedDepth)"'d"+str(i)+") ? egress1_ds_pkt_ready ? 1'b0) | " for i in range(self.NumClients) 
-    code += "                                            1'b0;"
+if IsDemux:
+    for i in range(NumClients):
+        code += "\\nwire assign egress"+str(i)+"_ds_pkt       = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt       : "+str(EncodedDepth)+"'d0;" 
+    
+    for i in range(NumClients) :
+        code += "\\nwire assign egress"+str(i)+"_ds_pkt_valid = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt_valid : "+str(EncodedDepth)+"'d0;" 
+    
+    code += "\\n"
+    code += "\\nwire assign ingress_ds_pkt_ready          ="
+    
+    for i in range(NumClients):
+        code += "\\n                                           ((demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? egress1_ds_pkt_ready ? 1'b0) | " 
+    
+    code += "\\n                                            1'b0;"
 
 else:
 
-    code += "wire assign egress_ds_pkt            ="
-    code += "                                      ((mux_select== "+str(self.EncodedDepth)+"'d"+str(i)+") ? ingress"+str(i)+"_ds_pkt : "+str(self.EncodedDepth)+"'d0 ) |" for i in range(self.NumClients)
-    code += "                                      "+str(self.EncodedDepth)+"'d0;"
-    code += ""
-    code += "wire assign egress_ds_pkt_valid      ="
-    code += "                                      ((mux_select== "+str(self.EncodedDepth)+"'d"+str(i)+") ? ingress"+str(i)+"_ds_pkt : "+str(self.EncodedDepth)+"'d0 ) |" for i in range(self.NumClients)
-    code += "                                      "+str(self.EncodedDepth)+"'d0;"
-    code += ""
-    code += "wire assign ingress"+str(self.EncodedDepth)+"_ds_pkt_ready = (mux_select== "+str(self.EncodedDepth)+"'d"+str(i)+") ? egress_ds_pkt_ready : 1'b0;" for i in range(self.NumClients)
-    code += ""
+    code += "\\nwire assign egress_ds_pkt            ="
+    #code += "\\n                                      ((mux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress"+str(i)+"_ds_pkt : "+str(EncodedDepth)+"'d0 ) |" for i in range(NumClients)
+    #code += "\\n                                      "+str(EncodedDepth)+"'d0;"
+    #code += "\\n"
+    #code += "\\nwire assign egress_ds_pkt_valid      ="
+    #code += "                                      ((mux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress"+str(i)+"_ds_pkt : "+str(EncodedDepth)+"'d0 ) |" for i in range(NumClients)
+    #code += "\\n                                      "+str(EncodedDepth)+"'d0;"
+    #code += "\\n"
+    #code += "\\nwire assign ingress"+str(EncodedDepth)+"_ds_pkt_ready = (mux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? egress_ds_pkt_ready : 1'b0;" for i in range(NumClients)
+    #code += "\\n"
 
 /f_f/
 
 """
 
-muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),sys.argv[4],sys.argv[5])
+muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
 muxdemux.main()
 
 

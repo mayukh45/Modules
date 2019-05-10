@@ -210,6 +210,7 @@ class BasicModule:
             "'d" + str(i) + ") ) ? wr_data : "+module_name + str(i) + ";" for i in range(camdepth)])
 
     def write_to_file(self, verilog):
+        #print(str(Path.home())
         with open(str(Path.home())+"/Documents/smartasic2/dumpverilog/"+self.name+".v","w") as f:
             f.write(verilog)
 

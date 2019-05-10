@@ -1,0 +1,4 @@
+Just checking what is the file name..
+AH_demux_2424_8_0
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am going to operate on this dict now

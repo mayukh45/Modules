@@ -1,133 +1,134 @@
-import os							import os
-from smartasic import BasicModule,Port				from smartasic import BasicModule,Port
-from DynamicGenerator import DynamicGenerator			from DynamicGenerator import DynamicGenerator
-from BusParser import BusParser					from BusParser import BusParser
-from pathlib import Path					from pathlib import Path
-from math import log2, ceil					from math import log2, ceil
-import sys							import sys
+Just checking what is the file name..
+AH_demux_2424_8_0
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am going to operate on this dict now
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am going to operate on this dict (2)
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am going to operate on this dict again
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am going to operate on this dict again(2)
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+I am done with this dict
+I am about to write a verilog file now
+
+module AH_demux_2424_8_0 (ing_data
+,ing_valid
+,ing_ready
+,egr0_data
+,egr0_valid
+,egr0_ready
+,egr1_data
+,egr1_valid
+,egr1_ready
+,demux.egress2.egr2_data
+,demux.egress2.egr2_valid
+,demux.egress2.egr2_ready
+,demux.egress3.egr3_data
+,demux.egress3.egr3_valid
+,demux.egress3.egr3_ready
+,demux.egress4.egr4_data
+,demux.egress4.egr4_valid
+,demux.egress4.egr4_ready
+,demux.egress5.egr5_data
+,demux.egress5.egr5_valid
+,demux.egress5.egr5_ready
+,demux.egress6.egr6_data
+,demux.egress6.egr6_valid
+,demux.egress6.egr6_ready);
+
+input [17:0] ing_data;
+input ing_valid;
+output ing_ready;
+output [17:0] egr0_data;
+output egr0_valid;
+input egr0_ready;
+output [17:0] egr1_data;
+output egr1_valid;
+input egr1_ready;
+output [17:0] demux.egress2.egr2_data;
+output demux.egress2.egr2_valid;
+input demux.egress2.egr2_ready;
+output [17:0] demux.egress3.egr3_data;
+output demux.egress3.egr3_valid;
+input demux.egress3.egr3_ready;
+output [17:0] demux.egress4.egr4_data;
+output demux.egress4.egr4_valid;
+input demux.egress4.egr4_ready;
+output [17:0] demux.egress5.egr5_data;
+output demux.egress5.egr5_valid;
+input demux.egress5.egr5_ready;
+output [17:0] demux.egress6.egr6_data;
+output demux.egress6.egr6_valid;
+input demux.egress6.egr6_ready;
 
 
-class CAM(BasicModule):						class CAM(BasicModule):
-   								   
-    #========================================================	    #========================================================
-    #  								    #  
-    #========================================================	    #========================================================
-    def add_ports_from_bus(self, filepath, bus_name):		    def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)			        parser = BusParser(filepath, bus_name)
-        parser.add_sub_dict_flat("snoop" , {"sin" : {"directi	        parser.add_sub_dict_flat("snoop" , {"sin" : {"directi
-        parser.wid_op_flat("wdata",self.CamWidth)		        parser.wid_op_flat("wdata",self.CamWidth)
-        parser.wid_op_flat("sin",self.SnoopWidth)		        parser.wid_op_flat("sin",self.SnoopWidth)
-        parser.wid_op_flat("sdata",self.CamWidth)		        parser.wid_op_flat("sdata",self.CamWidth)
-        parser.remove_sub_dict_flat("rd")			        parser.remove_sub_dict_flat("rd")
-        self.get_all_key_value_pairs(parser.dict) 		        self.get_all_key_value_pairs(parser.dict) 
-
-    def Create_dic_of_variable(self):				    def Create_dic_of_variable(self):
-
-        self.variable_dict['CamWidth']=self.CamWidth		        self.variable_dict['CamWidth']=self.CamWidth
-        self.variable_dict['SnoopWidth']=self.SnoopWidth	        self.variable_dict['SnoopWidth']=self.SnoopWidth
-        self.variable_dict['CamDepth']= self.CamDepth 		        self.variable_dict['CamDepth']= self.CamDepth 
-        self.variable_dict['EncodedDepth']=self.EncodedDepth	        self.variable_dict['EncodedDepth']=self.EncodedDepth
-    								    
-    def get_body(self):						    def get_body(self):
-        dynamicgenerator=DynamicGenerator(self.variable_dict,	        dynamicgenerator=DynamicGenerator(self.variable_dict,
-        self.body+=dynamicgenerator.parse_body()		        self.body+=dynamicgenerator.parse_body()
-        self.body = self.body.replace("ENCODEDDEPTH - 1", str	        self.body = self.body.replace("ENCODEDDEPTH - 1", str
-        self.body = self.body.replace("ENCODEDDEPTH", str(sel	        self.body = self.body.replace("ENCODEDDEPTH", str(sel
-        self.body = self.body.replace("CAMWIDTH - 1", str(sel	        self.body = self.body.replace("CAMWIDTH - 1", str(sel
-        self.body = self.body.replace("CAMWIDTH", str(self.Ca	        self.body = self.body.replace("CAMWIDTH", str(self.Ca
-        self.body = self.body.replace("SNOOPWIDTH - 1", str(s	        self.body = self.body.replace("SNOOPWIDTH - 1", str(s
-        self.body = self.body.replace("SNOOPWIDTH", str(self.	        self.body = self.body.replace("SNOOPWIDTH", str(self.
-        dynamicgenerator.silentremove()				        dynamicgenerator.silentremove()
+// Ingress and Egress are short circuited based on condition
 
 
-    def get_verilog(self):					    def get_verilog(self):
-        modulecode=self.get_header()				        modulecode=self.get_header()
-        self.get_body()						        self.get_body()
-        modulecode=modulecode.replace("BODY",self.body)		        modulecode=modulecode.replace("BODY",self.body)
-        return modulecode					        return modulecode
+wire assign egress0_ds_pkt       = (demux_select== 3'd0) ? ingress_ds_pkt       : 3'd0;
+wire assign egress1_ds_pkt       = (demux_select== 3'd1) ? ingress_ds_pkt       : 3'd0;
+wire assign egress2_ds_pkt       = (demux_select== 3'd2) ? ingress_ds_pkt       : 3'd0;
+wire assign egress3_ds_pkt       = (demux_select== 3'd3) ? ingress_ds_pkt       : 3'd0;
+wire assign egress4_ds_pkt       = (demux_select== 3'd4) ? ingress_ds_pkt       : 3'd0;
+wire assign egress5_ds_pkt       = (demux_select== 3'd5) ? ingress_ds_pkt       : 3'd0;
+wire assign egress6_ds_pkt       = (demux_select== 3'd6) ? ingress_ds_pkt       : 3'd0;
+wire assign egress7_ds_pkt       = (demux_select== 3'd7) ? ingress_ds_pkt       : 3'd0;
+wire assign egress0_ds_pkt_valid = (demux_select== 3'd0) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress1_ds_pkt_valid = (demux_select== 3'd1) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress2_ds_pkt_valid = (demux_select== 3'd2) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress3_ds_pkt_valid = (demux_select== 3'd3) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress4_ds_pkt_valid = (demux_select== 3'd4) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress5_ds_pkt_valid = (demux_select== 3'd5) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress6_ds_pkt_valid = (demux_select== 3'd6) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress7_ds_pkt_valid = (demux_select== 3'd7) ? ingress_ds_pkt_valid : 3'd0;
 
-    def main(self):						    def main(self):
-        self.write_to_file(self.get_verilog())			        self.write_to_file(self.get_verilog())
-        return self.get_verilog()				        return self.get_verilog()
+wire assign ingress_ds_pkt_ready          =
+                                           ((demux_select== 3'd0) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd1) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd2) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd3) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd4) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd5) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd6) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd7) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                            1'b0;
 
 
-    def __init__(self, camdepth, camwidth, snoopwidth, path_o	    def __init__(self, camdepth, camwidth, snoopwidth, path_o
-        self.CamDepth = camdepth				        self.CamDepth = camdepth
-        self.EncodedDepth = ceil(log2(int(camdepth)))		        self.EncodedDepth = ceil(log2(int(camdepth)))
-        self.SnoopWidth = snoopwidth				        self.SnoopWidth = snoopwidth
-        self.CamWidth = camwidth				        self.CamWidth = camwidth
-        self.name = "AH_" + self.__class__.__name__ + "_" + s	        self.name = "AH_" + self.__class__.__name__ + "_" + s
-        super().__init__(self.name)				        super().__init__(self.name)
-        self.body = ""						        self.body = ""
-        self.variable_dict={}					        self.variable_dict={}
-        self.Create_dic_of_variable()				        self.Create_dic_of_variable()
-        self.add_ports_from_bus(path_of_yaml, bus_name)		        self.add_ports_from_bus(path_of_yaml, bus_name)
-        self.cambody="""					        self.cambody="""
-wire [ENCODEDDEPTH - 1:0] internal_wr_ptr;			wire [ENCODEDDEPTH - 1:0] internal_wr_ptr;
-req  [ENCODEDDEPTH:0] wr_loc_counter;				req  [ENCODEDDEPTH:0] wr_loc_counter;
-        /f_f/							        /f_f/
-code = "\\n".join(["req  ["+str(CamWidth-1)+":0] cam_loc"+str	code = "\\n".join(["req  ["+str(CamWidth-1)+":0] cam_loc"+str
-        /f_f/							        /f_f/
-        always @ (posedge clk or negedge rst_an)		        always @ (posedge clk or negedge rst_an)
-begin								begin
-if (!rst_an) begin						if (!rst_an) begin
-  wr_loc_counter <= ENCODEDDEPTH+1'd0; // log2(CAMDEPTH) +1	  wr_loc_counter <= ENCODEDDEPTH+1'd0; // log2(CAMDEPTH) +1
-       end else begin						       end else begin
-  wr_loc_counter <= wr_location_counter[ENCODEDDEPTH] ? wr_lo	  wr_loc_counter <= wr_location_counter[ENCODEDDEPTH] ? wr_lo
-       end							       end
-end								end
-AH_srvfifo_ENCODEDDEPTH_CAMDEPTH u_wrloc_recirfifo (		AH_srvfifo_ENCODEDDEPTH_CAMDEPTH u_wrloc_recirfifo (
-.wr_valid(freeup_loc)						.wr_valid(freeup_loc)
-,.wr_ready(freedup_loc_valid)					,.wr_ready(freedup_loc_valid)
-,.wr_data(freedup_loc_ready)					,.wr_data(freedup_loc_ready)
 
-,.rd_valid(recir_loc_valid)					,.rd_valid(recir_loc_valid)
-,.rd_ready(recir_loc_ready)					,.rd_ready(recir_loc_ready)
-,.rd_data(recir_loc)						,.rd_data(recir_loc)
-);								);
 
-assign internal_wr_en = wr_valid & (recir_loc_valid | ~wr_loc	assign internal_wr_en = wr_valid & (recir_loc_valid | ~wr_loc
-assign internal_wr_ptr = ~wr_location_counter[ENCODEDDEPTH + 	assign internal_wr_ptr = ~wr_location_counter[ENCODEDDEPTH + 
+// Ingress and Egress are short circuited based on condition
 
-assign wr_ready	= ~wr_location_counter[ENCODEDDEPTH + 1] ? 1'	assign wr_ready	= ~wr_location_counter[ENCODEDDEPTH + 1] ? 1'
 
-assign recir_loc_ready	= ~wr_location_counter[ENCODEDDEPTH +	assign recir_loc_ready	= ~wr_location_counter[ENCODEDDEPTH +
+wire assign egress0_ds_pkt       = (demux_select== 3'd0) ? ingress_ds_pkt       : 3'd0;
+wire assign egress1_ds_pkt       = (demux_select== 3'd1) ? ingress_ds_pkt       : 3'd0;
+wire assign egress2_ds_pkt       = (demux_select== 3'd2) ? ingress_ds_pkt       : 3'd0;
+wire assign egress3_ds_pkt       = (demux_select== 3'd3) ? ingress_ds_pkt       : 3'd0;
+wire assign egress4_ds_pkt       = (demux_select== 3'd4) ? ingress_ds_pkt       : 3'd0;
+wire assign egress5_ds_pkt       = (demux_select== 3'd5) ? ingress_ds_pkt       : 3'd0;
+wire assign egress6_ds_pkt       = (demux_select== 3'd6) ? ingress_ds_pkt       : 3'd0;
+wire assign egress7_ds_pkt       = (demux_select== 3'd7) ? ingress_ds_pkt       : 3'd0;
+wire assign egress0_ds_pkt_valid = (demux_select== 3'd0) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress1_ds_pkt_valid = (demux_select== 3'd1) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress2_ds_pkt_valid = (demux_select== 3'd2) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress3_ds_pkt_valid = (demux_select== 3'd3) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress4_ds_pkt_valid = (demux_select== 3'd4) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress5_ds_pkt_valid = (demux_select== 3'd5) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress6_ds_pkt_valid = (demux_select== 3'd6) ? ingress_ds_pkt_valid : 3'd0;
+wire assign egress7_ds_pkt_valid = (demux_select== 3'd7) ? ingress_ds_pkt_valid : 3'd0;
 
-always @ (posedge clk or negedge rst_an)			always @ (posedge clk or negedge rst_an)
-if (!rst_an) begin						if (!rst_an) begin
+wire assign ingress_ds_pkt_ready          =
+                                           ((demux_select== 3'd0) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd1) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd2) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd3) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd4) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd5) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd6) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                           ((demux_select== 3'd7) ? egress1_ds_pkt_ready ? 1'b0) | 
+                                            1'b0;
 
-/f_f/								/f_f/
-code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= "+str(CamW	code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= "+str(CamW
-/f_f/								/f_f/
 
-end else begin							end else begin
-/f_f/								/f_f/
-code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= (internal_	code = "\\n\t"+"\\n\t".join(["cam_loc"+str(i)+" <= (internal_
-"'d"+str(i)+") ) ? wr_data : cam_loc"+str(i)+";" for i in ran	"'d"+str(i)+") ) ? wr_data : cam_loc"+str(i)+";" for i in ran
-/f_f/								/f_f/
 
-end								end
+endmodule
 
-wire assign snoop_match = freedup_loc_ready) & (		wire assign snoop_match = freedup_loc_ready) & (
-
-/f_f/								/f_f/
-code = " |\\n ".join(["(snoop_in == cam_loc"+str(i)+"["+str(S	code = " |\\n ".join(["(snoop_in == cam_loc"+str(i)+"["+str(S
-/f_f/								/f_f/
-);								);
-
-wire assign snoop_data = CAMWIDTH'd0 |				wire assign snoop_data = CAMWIDTH'd0 |
-/f_f/								/f_f/
-code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str	code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str
-/f_f/								/f_f/
-;								;
-
-wire assign freeup_loc = ENCODEDDEPTH'd0 |			wire assign freeup_loc = ENCODEDDEPTH'd0 |
-/f_f/								/f_f/
-code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str	code = " |\\n ".join(["( (snoop_in == cam_loc"+str(i)+"["+str
-/f_f/								/f_f/
-;								;
-
-wire assign freedup_loc_valid = snoop_match;			wire assign freedup_loc_valid = snoop_match;
-"""								"""
-cam=CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),	cam=CAM(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),
-cam.main()							cam.main()
