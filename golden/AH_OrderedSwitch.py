@@ -408,6 +408,7 @@ t = OrderedSwitch(10, 20, 30, 40, 50)
 t.main()
 with open('/home/mayukhs/Documents/smartasic2/refbuses/order_port.yaml','w') as f:
     f.write(yaml.dump(t.port_dict))
+print(t.port_dict)
 print("1"*50)
 #print(yaml.dump(t.wire_dict))
 
