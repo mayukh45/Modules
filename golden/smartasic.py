@@ -113,8 +113,8 @@ class BasicModule:
 
     def add_ports_from_bus(self):
         self.Ports.clear()
-        self.add_port("clk", "input", 1,"clk", None, "clk")
-        self.add_port("rstn", "input", 1,"rstn", None, "rstn")
+        self.add_port("clk", "input", "nonfluid",1,"clk", None, "clk")
+        self.add_port("rstn", "input","nonfluid",1,"rstn", None, "rstn")
 
     def get_object_declaration_str(self, obj_name):
         self.add_ports_from_bus()
