@@ -8,6 +8,7 @@ class BusParser:
     def __init__(self, filepath, bus_name):
         self.dict = yaml.load(open(filepath).read())
         self.BusName = bus_name
+        self.init_connections(self.dict)
 
     #=============================================================================================================================================
     # Used to craate an useful net name for each signal for example cpu_2_peripheral0_* bus. It overloads the prefix and prefloat directly
@@ -362,6 +363,7 @@ class BusParser:
                             v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
                             v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
                             v.update({"linked_to": None})
+                            v.update({"name": "_".join(self.get_path(k).split(".")[len(self.get_path(k).split(".")) - 1:])})
 
                         inner(v)
 
