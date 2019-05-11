@@ -1,12 +1,8 @@
 
-module AH_LruArbiter_35 (clk
-,rstn
-,req
+module AH_LruArbiter_35 (req
 ,gnt_busy
 ,gnt);
 
-input clk;
-input rstn;
 input [34:0] req;
 input [34:0] gnt_busy;
 output [34:0] gnt;

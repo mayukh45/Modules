@@ -226,7 +226,7 @@ class BasicModule:
 
     def write_to_file(self, verilog):
         #print(str(Path.home())
-        with open(str(Path.home())+"/Documents/smartasic2/dumpverilog/"+self.name+".v","w") as f:
+        with open(str(Path.home())+"/Documents/smartasic2/Modules/golden/AH_genverilog/"+self.name+".v","w") as f:
             f.write(verilog)
 
     def remove_port(self, port_name):

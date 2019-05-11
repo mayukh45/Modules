@@ -68,7 +68,7 @@ class DynamicGenerator:
         try:
             # os.remove(self.temp_py_file)
             # os.remove(self.temp_txt_file)
-            #os.system("rm temp_*")
+            os.system("rm temp_*")
             os.system("rm output_*")
         except:
             raise Exception("file not found")

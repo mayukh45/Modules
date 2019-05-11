@@ -23,10 +23,10 @@ class PacketConverter(BasicModule):
         parser.remove_sub_dict_flat("snoop")         
         parser.rename_flat("wcredit","wready")
         parser.rename_flat("rcredit","rready")
-        parser.wid_op_flat('rdata',self.WideWidth)
-        parser.wid_op_flat("wdata",self.NarrowWidth)
-        parser.flip_op_flat("wr")
-        parser.flip_op_flat("rd")
+        parser.widop_flat('rdata',self.WideWidth)
+        parser.widop_flat("wdata",self.NarrowWidth)
+        parser.flipop_flat("wr")
+        parser.flipop_flat("rd")
         self.get_all_key_value_pairs(parser.dict) 
 
     def get_body(self):

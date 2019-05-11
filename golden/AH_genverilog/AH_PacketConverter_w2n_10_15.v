@@ -1,21 +1,17 @@
 
-module AH_PacketConverter_w2n_10_15 (clk
-,rstn
-,wdata
+module AH_PacketConverter_w2n_10_15 (wdata
 ,wvalid
-,wready
+,wcredit
 ,rdata
 ,rvalid
-,rready);
+,rcredit);
 
-input clk;
-input rstn;
 output [9:0] wdata;
 output wvalid;
-input wready;
+input wcredit;
 input [14:0] rdata;
 input rvalid;
-output rready;
+output rcredit;
 
 
 
@@ -24,6 +20,7 @@ wire [-1:0] npacket_lane;
 always(@posedge clk or negedge rstn) begin
 if (!rstn) begin
     packet_lane <= 0'd0;
+
 	collated_packet <=15'd0;
 
 
@@ -35,6 +32,7 @@ end else begin
 
     end
 end
+
 assign npacket_lane = !rd_valid ? packet_lane:
 	(packet_lane != 0'd0) ? packet_lane + 1'b1:
 	wr_ready ? packet_lane + 1'b1 :packet_lane;

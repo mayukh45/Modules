@@ -9,7 +9,7 @@ class LruArbiter(BasicModule):
     #=========================================================================   
     # Overwrite the add_ports_from_bus method here.
     # Create the instance of busparser class.
-    # Then use the wid_op method to change the port width req, gnt, gnt_busy signals.
+    # Then use the widop method to change the port width req, gnt, gnt_busy signals.
     #=========================================================================
     
     ###### creating dictonary of variable
@@ -18,9 +18,9 @@ class LruArbiter(BasicModule):
 
     def add_ports_from_bus(self, filepath, bus_name):
         parser = BusParser(filepath, bus_name)
-        parser.wid_op_flat("req",self.Num_Clients)
-        parser.wid_op_flat("gnt",self.Num_Clients)
-        parser.wid_op_flat("gnt_busy",self.Num_Clients)
+        parser.widop_flat("req",self.Num_Clients)
+        parser.widop_flat("gnt",self.Num_Clients)
+        parser.widop_flat("gnt_busy",self.Num_Clients)
         self.get_all_key_value_pairs(parser.dict) 
 
     def get_body(self):

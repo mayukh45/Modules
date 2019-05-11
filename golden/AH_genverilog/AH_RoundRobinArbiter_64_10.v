@@ -1,13 +1,9 @@
 
-module AH_RoundRobinArbiter_64_10 (clk
-,rstn
-,req
-,grant);
+module AH_RoundRobinArbiter_64_10 (req
+,gnt);
 
-input clk;
-input rstn;
 input [63:0] req;
-output [63:0] grant;
+output [63:0] gnt;
 
 input [10:0] cfg_weight0;
 input [10:0] cfg_weight1;
