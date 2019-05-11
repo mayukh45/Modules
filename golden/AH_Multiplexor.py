@@ -72,9 +72,6 @@ class Multiplexor(BasicModule,BusParser):
         self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
         
-
-
-
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.muxdemuxbody) # passing dictonary and snoopbody to split the body
         self.body+=dynamicgenerator.parse_body()
@@ -94,7 +91,6 @@ class Multiplexor(BasicModule,BusParser):
         self.write_to_file(self.get_verilog())
         print (self.get_verilog())
         return self.get_verilog()
-
 
     def __init__(self, portwidth, numclients, isdemux, isbinary, path_of_yaml, bus_name):
         self.PortWidth = portwidth
