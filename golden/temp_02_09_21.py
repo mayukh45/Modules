@@ -1,8 +1,8 @@
 PortWidth=2424
-NumClients=8
-IsDemux=1
-IsBinary=0
-EncodedDepth=3
+NumClients=32
+IsDemux=False
+IsBinary=True
+EncodedDepth=5
 
 
 code = ""
