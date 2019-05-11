@@ -1,18 +1,17 @@
 Just checking what is the file name..
-AH_demux_2424_8_0
+AH_demux_2424_32_True
 {'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
 I am going to operate on this dict now
-{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
-I am going to operate on this dict (2)
-{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 2424, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'egr2_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'egr3_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'egr4_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'egr5_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'egr6_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress7': {'egr7_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr7_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr7_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress8': {'egr8_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr8_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr8_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress9': {'egr9_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr9_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr9_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress10': {'egr10_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr10_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr10_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress11': {'egr11_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr11_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr11_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress12': {'egr12_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr12_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr12_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress13': {'egr13_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr13_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr13_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress14': {'egr14_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr14_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr14_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress15': {'egr15_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr15_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr15_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress16': {'egr16_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr16_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr16_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress17': {'egr17_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr17_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr17_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress18': {'egr18_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr18_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr18_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress19': {'egr19_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr19_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr19_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress20': {'egr20_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr20_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr20_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress21': {'egr21_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr21_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr21_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress22': {'egr22_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr22_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr22_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress23': {'egr23_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr23_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr23_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress24': {'egr24_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr24_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr24_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress25': {'egr25_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr25_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr25_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress26': {'egr26_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr26_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr26_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress27': {'egr27_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr27_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr27_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress28': {'egr28_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr28_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr28_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress29': {'egr29_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr29_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr29_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress30': {'egr30_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr30_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr30_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
 I am going to operate on this dict again
-{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+This is the self.IsDemux value --False
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 2424, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'egr2_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'egr3_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'egr4_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'egr5_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'egr6_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress7': {'egr7_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr7_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr7_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress8': {'egr8_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr8_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr8_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress9': {'egr9_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr9_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr9_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress10': {'egr10_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr10_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr10_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress11': {'egr11_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr11_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr11_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress12': {'egr12_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr12_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr12_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress13': {'egr13_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr13_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr13_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress14': {'egr14_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr14_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr14_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress15': {'egr15_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr15_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr15_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress16': {'egr16_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr16_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr16_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress17': {'egr17_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr17_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr17_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress18': {'egr18_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr18_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr18_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress19': {'egr19_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr19_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr19_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress20': {'egr20_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr20_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr20_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress21': {'egr21_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr21_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr21_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress22': {'egr22_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr22_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr22_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress23': {'egr23_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr23_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr23_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress24': {'egr24_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr24_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr24_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress25': {'egr25_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr25_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr25_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress26': {'egr26_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr26_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr26_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress27': {'egr27_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr27_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr27_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress28': {'egr28_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr28_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr28_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress29': {'egr29_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr29_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr29_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress30': {'egr30_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr30_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr30_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
 I am going to operate on this dict again(2)
-{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 18, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'demux.egress2.egr2_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress2.egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress2.egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'demux.egress3.egr3_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress3.egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress3.egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'demux.egress4.egr4_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress4.egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress4.egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'demux.egress5.egr5_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress5.egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress5.egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'demux.egress6.egr6_data': {'direction': 'output', 'width': 18, 'type': 'fluid'}, 'demux.egress6.egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'demux.egress6.egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
+{'demux': {'ingress': {'ing_data': {'direction': 'input', 'width': 2424, 'type': 'fluid'}, 'ing_valid': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}, 'ing_ready': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}}, 'egress0': {'egr0_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr0_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr0_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress1': {'egr1_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr1_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr1_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress2': {'egr2_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr2_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr2_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress3': {'egr3_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr3_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr3_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress4': {'egr4_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr4_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr4_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress5': {'egr5_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr5_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr5_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress6': {'egr6_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr6_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr6_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress7': {'egr7_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr7_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr7_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress8': {'egr8_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr8_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr8_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress9': {'egr9_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr9_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr9_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress10': {'egr10_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr10_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr10_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress11': {'egr11_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr11_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr11_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress12': {'egr12_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr12_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr12_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress13': {'egr13_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr13_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr13_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress14': {'egr14_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr14_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr14_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress15': {'egr15_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr15_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr15_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress16': {'egr16_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr16_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr16_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress17': {'egr17_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr17_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr17_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress18': {'egr18_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr18_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr18_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress19': {'egr19_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr19_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr19_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress20': {'egr20_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr20_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr20_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress21': {'egr21_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr21_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr21_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress22': {'egr22_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr22_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr22_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress23': {'egr23_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr23_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr23_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress24': {'egr24_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr24_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr24_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress25': {'egr25_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr25_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr25_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress26': {'egr26_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr26_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr26_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress27': {'egr27_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr27_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr27_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress28': {'egr28_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr28_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr28_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress29': {'egr29_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr29_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr29_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}, 'egress30': {'egr30_data': {'direction': 'output', 'width': 2424, 'type': 'fluid'}, 'egr30_valid': {'direction': 'output', 'width': 1, 'type': 'nonfluid'}, 'egr30_ready': {'direction': 'input', 'width': 1, 'type': 'nonfluid'}}}}
 I am done with this dict
 I am about to write a verilog file now
 
-module AH_demux_2424_8_0 (ing_data
+module AH_demux_2424_32_True (ing_data
 ,ing_valid
 ,ing_ready
 ,egr0_data
@@ -21,78 +20,196 @@ module AH_demux_2424_8_0 (ing_data
 ,egr1_data
 ,egr1_valid
 ,egr1_ready
-,demux.egress2.egr2_data
-,demux.egress2.egr2_valid
-,demux.egress2.egr2_ready
-,demux.egress3.egr3_data
-,demux.egress3.egr3_valid
-,demux.egress3.egr3_ready
-,demux.egress4.egr4_data
-,demux.egress4.egr4_valid
-,demux.egress4.egr4_ready
-,demux.egress5.egr5_data
-,demux.egress5.egr5_valid
-,demux.egress5.egr5_ready
-,demux.egress6.egr6_data
-,demux.egress6.egr6_valid
-,demux.egress6.egr6_ready);
+,egr2_data
+,egr2_valid
+,egr2_ready
+,egr3_data
+,egr3_valid
+,egr3_ready
+,egr4_data
+,egr4_valid
+,egr4_ready
+,egr5_data
+,egr5_valid
+,egr5_ready
+,egr6_data
+,egr6_valid
+,egr6_ready
+,egr7_data
+,egr7_valid
+,egr7_ready
+,egr8_data
+,egr8_valid
+,egr8_ready
+,egr9_data
+,egr9_valid
+,egr9_ready
+,egr10_data
+,egr10_valid
+,egr10_ready
+,egr11_data
+,egr11_valid
+,egr11_ready
+,egr12_data
+,egr12_valid
+,egr12_ready
+,egr13_data
+,egr13_valid
+,egr13_ready
+,egr14_data
+,egr14_valid
+,egr14_ready
+,egr15_data
+,egr15_valid
+,egr15_ready
+,egr16_data
+,egr16_valid
+,egr16_ready
+,egr17_data
+,egr17_valid
+,egr17_ready
+,egr18_data
+,egr18_valid
+,egr18_ready
+,egr19_data
+,egr19_valid
+,egr19_ready
+,egr20_data
+,egr20_valid
+,egr20_ready
+,egr21_data
+,egr21_valid
+,egr21_ready
+,egr22_data
+,egr22_valid
+,egr22_ready
+,egr23_data
+,egr23_valid
+,egr23_ready
+,egr24_data
+,egr24_valid
+,egr24_ready
+,egr25_data
+,egr25_valid
+,egr25_ready
+,egr26_data
+,egr26_valid
+,egr26_ready
+,egr27_data
+,egr27_valid
+,egr27_ready
+,egr28_data
+,egr28_valid
+,egr28_ready
+,egr29_data
+,egr29_valid
+,egr29_ready
+,egr30_data
+,egr30_valid
+,egr30_ready);
 
-input [17:0] ing_data;
+input [2423:0] ing_data;
 input ing_valid;
 output ing_ready;
-output [17:0] egr0_data;
+output [2423:0] egr0_data;
 output egr0_valid;
 input egr0_ready;
-output [17:0] egr1_data;
+output [2423:0] egr1_data;
 output egr1_valid;
 input egr1_ready;
-output [17:0] demux.egress2.egr2_data;
-output demux.egress2.egr2_valid;
-input demux.egress2.egr2_ready;
-output [17:0] demux.egress3.egr3_data;
-output demux.egress3.egr3_valid;
-input demux.egress3.egr3_ready;
-output [17:0] demux.egress4.egr4_data;
-output demux.egress4.egr4_valid;
-input demux.egress4.egr4_ready;
-output [17:0] demux.egress5.egr5_data;
-output demux.egress5.egr5_valid;
-input demux.egress5.egr5_ready;
-output [17:0] demux.egress6.egr6_data;
-output demux.egress6.egr6_valid;
-input demux.egress6.egr6_ready;
+output [2423:0] egr2_data;
+output egr2_valid;
+input egr2_ready;
+output [2423:0] egr3_data;
+output egr3_valid;
+input egr3_ready;
+output [2423:0] egr4_data;
+output egr4_valid;
+input egr4_ready;
+output [2423:0] egr5_data;
+output egr5_valid;
+input egr5_ready;
+output [2423:0] egr6_data;
+output egr6_valid;
+input egr6_ready;
+output [2423:0] egr7_data;
+output egr7_valid;
+input egr7_ready;
+output [2423:0] egr8_data;
+output egr8_valid;
+input egr8_ready;
+output [2423:0] egr9_data;
+output egr9_valid;
+input egr9_ready;
+output [2423:0] egr10_data;
+output egr10_valid;
+input egr10_ready;
+output [2423:0] egr11_data;
+output egr11_valid;
+input egr11_ready;
+output [2423:0] egr12_data;
+output egr12_valid;
+input egr12_ready;
+output [2423:0] egr13_data;
+output egr13_valid;
+input egr13_ready;
+output [2423:0] egr14_data;
+output egr14_valid;
+input egr14_ready;
+output [2423:0] egr15_data;
+output egr15_valid;
+input egr15_ready;
+output [2423:0] egr16_data;
+output egr16_valid;
+input egr16_ready;
+output [2423:0] egr17_data;
+output egr17_valid;
+input egr17_ready;
+output [2423:0] egr18_data;
+output egr18_valid;
+input egr18_ready;
+output [2423:0] egr19_data;
+output egr19_valid;
+input egr19_ready;
+output [2423:0] egr20_data;
+output egr20_valid;
+input egr20_ready;
+output [2423:0] egr21_data;
+output egr21_valid;
+input egr21_ready;
+output [2423:0] egr22_data;
+output egr22_valid;
+input egr22_ready;
+output [2423:0] egr23_data;
+output egr23_valid;
+input egr23_ready;
+output [2423:0] egr24_data;
+output egr24_valid;
+input egr24_ready;
+output [2423:0] egr25_data;
+output egr25_valid;
+input egr25_ready;
+output [2423:0] egr26_data;
+output egr26_valid;
+input egr26_ready;
+output [2423:0] egr27_data;
+output egr27_valid;
+input egr27_ready;
+output [2423:0] egr28_data;
+output egr28_valid;
+input egr28_ready;
+output [2423:0] egr29_data;
+output egr29_valid;
+input egr29_ready;
+output [2423:0] egr30_data;
+output egr30_valid;
+input egr30_ready;
 
 
 // Ingress and Egress are short circuited based on condition
 
 
-wire assign egress0_ds_pkt       = (demux_select== 3'd0) ? ingress_ds_pkt       : 3'd0;
-wire assign egress1_ds_pkt       = (demux_select== 3'd1) ? ingress_ds_pkt       : 3'd0;
-wire assign egress2_ds_pkt       = (demux_select== 3'd2) ? ingress_ds_pkt       : 3'd0;
-wire assign egress3_ds_pkt       = (demux_select== 3'd3) ? ingress_ds_pkt       : 3'd0;
-wire assign egress4_ds_pkt       = (demux_select== 3'd4) ? ingress_ds_pkt       : 3'd0;
-wire assign egress5_ds_pkt       = (demux_select== 3'd5) ? ingress_ds_pkt       : 3'd0;
-wire assign egress6_ds_pkt       = (demux_select== 3'd6) ? ingress_ds_pkt       : 3'd0;
-wire assign egress7_ds_pkt       = (demux_select== 3'd7) ? ingress_ds_pkt       : 3'd0;
-wire assign egress0_ds_pkt_valid = (demux_select== 3'd0) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress1_ds_pkt_valid = (demux_select== 3'd1) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress2_ds_pkt_valid = (demux_select== 3'd2) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress3_ds_pkt_valid = (demux_select== 3'd3) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress4_ds_pkt_valid = (demux_select== 3'd4) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress5_ds_pkt_valid = (demux_select== 3'd5) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress6_ds_pkt_valid = (demux_select== 3'd6) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress7_ds_pkt_valid = (demux_select== 3'd7) ? ingress_ds_pkt_valid : 3'd0;
-
-wire assign ingress_ds_pkt_ready          =
-                                           ((demux_select== 3'd0) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd1) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd2) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd3) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd4) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd5) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd6) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd7) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                            1'b0;
+wire assign egress_ds_pkt            =
 
 
 
@@ -100,33 +217,7 @@ wire assign ingress_ds_pkt_ready          =
 // Ingress and Egress are short circuited based on condition
 
 
-wire assign egress0_ds_pkt       = (demux_select== 3'd0) ? ingress_ds_pkt       : 3'd0;
-wire assign egress1_ds_pkt       = (demux_select== 3'd1) ? ingress_ds_pkt       : 3'd0;
-wire assign egress2_ds_pkt       = (demux_select== 3'd2) ? ingress_ds_pkt       : 3'd0;
-wire assign egress3_ds_pkt       = (demux_select== 3'd3) ? ingress_ds_pkt       : 3'd0;
-wire assign egress4_ds_pkt       = (demux_select== 3'd4) ? ingress_ds_pkt       : 3'd0;
-wire assign egress5_ds_pkt       = (demux_select== 3'd5) ? ingress_ds_pkt       : 3'd0;
-wire assign egress6_ds_pkt       = (demux_select== 3'd6) ? ingress_ds_pkt       : 3'd0;
-wire assign egress7_ds_pkt       = (demux_select== 3'd7) ? ingress_ds_pkt       : 3'd0;
-wire assign egress0_ds_pkt_valid = (demux_select== 3'd0) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress1_ds_pkt_valid = (demux_select== 3'd1) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress2_ds_pkt_valid = (demux_select== 3'd2) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress3_ds_pkt_valid = (demux_select== 3'd3) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress4_ds_pkt_valid = (demux_select== 3'd4) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress5_ds_pkt_valid = (demux_select== 3'd5) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress6_ds_pkt_valid = (demux_select== 3'd6) ? ingress_ds_pkt_valid : 3'd0;
-wire assign egress7_ds_pkt_valid = (demux_select== 3'd7) ? ingress_ds_pkt_valid : 3'd0;
-
-wire assign ingress_ds_pkt_ready          =
-                                           ((demux_select== 3'd0) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd1) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd2) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd3) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd4) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd5) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd6) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                           ((demux_select== 3'd7) ? egress1_ds_pkt_ready ? 1'b0) | 
-                                            1'b0;
+wire assign egress_ds_pkt            =
 
 
 

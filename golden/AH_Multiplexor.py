@@ -25,26 +25,33 @@ class Multiplexor(BasicModule,BusParser):
         self.dyaml("1.yaml")
         print("I am going to operate on this dict now")
 
+        ##if(self.NumClients > 2):
+        ##    for i in range(2, self.NumClients-1):
+
+        ##print(self.dict)
+        ##self.dyaml("1_1.yaml")
+        ##print("I am going to operate on this dict (2)")
+        #self.rename("egress2.egr1_data" , "egress2.egr2_data" )
+
+
         if(self.NumClients > 2):
             for i in range(2, self.NumClients-1):
                 self.copy_flat("egress1", "egress"+str(i))
-
-        print(self.dict)
-        self.dyaml("1_1.yaml")
-        print("I am going to operate on this dict (2)")
-        #self.rename("egress2.egr1_data" , "egress2.egr2_data" )
-
-        if(self.NumClients > 2):
-            for i in range(2, self.NumClients-1):
                 self.rename("demux.egress"+str(i)+".egr1_data" , "egr"+str(i)+"_data" )
                 self.rename("demux.egress"+str(i)+".egr1_valid", "egr"+str(i)+"_valid")
                 self.rename("demux.egress"+str(i)+".egr1_ready", "egr"+str(i)+"_ready")
+        
+        self.widop_flat("ing_data",self.PortWidth)
+        for i in range(0, self.NumClients-1):
+            self.widop_flat("egr"+str(i)+"_data",self.PortWidth)
 
         print(self.dict)
         print("I am going to operate on this dict again")
         self.dyaml("2.yaml")
-        
-        if (self.IsDemux is None):
+       
+        print("This is the self.IsDemux value --"+self.IsDemux)
+
+        if self.IsDemux is False:
             for i in range (self.NumClients):
                 self.rename_flat("egress"+str(i), "ingress"+str(i)) 
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_data" , "ing"+str(i)+"_data" )
@@ -55,10 +62,10 @@ class Multiplexor(BasicModule,BusParser):
         print("I am going to operate on this dict again(2)")
         self.dyaml("3.yaml")
         
-        if self.IsDemux is None:
+        if not self.IsDemux:
             self.rename_flat("ingress", "egress")
             print(self.dict)
-            print("I am going to operate on this dict again(2)")
+            print("I am going to operate on this dict again(3)")
             self.dyaml("3_3.yaml")
             self.rename("demux.egress.ing_data" , "egr_data" )
             self.rename("demux.egress.ing_valid", "egr_valid")

@@ -3,7 +3,7 @@ demux:
         egr0_data:
             direction: output
             type: fluid
-            width: 18
+            width: 2424
         egr0_ready:
             direction: input
             type: nonfluid
@@ -16,7 +16,7 @@ demux:
         egr1_data:
             direction: output
             type: fluid
-            width: 18
+            width: 2424
         egr1_ready:
             direction: input
             type: nonfluid
@@ -25,68 +25,380 @@ demux:
             direction: output
             type: nonfluid
             width: 1
-    egress2:
-        demux.egress2.egr2_data:
+    egress10:
+        egr10_data:
             direction: output
             type: fluid
-            width: 18
-        demux.egress2.egr2_ready:
+            width: 2424
+        egr10_ready:
             direction: input
             type: nonfluid
             width: 1
-        demux.egress2.egr2_valid:
+        egr10_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress11:
+        egr11_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr11_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr11_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress12:
+        egr12_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr12_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr12_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress13:
+        egr13_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr13_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr13_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress14:
+        egr14_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr14_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr14_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress15:
+        egr15_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr15_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr15_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress16:
+        egr16_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr16_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr16_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress17:
+        egr17_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr17_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr17_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress18:
+        egr18_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr18_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr18_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress19:
+        egr19_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr19_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr19_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress2:
+        egr2_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr2_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr2_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress20:
+        egr20_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr20_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr20_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress21:
+        egr21_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr21_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr21_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress22:
+        egr22_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr22_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr22_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress23:
+        egr23_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr23_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr23_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress24:
+        egr24_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr24_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr24_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress25:
+        egr25_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr25_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr25_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress26:
+        egr26_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr26_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr26_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress27:
+        egr27_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr27_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr27_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress28:
+        egr28_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr28_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr28_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress29:
+        egr29_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr29_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr29_valid:
             direction: output
             type: nonfluid
             width: 1
     egress3:
-        demux.egress3.egr3_data:
+        egr3_data:
             direction: output
             type: fluid
-            width: 18
-        demux.egress3.egr3_ready:
+            width: 2424
+        egr3_ready:
             direction: input
             type: nonfluid
             width: 1
-        demux.egress3.egr3_valid:
+        egr3_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress30:
+        egr30_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr30_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr30_valid:
             direction: output
             type: nonfluid
             width: 1
     egress4:
-        demux.egress4.egr4_data:
+        egr4_data:
             direction: output
             type: fluid
-            width: 18
-        demux.egress4.egr4_ready:
+            width: 2424
+        egr4_ready:
             direction: input
             type: nonfluid
             width: 1
-        demux.egress4.egr4_valid:
+        egr4_valid:
             direction: output
             type: nonfluid
             width: 1
     egress5:
-        demux.egress5.egr5_data:
+        egr5_data:
             direction: output
             type: fluid
-            width: 18
-        demux.egress5.egr5_ready:
+            width: 2424
+        egr5_ready:
             direction: input
             type: nonfluid
             width: 1
-        demux.egress5.egr5_valid:
+        egr5_valid:
             direction: output
             type: nonfluid
             width: 1
     egress6:
-        demux.egress6.egr6_data:
+        egr6_data:
             direction: output
             type: fluid
-            width: 18
-        demux.egress6.egr6_ready:
+            width: 2424
+        egr6_ready:
             direction: input
             type: nonfluid
             width: 1
-        demux.egress6.egr6_valid:
+        egr6_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress7:
+        egr7_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr7_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr7_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress8:
+        egr8_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr8_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr8_valid:
+            direction: output
+            type: nonfluid
+            width: 1
+    egress9:
+        egr9_data:
+            direction: output
+            type: fluid
+            width: 2424
+        egr9_ready:
+            direction: input
+            type: nonfluid
+            width: 1
+        egr9_valid:
             direction: output
             type: nonfluid
             width: 1
@@ -94,7 +406,7 @@ demux:
         ing_data:
             direction: input
             type: fluid
-            width: 18
+            width: 2424
         ing_ready:
             direction: output
             type: nonfluid
