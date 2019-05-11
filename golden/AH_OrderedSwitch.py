@@ -10,28 +10,31 @@ print(sys.path)
 class OrderedSwitch(BasicModule):
 
     def get_body(self):
-        spf1 = SnoopableFIFO(10, 32, 10,  "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
+        object_dict = {}
+        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
+        object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         spf1.smart_connectionop("astob", None,"wr_","egress0_dspkt_")
         spf1.smart_connectionop("astob", None, "rd_", "egress0_dspkt_")
         spf1.smart_connectionop("astob", None, "snoop_", "egress0_dspkt_")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
-        print(spf1.dict)
-        spf2 = copy.deepcopy(spf1)
-        spf2.smart_connectionop("astob", None, "egress0" , "egress1")
-        spf3 = copy.deepcopy(spf1)
-        spf3.smart_connectionop("astob", None, "egress0", "egress2")
-        spf4 = copy.deepcopy(spf1)
-        spf4.smart_connectionop("astob", None, "egress0", "egress3")
-        self.port_dict , self.wire_dict = self.populate_wire_and_ports(spf1,spf2, spf3, spf4)
+        #print(spf1.dict)
+        object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
+        for i in range(1, self.NumberOfEgress):
+            curr_obj = copy.deepcopy(spf1)
+            curr_obj.smart_connectionop("astob", None, "egress0" , "egress"+str(i))
+
+        self.port_dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
+
 
     def main(self):
         self.get_body()
 
-    def __init__(self, number_of_egress,ds_packet_size, ups_packet_size, ds_decodable_field_width, ups_response_decodable_field_width):
+    def __init__(self, number_of_egress,ds_packet_size, ups_packet_size, ds_decodable_field_width, ups_response_decodable_field_width, snoopdepth):
         self.name = "AH_"+self.__class__.__name__+"_"+str(number_of_egress)+"_"+str(ds_packet_size)+"_"+str(ups_packet_size)+"_"+str(ds_decodable_field_width)+"_"+str(ups_response_decodable_field_width)
         BasicModule.__init__(self, self.name)
         self.NumberOfEgress = number_of_egress
         self.dsPktSize = ds_packet_size
+        self.SnoopDepth = snoopdepth
         self.upPktSize = ups_packet_size
         self.dsDecodableFieldWidth = ds_decodable_field_width
         self.upResponseDecodableFieldWidth = ups_response_decodable_field_width
@@ -348,8 +351,6 @@ AH_decoder_4_20 u_decoder_4_20 (
     .ingress3_pkt_valid (egress3_us_pkt_valid),
     .ingress3_pkt_ready (egress3_us_pkt_ready),
 );
-i
-
 //===================================================================================
 // While sending upstream response valid -
 // For each egress channel-

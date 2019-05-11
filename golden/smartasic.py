@@ -123,25 +123,39 @@ class BasicModule:
     def populate_wire_and_ports(self, *args):
         wire_dict = {}
         port_dict = {}
-       # print("AFTER :" + str(args[0].dict))
+        set_of_ports = set()
+        for i in range(len(args)):
+            args[i].Ports.clear()
+            args[i].get_all_key_value_pairs(args[i].dict)
+
         for i in range(len(args)):
             curr_obj = args[i]
-          #  print("WTF :"+ str(curr_obj.dict))
-            curr_obj.Ports.clear()
-            curr_obj.get_all_key_value_pairs(curr_obj.dict)
-            #curr_obj.get_all_key_value_pairs(curr_obj.dict)
-         #   print("CURR_DICT : "+str(curr_obj.dict))
-            for port in curr_obj.Ports:
-                is_connected = False
+
+            for curr_port in curr_obj.Ports:
+                is_connected = None
               #  print("PORTS : "+str(port.__dict__))
-                for j in range(len(args)):
-                    if any([i!=j and port.cname == other_ports.cname  for other_ports in args[j].Ports]):
-                        is_connected = True
-               # print("BEFORE : "+ str(port_dict))
-                if is_connected and port.name != 'clk' and port.name != 'rstn':
-                    self.create_dict_branch(port.cname, wire_dict, port)
-                elif port.name!='clk' and port.name !='rstn':
-                    self.create_dict_branch(port.cname, port_dict, port)
+                if curr_port.direction == 'output' and curr_port.cname not in set_of_ports:
+                    for j in range(len(args)):
+                        if any([i!=j and other_port.direction == 'output' and other_port.cname == curr_port.cname for other_port in args[j].Ports]):
+                            raise Exception("Problem in " + str(curr_port.__dict__))
+
+                    is_connected = True
+                    set_of_ports.add(curr_port.cname)
+
+                elif curr_port.direction == 'input' and curr_port.cname not in set_of_ports:
+                    cout = True
+                    for j in range(len(args)):
+                        if any([i!=j and other_port.direction == 'output' and curr_port.cname == other_port.cname for other_port in args[j].Ports]):
+                            cout = False
+
+                    if not cout:
+                        is_connected = False
+                        set_of_ports.add(curr_port.cname)
+
+                if is_connected == True and curr_port.name != 'clk' and curr_port.name != 'rstn':
+                    self.create_dict_branch(curr_port.cname, wire_dict, curr_port)
+                elif is_connected == False and curr_port.name!='clk' and curr_port.name !='rstn':
+                    self.create_dict_branch(curr_port.cname, port_dict, curr_port)
                # print("AFTER : "+ str(port_dict))
         return port_dict , wire_dict
 
