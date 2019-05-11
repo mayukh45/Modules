@@ -40,7 +40,8 @@ class OrderedSwitch(BasicModule):
         self.upResponseDecodableFieldWidth = ups_response_decodable_field_width
         self.port_dict = {}
         self.wire_dict = {}
-        #self.order_body = """
+        #self.order_body =
+        """
 // 4 --> number of egress.
 // 25 -> ds packet size
 // 20 -> upstream packet size.
