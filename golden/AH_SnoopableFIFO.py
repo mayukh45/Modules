@@ -61,7 +61,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.EncodedDepth = int(ceil(log2(fifodepth)))
         self.variable_dict={}
         self.Create_dic_of_variable()
-        BusParser.__init__(self, path_of_yaml, bus_name)
+        BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
         self.add_ports_from_bus()
         self.snoopbody="""
 reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1

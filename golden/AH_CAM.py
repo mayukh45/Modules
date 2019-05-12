@@ -61,7 +61,7 @@ class CAM(BasicModule,BusParser):
         self.name = "AH_" + self.__class__.__name__ + "_" + str(camdepth) + "_" + str(camwidth) + "_" + str(snoopwidth)
         BasicModule.__init__(self,self.name)
         self.body = ""
-        BusParser.__init__(self,path_of_yaml, bus_name)
+        BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
         self.variable_dict={}
         self.Create_dic_of_variable()
         self.add_ports_from_bus()
