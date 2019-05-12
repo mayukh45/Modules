@@ -360,7 +360,7 @@ class BusParser:
                     if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
                         if 'direction' in v.keys():
                             v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
-                            v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
+                            v.update({"heiarchy": "_".join(self.get_path(k).split("."))})
                             #v.update({"linked_to": None})
                             v.update({"name": "_".join(self.get_path(k).split(".")[len(self.get_path(k).split(".")) - 1:])})
 
