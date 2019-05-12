@@ -50,11 +50,14 @@ class CAM(BasicModule,BusParser):
         return self.get_verilog()
 
 
-    def __init__(self, camdepth, camwidth, snoopwidth, path_of_yaml,bus_name):
+    def __init__(self, camdepth, camwidth, snoopwidth, path_of_yaml=None,bus_name=None):
         self.CamDepth = camdepth
         self.EncodedDepth = ceil(log2(int(camdepth)))
         self.SnoopWidth = snoopwidth
         self.CamWidth = camwidth
+        if path_of_yaml is None:
+            path_of_yaml = "../../../smartasic2/refbuses/astob_for_order_switch.yaml"
+            bus_name = "astob"
         self.name = "AH_" + self.__class__.__name__ + "_" + str(camdepth) + "_" + str(camwidth) + "_" + str(snoopwidth)
         BasicModule.__init__(self,self.name)
         self.body = ""

@@ -46,12 +46,15 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.write_to_file(self.get_verilog())
         return self.get_verilog()
 
-    def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml, bus_name):
+    def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml = None, bus_name = None):
         
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
-        
+        if path_of_yaml is None:
+            path_of_yaml = "../../../smartasic2/refbuses/astob_for_order_switch.yaml"
+            bus_name = "astob"
+
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
         BasicModule.__init__(self, self.name)
         self.body = ""
