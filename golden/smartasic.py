@@ -183,6 +183,7 @@ class BasicModule:
        # print("AFTER : "+ str(dictionary))
 
     def connport(self, data, pattern, port_dict):
+        parser = BusParser(data, list(data.keys())[0])
         def inner(data):
             if isinstance(data, dict):
                 for k, v in data.items():
@@ -190,6 +191,7 @@ class BasicModule:
                         if 'direction' in v.keys():
                             if re.match(pattern, v['cname']):
                                 self.create_dict_branch(v['heiarchy'], port_dict, v)
+                                parser.remove_sub_dict(v['heiarchy'])
 
 
                         inner(v)
