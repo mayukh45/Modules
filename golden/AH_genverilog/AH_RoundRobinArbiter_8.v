@@ -1,13 +1,9 @@
 
-module AH_RoundRobinArbiter_8 (clk
-,rstn
-,req
-,grant);
+module AH_RoundRobinArbiter_8 (req
+,gnt);
 
-input clk;
-input rstn;
 input [7:0] req;
-output [7:0] grant;
+output [7:0] gnt;
 
 
 

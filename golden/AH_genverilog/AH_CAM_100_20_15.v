@@ -1,7 +1,5 @@
 
-module AH_CAM_100_20_15 (clk
-,rstn
-,wdata
+module AH_CAM_100_20_15 (wdata
 ,wvalid
 ,wcredit
 ,sdata
@@ -9,8 +7,6 @@ module AH_CAM_100_20_15 (clk
 ,smatch
 ,sin);
 
-input clk;
-input rstn;
 input [19:0] wdata;
 input wvalid;
 output wcredit;

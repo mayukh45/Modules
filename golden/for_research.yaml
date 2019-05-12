@@ -1,0 +1,124 @@
+##========================================================================================
+##========================================================================================
+## Start of BASIC ACCESS  Interface Bus specification 
+#
+##========================================================================================
+##========================================================================================
+situation1 
+##========================================================================================
+obj_a.smart_connectionop wr_w mywires_
+.wr_wdata (mywires_data)
+.wr_wvalid(mywires_valid)
+.wr_wready(mywires_ready)
+
+obj_b.smart_connectionop rd_r mywires_
+.rd_rdata (mywires_data)
+.rd_rvalid(mywires_valid)
+.rd_rready(mywires_ready)
+
+wire [] mywires_data
+wire    mywires_valid
+wire    mywires_ready
+##========================================================================================
+
+usecase2
+##========================================================================================
+obj_a.smart_connectionop wr_w mywires_
+.wr_wdata (mywires_data)
+.wr_wvalid(mywires_valid)
+.wr_wready(mywires_ready)
+
+--obj_b does not have rd_r in its cname anymore.
+
+obj_b.smart_connport      rd_r mywires_
+.rd_rdata (mywires_data)  
+.rd_rvalid(mywires_valid)
+.rd_rready(mywires_ready) 
+
+output [] mywires_data
+output    mywires_valid
+output    mywires_ready
+##========================================================================================
+
+usecase3
+##========================================================================================
+obj_a.smart_connectionop wr_w mywires_
+.wr_wdata (mywires_data)
+.wr_wvalid(mywires_valid)
+.wr_wready(mywires_ready)
+
+--obj_b does not have rd_r in its cname anymore.
+
+obj_b.smart_connectionop      rd_r mywires_
+obj_b.smart_connport          mywires_rdata 
+
+.rd_rdata (mywires_data)  
+.rd_rvalid(mywires_valid)
+.rd_rready(mywires_ready) 
+
+output [] mywires_data
+wire      mywires_valid
+wire      mywires_ready
+
+
+obj_a -wr-> i i o 
+obj_b -rd-> o o i
+
+
+astob:
+           
+                    wr:
+                           wdata:
+                                     direction: input
+                                     width : 18
+                                     type: fluid
+                                     cname: mywire_wdata
+
+                           wvalid:
+                                     direction: input
+                                     width : 1
+                                     type: nonfluid
+                                     cname: mywire_wvalid
+
+                           wready:
+                                     direction: output
+                                     width : 1
+                                     type: nonfluid
+                                     cname: mywire_wready
+
+
+                    rd:
+                           rdata:
+                                     direction: output
+                                     width : 18
+                                     type: fluid
+
+                           rvalid:
+                                     direction: output
+                                     width : 1
+                                     type: nonfluid
+
+                           rready:
+                                     direction: input
+                                     width : 1
+                                     type: nonfluid
+
+                 
+                    snoop:
+                           sdata:
+                                     direction: input
+                                     width : 18
+                                     type: fluid
+
+                           svalid:
+                                     direction: input
+                                     width : 1
+                                     type: nonfluid
+
+                           smatch:
+                                     direction: input
+                                     width : 1
+                                     type: nonfluid
+
+
+                                                                                                                                                     

@@ -1,14 +1,10 @@
 
-module AH_DivPipelined_4_8 (clk
-,rstn
-,start
+module AH_DivPipelined_4_8 (start
 ,dividend
 ,divisor
 ,data_valid
 ,div_by_zero);
 
-input clk;
-input rstn;
 input start;
 input [3:0] dividend;
 input [3:0] divisor;

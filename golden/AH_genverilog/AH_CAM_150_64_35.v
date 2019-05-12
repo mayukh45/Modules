@@ -1,7 +1,5 @@
 
-module AH_CAM_150_64_35 (clk
-,rstn
-,wdata
+module AH_CAM_150_64_35 (wdata
 ,wvalid
 ,wready
 ,sdata
@@ -9,8 +7,6 @@ module AH_CAM_150_64_35 (clk
 ,smatch
 ,sin);
 
-input clk;
-input rstn;
 input [63:0] wdata;
 input wvalid;
 output wready;
