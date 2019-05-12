@@ -5,6 +5,8 @@ from templates import module_template
 from templates import fifo_body_template
 from pathlib import Path
 from BusParser import BusParser
+import re
+import yaml
 
 class Port:
 
@@ -13,7 +15,7 @@ class Port:
         OUTPUT = "output"
         INOUT  = "inout"
 
-    def __init__(self, name, direction, type, width, heiarchy, linked_to,  cname):
+    def __init__(self, name, direction, type, width, heiarchy, cname):
         """
         if not isinstance(direction, Port.Direction):
             raise TypeError('direction must be an instance of Port.Direction')
@@ -25,7 +27,6 @@ class Port:
         self.direction = direction
         self.width = width
         self.heiarchy = heiarchy
-        self.linked_to = linked_to
         self.cname = cname
 
     def get_declaration(self):
@@ -46,8 +47,8 @@ class BasicModule:
         self.results = []
         self.port_list = []
 
-    def add_port(self, name, direction, type, width, heiarchy, linked_to, cname):
-        self.Ports.append(Port(name, direction, type, width, heiarchy, linked_to, cname))
+    def add_port(self, name, direction, type, width, heiarchy, cname):
+        self.Ports.append(Port(name, direction, type, width, heiarchy, cname))
 
     def get_port_str(self):
         """port_objs = [self.__dict__[name] for name in self.__dict__ if isinstance(self.__dict__[name], Port)]
@@ -96,7 +97,7 @@ class BasicModule:
                              # TODO: I need to find the values of 'width', 'direction' and of course
                              # 'signal' here. If I can print them, I can just call self.add_port method
                              # here with them.
-                             self.add_port(v['name'], v['direction'], v['type'], v['width'], v['heiarchy'], v['linked_to'], v['cname'])
+                             self.add_port(v['name'], v['direction'], v['type'], v['width'], v['heiarchy'],  v['cname'])
 
                              #  print("I have found direction, must be at a signal.")
                              self.port_list.append(k)
@@ -180,6 +181,27 @@ class BasicModule:
 
         dictionary[heiarchy[len(heiarchy) - 1]] = signal.__dict__
        # print("AFTER : "+ str(dictionary))
+
+    def connport(self, data, pattern, port_dict):
+        def inner(data):
+            if isinstance(data, dict):
+                for k, v in data.items():
+                    if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
+                        if 'direction' in v.keys():
+                            if re.match(pattern, v['cname']):
+                                self.create_dict_branch(v['heiarchy'], port_dict, v)
+
+
+                        inner(v)
+
+            elif isinstance(data, list) or isinstance(data, tuple):
+                for item in data:
+                    inner(item)
+
+        inner(data)
+
+    def load_dict(self, filepath):
+        return yaml.load(open(filepath).read())
 
     def get_header(self):
         mytemplate = module_template

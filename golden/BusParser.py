@@ -5,8 +5,8 @@ import queue
 import re
 
 class BusParser:
-    def __init__(self, filepath, bus_name):
-        self.dict = yaml.load(open(filepath).read())
+    def __init__(self, dictionary, bus_name):
+        self.dict = dictionary
         self.BusName = bus_name
         self.init_connections(self.dict)
 
@@ -67,8 +67,8 @@ class BusParser:
     def add_connection_flat(self, key, new_cname):
         self.add_connection(self.get_path(key), new_cname)
 
-    def smart_connection_flat(self, key, linked_to, pattern_in_cname, replacement):
-        self.smart_connectionop(self.get_path(key), linked_to, pattern_in_cname, replacement)
+    def smart_connection_flat(self, key, pattern_in_cname, replacement):
+        self.smart_connectionop(self.get_path(key), pattern_in_cname, replacement)
 
     def widop(self, exp, width):
         """Changes width of a fluid port"""
@@ -329,11 +329,10 @@ class BusParser:
             temp = temp[levels]
         return temp
 
-    def smart_connectionop(self, exp, linked_to, pattern_in_cname, replacement):
+    def smart_connectionop(self, exp, pattern_in_cname, replacement):
         """
 
         :param exp: The heiarchy of the node to which connection is to be made.
-        :param linked_to: The class object to which the invoking object will be connected
         :param connection_name: The name of the created connection
         :return: None
         """
@@ -342,16 +341,16 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        self.smart_connection(temp, linked_to, pattern_in_cname, replacement)
+        self.smart_connection(temp, pattern_in_cname, replacement)
 
-    def smart_connection(self, u, linked_to, pattern_in_cname, replacement):
+    def smart_connection(self, u, pattern_in_cname, replacement):
 
         for k in list(u.keys()):
             if isinstance(u.get(k), collections.Mapping):
-                u[k] = self.smart_connection(u.get(k), linked_to, pattern_in_cname, replacement)
+                u[k] = self.smart_connection(u.get(k), pattern_in_cname, replacement)
 
             else:
-                u.update({"linked_to": linked_to.name if linked_to is not None else None, "cname": re.sub(pattern_in_cname, replacement, u['cname'])})
+                u.update({"cname": re.sub(pattern_in_cname, replacement, u['cname'])})
         return u
 
     def init_connections(self, data):
@@ -362,7 +361,7 @@ class BusParser:
                         if 'direction' in v.keys():
                             v.update({"cname": "_".join(self.get_path(k).split(".")[1:])})
                             v.update({"heiarchy": "_".join(self.get_path(k).split(".")[1:])})
-                            v.update({"linked_to": None})
+                            #v.update({"linked_to": None})
                             v.update({"name": "_".join(self.get_path(k).split(".")[len(self.get_path(k).split(".")) - 1:])})
 
                         inner(v)
