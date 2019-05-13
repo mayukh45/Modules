@@ -11,17 +11,17 @@ class OrderedSwitch(BasicModule):
 
     def get_body(self):
         object_dict = {}
-        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "/home/mayukhs/Documents/smartasic2/refbuses/astob_for_order_switch.yaml", "astob")
+        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "/home/mayukhs/Documents/smartasic2/refbuses/astob.yaml", "astob")
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
-        spf1.smart_connectionop("astob", None,"wr_","egress0_dspkt_")
-        spf1.smart_connectionop("astob", None, "rd_", "egress0_dspkt_")
-        spf1.smart_connectionop("astob", None, "snoop_", "egress0_dspkt_")
+        spf1.smart_connectionop("astob", "wr_","egress0_dspkt_")
+        spf1.smart_connectionop("astob",  "rd_", "egress0_dspkt_")
+        spf1.smart_connectionop("astob",  "snoop_", "egress0_dspkt_")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
         #print(spf1.dict)
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
-            curr_obj.smart_connectionop("astob", None, "egress0" , "egress"+str(i))
+            curr_obj.smart_connectionop("astob", "egress0" , "egress"+str(i))
 
         self.port_dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
 
@@ -195,6 +195,7 @@ AH_demux_4_25 u_demux_4_25 (
     .egress1_pkt        (egress1_ds_pkt),
     .egress1_pkt_valid  (egress1_ds_pkt_valid_pre),
     .egress1_pkt_ready  (egress1_ds_pkt_ready),
+
 
     .egress2_pkt        (egress2_ds_pkt),
     .egress2_pkt_valid  (egress2_ds_pkt_valid_pre),
@@ -404,11 +405,12 @@ endmodule
 // Instantiate the upstream arbiter.
 """
 
-t = OrderedSwitch(10, 20, 30, 40, 50)
+
+t = OrderedSwitch(10, 20, 30,50, 40, 50)
 t.main()
 with open('/home/mayukhs/Documents/smartasic2/refbuses/order_port.yaml','w') as f:
     f.write(yaml.dump(t.port_dict))
 print(t.port_dict)
 print("1"*50)
-#print(yaml.dump(t.wire_dict))
+print(yaml.dump(t.wire_dict))
 

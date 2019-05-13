@@ -114,17 +114,18 @@ class BasicModule:
 
     def add_ports_from_bus(self):
         self.Ports.clear()
-        self.add_port("clk", "input", "nonfluid",1,"clk", None, "clk")
-        self.add_port("rstn", "input","nonfluid",1,"rstn", None, "rstn")
+        self.add_port("clk", "input", "nonfluid",1,"clk", "clk")
+        self.add_port("rstn", "input","nonfluid",1,"rstn", "rstn")
 
     def get_object_declaration_str(self, obj_name):
         self.add_ports_from_bus()
         code = "\n".join(["."+ports.name + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
-    def populate_wire_and_ports(self, *args):
+    def populate_wire_and_ports(self, args):
         wire_dict = {}
         port_dict = {}
+        args = list(args)
         set_of_ports = set()
         for i in range(len(args)):
             args[i].Ports.clear()
