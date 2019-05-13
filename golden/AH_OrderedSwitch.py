@@ -11,7 +11,7 @@ class OrderedSwitch(BasicModule):
 
     def get_body(self):
         object_dict = {}
-        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "/home/mayukhs/Documents/smartasic2/refbuses/astob.yaml", "astob")
+        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "../astob_for_order_switch.yaml", "astob")
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         spf1.smart_connectionop("astob", "wr_","egress0_dspkt_")
         spf1.smart_connectionop("astob",  "rd_", "egress0_dspkt_")
@@ -22,9 +22,16 @@ class OrderedSwitch(BasicModule):
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
             curr_obj.smart_connectionop("astob", "egress0" , "egress"+str(i))
+            #print(yaml.dump(curr_obj.dict))
+            object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(
+                self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
 
-        self.port_dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
+        self.dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
 
+
+    def add_ports_from_bus(self):
+        BasicModule.add_ports_from_bus(self)
+        self.get_all_key_value_pairs(self.dict)
 
     def main(self):
         self.get_body()
@@ -38,7 +45,7 @@ class OrderedSwitch(BasicModule):
         self.upPktSize = ups_packet_size
         self.dsDecodableFieldWidth = ds_decodable_field_width
         self.upResponseDecodableFieldWidth = ups_response_decodable_field_width
-        self.port_dict = {}
+        self.dict = {}
         self.wire_dict = {}
         self.order_body = """
 // 4 --> number of egress.
@@ -406,11 +413,14 @@ endmodule
 """
 
 
-t = OrderedSwitch(10, 20, 30,50, 40, 50)
+t = OrderedSwitch(4, 20, 30,50, 40, 50)
 t.main()
-with open('/home/mayukhs/Documents/smartasic2/refbuses/order_port.yaml','w') as f:
-    f.write(yaml.dump(t.port_dict))
-print(t.port_dict)
+with open('../order_port.yaml','w') as f:
+    f.write(yaml.dump(t.dict))
+print(yaml.dump(t.dict))
 print("1"*50)
-print(yaml.dump(t.wire_dict))
-
+t.add_ports_from_bus()
+#print(yaml.dump(t.wire_dict))
+p , q = t.get_port_str()
+print(p)
+print(q)

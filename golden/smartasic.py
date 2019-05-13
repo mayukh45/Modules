@@ -117,6 +117,7 @@ class BasicModule:
         self.add_port("clk", "input", "nonfluid",1,"clk", "clk")
         self.add_port("rstn", "input","nonfluid",1,"rstn", "rstn")
 
+
     def get_object_declaration_str(self, obj_name):
         self.add_ports_from_bus()
         code = "\n".join(["."+ports.name + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
@@ -126,6 +127,7 @@ class BasicModule:
         wire_dict = {}
         port_dict = {}
         args = list(args)
+        #print(args)
         set_of_ports = set()
         for i in range(len(args)):
             args[i].Ports.clear()
@@ -138,11 +140,14 @@ class BasicModule:
                 is_connected = None
               #  print("PORTS : "+str(port.__dict__))
                 if curr_port.direction == 'output' and curr_port.cname not in set_of_ports:
+                    is_input_there = False
                     for j in range(len(args)):
                         if any([i!=j and other_port.direction == 'output' and other_port.cname == curr_port.cname for other_port in args[j].Ports]):
                             raise Exception("Problem in " + str(curr_port.__dict__))
+                        if any([i!=j and other_port.direction == 'input' and other_port.cname == curr_port.cname for other_port in args[j].Ports]):
+                            is_input_there = True
 
-                    is_connected = True
+                    is_connected = True and is_input_there
                     set_of_ports.add(curr_port.cname)
 
                 elif curr_port.direction == 'input' and curr_port.cname not in set_of_ports:
@@ -156,9 +161,9 @@ class BasicModule:
                         set_of_ports.add(curr_port.cname)
 
                 if is_connected == True and curr_port.name != 'clk' and curr_port.name != 'rstn':
-                    self.create_dict_branch(curr_port.cname, wire_dict, curr_port)
-                elif is_connected == False and curr_port.name!='clk' and curr_port.name !='rstn':
-                    self.create_dict_branch(curr_port.cname, port_dict, curr_port)
+                    self.create_dict_branch("astob_"+curr_port.cname, wire_dict, curr_port)
+                elif is_connected == False or (is_connected == None and curr_port.cname not in set_of_ports) and curr_port.name!='clk' and curr_port.name !='rstn':
+                    self.create_dict_branch("astob_"+curr_port.cname, port_dict, curr_port)
                # print("AFTER : "+ str(port_dict))
         return port_dict , wire_dict
 
@@ -166,7 +171,7 @@ class BasicModule:
         ##print("SIGNAL :"+str(signal))
        # print("BEFORE : "+str(dictionary))
         signal.__dict__['name'] = signal.__dict__['cname']
-        signal.__dict__['heiarchy'] = signal.__dict__['cname']
+        signal.__dict__['heiarchy'] = exp
         heiarchy = exp.split("_")
        # print("HIER : "+str(heiarchy))
         j = 0
