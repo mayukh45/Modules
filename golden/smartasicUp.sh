@@ -9,7 +9,7 @@
   python3 AH_CAM.py 120  128 68                  ../../../smartasic2/refbuses/astob.yaml              astob
   python3 AH_CAM.py 150  64  35                  ../../../smartasic2/refbuses/astob.yaml              astob
   python3 AH_CAM.py 1100 20  15                  ../../../smartasic2/refbuses/astob.yaml              astob
-
+  python3 AH_OrderedSwitch.py
  #===========================================================================================================================================================
  ## TODO t obe done by either Soumyajit or Utkarsh or Mayukh
  #===========================================================================================================================================================
