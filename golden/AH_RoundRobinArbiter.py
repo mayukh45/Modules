@@ -15,10 +15,10 @@ class RoundRobinArbiter(BasicModule):
 
     def add_ports_from_bus(self, filepath, bus_name):
         parser = BusParser(filepath, bus_name)
-        parser.widop_flat("req",self.Num_Clients)
-        parser.rename_flat('gnt',"grant")
-        parser.widop_flat("grant",self.Num_Clients)
-        parser.remove_sub_dict_flat("gnt_busy")
+        self.widop_flat("req",self.Num_Clients)
+        self.rename_flat('gnt',"grant")
+        self.widop_flat("grant",self.Num_Clients)
+        self.remove_sub_dict_flat("gnt_busy")
         self.get_all_key_value_pairs(parser.dict)
 
     def get_body(self):

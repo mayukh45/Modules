@@ -17,8 +17,8 @@ from pathlib import Path
 class DivPipelined(BasicModule):
     def add_ports_from_bus(self, filepath, bus_name):
         parser = BusParser(filepath, bus_name)
-        parser.widop_flat('dividend',self.bits)
-        parser.widop_flat('divisor',self.bits)
+        self.widop_flat('dividend',self.bits)
+        self.widop_flat('divisor',self.bits)
         self.get_all_key_value_pairs(parser.dict) 
 
     def Create_dic_of_variable(self):

@@ -20,13 +20,13 @@ class PacketConverter(BasicModule):
 
     def add_ports_from_bus(self, filepath, bus_name):
         parser = BusParser(filepath, bus_name)                
-        parser.remove_sub_dict_flat("snoop")         
-        parser.rename_flat("wcredit","wready")
-        parser.rename_flat("rcredit","rready")
-        parser.widop_flat('rdata',self.WideWidth)
-        parser.widop_flat("wdata",self.NarrowWidth)
-        parser.flipop_flat("wr")
-        parser.flipop_flat("rd")
+        self.remove_sub_dict_flat("snoop")         
+        self.rename_flat("wcredit","wready")
+        self.rename_flat("rcredit","rready")
+        self.widop_flat('rdata',self.WideWidth)
+        self.widop_flat("wdata",self.NarrowWidth)
+        self.flipop_flat("wr")
+        self.flipop_flat("rd")
         self.get_all_key_value_pairs(parser.dict) 
 
     def get_body(self):
