@@ -6,20 +6,20 @@ from DynamicGenerator import DynamicGenerator
 from BusParser import BusParser
 from pathlib import Path
 
-class RoundRobinArbiter(BasicModule):
-    
+class RoundRobinArbiter(BasicModule,BusParser):
+
     def Create_dic_of_variable(self):
-        self.variable_dict['Num_Clients']=self.Num_Clients 
+        self.variable_dict['Num_Clients']=self.Num_Clients
         self.variable_dict['EncodedNum_Clients']=self.EncodedNum_Clients
         self.variable_dict['weight']=self.weight
 
     def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
+       # parser = BusParser(filepath, bus_name)
         self.widop_flat("req",self.Num_Clients)
         self.rename_flat('gnt',"grant")
         self.widop_flat("grant",self.Num_Clients)
         self.remove_sub_dict_flat("gnt_busy")
-        self.get_all_key_value_pairs(parser.dict)
+        self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.arbiter_body)
@@ -41,7 +41,7 @@ class RoundRobinArbiter(BasicModule):
         return self.get_verilog()
 
 
-    def __init__(self,num_clients,path_of_yaml,bus_name,weight=None):
+    def __init__(self,num_clients,path_of_yaml=None,bus_name=None,weight=None):
         self.bus_name=bus_name
         self.Num_Clients=num_clients
         self.weight = weight
@@ -49,9 +49,9 @@ class RoundRobinArbiter(BasicModule):
             self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)
         else:
             self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)+"_"+str(weight)
-        super().__init__(self.name)
+        BasicModule.__init__(self ,self.name)
         self.EncodedNum_Clients = int(ceil(log2(self.Num_Clients)))
-        
+        BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
         self.variable_dict={}
         self.Create_dic_of_variable()
         self.body=""
@@ -63,7 +63,7 @@ if(weight != None):
 else:
     code=""
 /f_f/
-reg	[ENCODEDNUMCLIENTS - 1:0]	rotate_ptr;  
+reg	[ENCODEDNUMCLIENTS - 1:0]	rotate_ptr;
 reg	[NUMCLIENTS - 1:0]	shift_req;
 reg	[NUMCLIENTS - 1:0]	shift_grant;
 reg	[NUMCLIENTS - 1:0]	grant_comb;
@@ -88,7 +88,7 @@ for i in range(2, Num_Clients-1):
     code+=str(EncodedNum_Clients)+"'b"+"0"*(EncodedNum_Clients-len(bin(i)[2:]))+bin(i)[2:]+":" \
                             " shift_req["+str(Num_Clients-1)+":0] = {req["+str(i-1)+":0],req["+str(Num_Clients-1)+":" \
                             + str(i)+"]};\\n\t\t\t"
-    
+
 code+=str(EncodedNum_Clients)+"'b"+bin(Num_Clients-1)[2:]+": shift_req["+str(Num_Clients-1)+":0] = " \
                          "{req["+str(Num_Clients-2)+":0],req["+str(Num_Clients-1)+"]};"
 /f_f/
@@ -101,7 +101,7 @@ begin
 code="shift_grant["+str(Num_Clients-1)+":0] = " +str(Num_Clients)+"" \
                             "'b0;\\n\t\t\tif (shift_req[0])	shift_grant[0] = 1'b1;\\n\t\t\t"
 for i in range(1,Num_Clients):
-    code += "else if (shift_req["+str(i)+"])	shift_grant["+str(i)+"] = 1'b1;\\n\t\t\t"    
+    code += "else if (shift_req["+str(i)+"])	shift_grant["+str(i)+"] = 1'b1;\\n\t\t\t"
 /f_f/
 	endcase
 end
@@ -136,7 +136,7 @@ always @ (posedge clk or negedge rst_n)
 begin
 	if (!rst_n)
 		rotate_ptr[ENCODEDNUMCLIENTS - 1:0] <= ENCODEDNUMCLIENTS'b0;
-	else 
+	else
 		case (1'b1) // synthesis parallel_case
 /f_f/
 code=""
@@ -175,4 +175,4 @@ else:
     roundrobinarbiter=RoundRobinArbiter(int(sys.argv[1]), sys.argv[2], sys.argv[3])
 roundrobinarbiter.main()
 
-    
+

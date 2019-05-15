@@ -47,7 +47,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         return self.get_verilog()
 
     def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml = None, bus_name = None):
-        
+
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
@@ -66,7 +66,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.snoopbody="""
 reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
 
-reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1 
+reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1
 
 
 /f_f/

@@ -10,7 +10,7 @@ input [127:0] dividend;
 input [127:0] divisor;
 output data_valid;
 output div_by_zero;
- 
+
 //=======================================================================================================================================================
 `timescale 1ns / 1ps
 
@@ -31,7 +31,7 @@ output div_by_zero;
         start_gen[0] 	         <= 0;
         negative_quotient_gen[0] <= 0;
         dividend_gen[255:0] <= 0;
-        divisor_gen[255:0] 	<= 0; 
+        divisor_gen[255:0] 	<= 0;
     end
       else begin
         div_by_zero_gen[0]       	<= (divisor == 0);
@@ -69,7 +69,7 @@ output div_by_zero;
 
     end // else: !if(!rst_n)
   end // always @ (posedge clk)
-  
+
 
 always @ (posedge clk or negedge rst_n) begin
 	if (!rst_n) begin
@@ -233,7 +233,7 @@ always @ (posedge clk or negedge rst_n) begin
 end 
 
 
- 
+
 always @ (posedge clk or negedge rst_n) begin
 	div_by_zero_gen[9]	<= 0;
 	negative_quotient_gen[9]	<= 0;
@@ -250,8 +250,8 @@ always @ (posedge clk or negedge rst_n) begin
 		end
 	end
 
- 
- 
+
+
  always @ (posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       div_by_zero_gen[9]<= 0;

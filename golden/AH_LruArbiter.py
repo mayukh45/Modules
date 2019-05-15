@@ -5,7 +5,7 @@ from DynamicGenerator import DynamicGenerator
 from BusParser import BusParser
 from pathlib import Path
 
-class LruArbiter(BasicModule):
+class LruArbiter(BasicModule,BusParser):
     #=========================================================================
     # Overwrite the add_ports_from_bus method here.
     # Create the instance of busparser class.
@@ -39,12 +39,13 @@ class LruArbiter(BasicModule):
         self.write_to_file(self.get_verilog())
         return self.get_verilog()
 
-    def __init__(self,num_clients,path_of_yaml,bus_name):
+    def __init__(self,num_clients,path_of_yaml=None,bus_name=None):
         self.bus_name=bus_name
         self.Num_Clients=num_clients
         self.variable_dict={}
         self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)
         BasicModule.__init__(self, self.name)
+        BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
         self.body=""
         self.Create_dic_of_variable()
         self.add_ports_from_bus(path_of_yaml,bus_name)

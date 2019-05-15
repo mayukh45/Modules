@@ -26,7 +26,7 @@ req [15:0] req14_used_status;
 req [15:0] req15_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 16'd16;
 	req1_used_status <= 16'd15;
@@ -370,7 +370,7 @@ always @(posedge clk, negedge rstn) begin
 	((req14 & (req14_used_status > req15_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[15:0] = 16'd0

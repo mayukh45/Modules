@@ -415,7 +415,7 @@ endmodule
 """
 
 
-t = OrderedSwitch(4, 20, 30,50, 40, 50)
+t = OrderedSwitch(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]) ,int(sys.argv[4]), int(sys.argv[5]), int(sys.argv[6]))
 t.main()
 #with open('../order_port.yaml','w') as f:
 

@@ -42,7 +42,7 @@ req [31:0] req30_used_status;
 req [31:0] req31_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 32'd32;
 	req1_used_status <= 32'd31;
@@ -1234,7 +1234,7 @@ always @(posedge clk, negedge rstn) begin
 	((req30 & (req30_used_status > req31_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[31:0] = 32'd0

@@ -14,7 +14,7 @@ req [3:0] req2_used_status;
 req [3:0] req3_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 4'd4;
 	req1_used_status <= 4'd3;
@@ -58,7 +58,7 @@ always @(posedge clk, negedge rstn) begin
 	((req2 & (req2_used_status > req3_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[3:0] = 4'd0

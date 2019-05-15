@@ -7,7 +7,7 @@ output [7:0] gnt;
 
 
 
-reg	[2:0]	rotate_ptr;  
+reg	[2:0]	rotate_ptr;
 reg	[7:0]	shift_req;
 reg	[7:0]	shift_grant;
 reg	[7:0]	grant_comb;
@@ -73,7 +73,7 @@ always @ (posedge clk or negedge rst_n)
 begin
 	if (!rst_n)
 		rotate_ptr[2:0] <= 3'b0;
-	else 
+	else
 		case (1'b1) // synthesis parallel_case
 grant[0]: rotate_ptr[2:0] <= 3'd1;
 			grant[1]: rotate_ptr[2:0] <= 3'd2;

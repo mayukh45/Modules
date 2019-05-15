@@ -22,7 +22,7 @@ input [5:0] cfg_weight13;
 input [5:0] cfg_weight14;
 input [5:0] cfg_weight15;
 
-reg	[3:0]	rotate_ptr;  
+reg	[3:0]	rotate_ptr;
 reg	[15:0]	shift_req;
 reg	[15:0]	shift_grant;
 reg	[15:0]	grant_comb;
@@ -127,7 +127,7 @@ always @ (posedge clk or negedge rst_n)
 begin
 	if (!rst_n)
 		rotate_ptr[3:0] <= 4'b0;
-	else 
+	else
 		case (1'b1) // synthesis parallel_case
 grant[0]: rotate_ptr[3:0] <= | nweight0 ?  : rotate_ptr :4'd1;
 			grant[1]: rotate_ptr[3:0] <= | nweight1 ?  : rotate_ptr :4'd2;

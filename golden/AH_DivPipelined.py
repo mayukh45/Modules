@@ -3,7 +3,7 @@
 # variable. Also the bit width of divisor is available.
 # TODO: A final touch is pending on this block to transform the code into multiple inheritence
 # dictionary at class level.
-# TODO: The body of the code where main verilog and intermittant Python is written can be 
+# TODO: The body of the code where main verilog and intermittant Python is written can be
 # further moved to bottom side. We need to think through this more.
 #==================================================================================================
 
@@ -14,12 +14,12 @@ from DynamicGenerator import DynamicGenerator
 from BusParser import BusParser
 from pathlib import Path
 
-class DivPipelined(BasicModule):
+class DivPipelined(BasicModule, BusParser):
     def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)
+       # parser = BusParser(filepath, bus_name)
         self.widop_flat('dividend',self.bits)
         self.widop_flat('divisor',self.bits)
-        self.get_all_key_value_pairs(parser.dict) 
+        self.get_all_key_value_pairs(self.dict)
 
     def Create_dic_of_variable(self):
         self.variable_dict['bits']=self.bits
@@ -55,16 +55,17 @@ class DivPipelined(BasicModule):
         self.write_to_file(self.get_verilog())
         return self.get_verilog()
 
-    def __init__(self,bits,stages,path_of_yaml,bus_name):
+    def __init__(self,bits,stages,path_of_yaml=None,bus_name=None):
         self.bits=bits
         self.stages=stages
         self.body=""
         self.name="AH_"+self.__class__.__name__+"_"+str(bits)+"_"+str(stages)
-        super().__init__(self.name)
+        BasicModule.__init__(self , self.name)
         self.variable_dict={}
+        BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
         self.Create_dic_of_variable()
         self.add_ports_from_bus(path_of_yaml,bus_name)
-        self.DivPipelinedBody= """ 
+        self.DivPipelinedBody= """
 //=======================================================================================================================================================
 `timescale 1ns / 1ps
 
@@ -85,7 +86,7 @@ class DivPipelined(BasicModule):
         start_gen[0] 	         <= 0;
         negative_quotient_gen[0] <= 0;
         dividend_gen[BITS*2-1:0] <= 0;
-        divisor_gen[BITS*2-1:0] 	<= 0; 
+        divisor_gen[BITS*2-1:0] 	<= 0;
     end
       else begin
         div_by_zero_gen[0]       	<= (divisor == 0);
@@ -123,7 +124,7 @@ class DivPipelined(BasicModule):
 
     end // else: !if(!rst_n)
   end // always @ (posedge clk)
-  
+
 /f_f/
 code=""
 for i in range(1,stages-2):
@@ -146,7 +147,7 @@ for i in range(1,stages-2):
     code+="\\n\t\tquotient_gen["+str(bits*2*(i+1)-1)+":"+str(bits*2*i)+"]\t\t<= quotient_gen["+str(bits*2*i-1)+":"+str(bits*2*(i-1))+"];"
     code+="\\n\t\tdividend_gen["+str(bits*2*(i+2)-1)+":"+str(bits*2*(i+1))+"]\t\t<= dividend_gen["+str(bits*2*(i+1)-1)+":"+str(bits*2*i)+"];\\n\t\tend \\n\tend \\nend \\n"
 /f_f/
- 
+
 /f_f/
 code=""
 code+="always @ (posedge clk or negedge rst_n) begin"
@@ -162,8 +163,8 @@ code+="\\n\tif ( dividend_gen["+str(bits*2*(stages-1)-1)+":"+str(bits*2*(stages-
 code+="\\n\tquotient_gen["+str(bits*2*(stages-1)-1)+":"+str(bits*2*(stages-2))+"] 	\t<= quotient_gen["+str(bits*2*(stages-2)-1)+":"+str(bits*2*(stages-3))+"] | 1;\\n\telse"
 code+="\\n\tquotient_gen["+str(bits*2*(stages-1)-1)+":"+str(bits*2*(stages-2))+"] 	\t<= quotient_gen["+str(bits*2*(stages-2)-1)+":"+str(bits*2*(stages-3))+"];\\n\t\tend\\n\tend"
  /f_f/
- 
- 
+
+
  always @ (posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       div_by_zero_gen[STAGES-1]<= 0;
@@ -201,4 +202,4 @@ code+="\\n\tquotient_gen["+str(bits*2*(stages-1)-1)+":"+str(bits*2*(stages-2))+"
 dp=DivPipelined(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4])
 dp.main()
 
-    
+

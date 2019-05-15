@@ -18,7 +18,7 @@ req [7:0] req6_used_status;
 req [7:0] req7_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 8'd8;
 	req1_used_status <= 8'd7;
@@ -130,7 +130,7 @@ always @(posedge clk, negedge rstn) begin
 	((req6 & (req6_used_status > req7_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[7:0] = 8'd0

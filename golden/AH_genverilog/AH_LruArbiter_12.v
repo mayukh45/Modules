@@ -22,7 +22,7 @@ req [11:0] req10_used_status;
 req [11:0] req11_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 12'd12;
 	req1_used_status <= 12'd11;
@@ -234,7 +234,7 @@ always @(posedge clk, negedge rstn) begin
 	((req10 & (req10_used_status > req11_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[11:0] = 12'd0

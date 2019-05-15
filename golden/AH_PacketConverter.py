@@ -7,7 +7,7 @@ from BusParser import BusParser
 from pathlib import Path
 
 
-class PacketConverter(BasicModule):
+class PacketConverter(BasicModule,BusParser):
 
 
     def Create_dic_of_variable(self):
@@ -19,15 +19,15 @@ class PacketConverter(BasicModule):
 
 
     def add_ports_from_bus(self, filepath, bus_name):
-        parser = BusParser(filepath, bus_name)                
-        self.remove_sub_dict_flat("snoop")         
+       # parser = BusParser(filepath, bus_name)
+        self.remove_sub_dict_flat("snoop")
         self.rename_flat("wcredit","wready")
         self.rename_flat("rcredit","rready")
         self.widop_flat('rdata',self.WideWidth)
         self.widop_flat("wdata",self.NarrowWidth)
         self.flipop_flat("wr")
         self.flipop_flat("rd")
-        self.get_all_key_value_pairs(parser.dict) 
+        self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.packetconverter)
@@ -49,9 +49,9 @@ class PacketConverter(BasicModule):
         self.write_to_file(self.get_verilog())
         return self.get_verilog()
 
-    
-    
-    def __init__(self, width1, width2, isW2N,path_of_yaml,bus_name):
+
+
+    def __init__(self, width1, width2, isW2N,path_of_yaml=None,bus_name=None):
         self.WideWidth = max(width1, width2)
         self.NarrowWidth = min(width1, width2)
         self.isW2N = isW2N
@@ -61,8 +61,9 @@ class PacketConverter(BasicModule):
             self.name = "AH_"+self.__class__.__name__+"_w2n_"+str(self.NarrowWidth)+"_"+str(self.WideWidth)
         else:
             self.name = "AH_"+self.__class__.__name__+"_n2w_"+str(self.NarrowWidth)+"_"+str(self.WideWidth)
-        super().__init__(self.name)    
-        self.body=""    
+        BasicModule.__init__(self, self.name)
+        self.body=""
+        BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
         self.variable_dict={}
         self.Create_dic_of_variable()
         self.add_ports_from_bus(path_of_yaml,bus_name)
@@ -113,6 +114,6 @@ else:
                     "assign wr_data = ncollated_packet;"
 /f_f/
 """
- 
+
 packetconverter=PacketConverter(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3],sys.argv[4], sys.argv[5])
 packetconverter.main()

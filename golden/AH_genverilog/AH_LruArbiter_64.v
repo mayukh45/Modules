@@ -74,7 +74,7 @@ req [63:0] req62_used_status;
 req [63:0] req63_used_status;
 
 always @(posedge clk, negedge rstn) begin
-        if(~rstn) begin	
+        if(~rstn) begin
 
 	req0_used_status <= 64'd64;
 	req1_used_status <= 64'd63;
@@ -4498,7 +4498,7 @@ always @(posedge clk, negedge rstn) begin
 	((req62 & (req62_used_status > req63_used_status)) ?1'b0 |
 		1'b1;
 	end
-          
+
 always @(req, gnt_busy) begin
 
 	gnt_pre[63:0] = 64'd0

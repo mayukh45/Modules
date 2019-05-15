@@ -6,12 +6,12 @@ module AH_PacketConverter_n2w_20_32 (wdata
 ,rvalid
 ,rcredit);
 
-output [19:0] wdata;
-output wvalid;
-input wcredit;
-input [31:0] rdata;
-input rvalid;
-output rcredit;
+input [19:0] wdata;
+input wvalid;
+output wcredit;
+output [31:0] rdata;
+output rvalid;
+input rcredit;
 
 
 

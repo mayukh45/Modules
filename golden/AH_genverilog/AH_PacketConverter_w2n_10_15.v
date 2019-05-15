@@ -6,12 +6,12 @@ module AH_PacketConverter_w2n_10_15 (wdata
 ,rvalid
 ,rcredit);
 
-output [9:0] wdata;
-output wvalid;
-input wcredit;
-input [14:0] rdata;
-input rvalid;
-output rcredit;
+input [9:0] wdata;
+input wvalid;
+output wcredit;
+output [14:0] rdata;
+output rvalid;
+input rcredit;
 
 
 
