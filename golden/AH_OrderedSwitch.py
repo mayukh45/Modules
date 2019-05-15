@@ -18,6 +18,8 @@ class OrderedSwitch(BasicModule):
         spf1.smart_connectionop("astob",  "snoop_", "egress0_dspkt_")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
         #print(spf1.dict)
+        
+        print(spf1.get_object_declaration_str("hello"))
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
@@ -422,5 +424,5 @@ print("1"*50)
 t.add_ports_from_bus()
 #print(yaml.dump(t.wire_dict))
 p , q = t.get_port_str()
-print(p)
-print(q)
+#print(p)
+#print(q)
