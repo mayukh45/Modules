@@ -1,0 +1,33 @@
+# This YAML Lists down the ranges for decode apertures of each client of a decoder.
+# As Decoder size increases or decreases, this yaml needs to change. The yaml is an input 
+# parameter itself.
+
+
+decode_apertures:
+               client0:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF
+               client1:
+                          tom: 0000_2000
+                          bom: 0000_3FFF
+               client2:
+                          tom: 0000_4000
+                          bom: 0000_5FFF
+               client3:
+                          tom: 0000_5FFF
+                          bom: 0000_6FFF
+               client4:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF
+               client5:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF
+               client6:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF
+               client7:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF
+               client0:
+                          tom: 0000_0FFF
+                          bom: 0000_1FFF

@@ -1,0 +1,87 @@
+astob:
+  egress0:
+    dspkt:
+      rdata: {cname: egress0_dspkt_rdata, direction: output, heiarchy: astob_egress0_dspkt_rdata,
+        name: egress0_dspkt_rdata, type: fluid, width: 20}
+      rready: {cname: egress0_dspkt_rready, direction: input, heiarchy: astob_egress0_dspkt_rready,
+        name: egress0_dspkt_rready, type: nonfluid, width: 1}
+      rvalid: {cname: egress0_dspkt_rvalid, direction: output, heiarchy: astob_egress0_dspkt_rvalid,
+        name: egress0_dspkt_rvalid, type: nonfluid, width: 1}
+      sdata: {cname: egress0_dspkt_sdata, direction: input, heiarchy: astob_egress0_dspkt_sdata,
+        name: egress0_dspkt_sdata, type: fluid, width: 20}
+      smatch: {cname: egress0_dspkt_smatch, direction: input, heiarchy: astob_egress0_dspkt_smatch,
+        name: egress0_dspkt_smatch, type: nonfluid, width: 1}
+      wdata: {cname: egress0_dspkt_wdata, direction: input, heiarchy: astob_egress0_dspkt_wdata,
+        name: egress0_dspkt_wdata, type: fluid, width: 20}
+      wready: {cname: egress0_dspkt_wready, direction: output, heiarchy: astob_egress0_dspkt_wready,
+        name: egress0_dspkt_wready, type: nonfluid, width: 1}
+      wvalid: {cname: egress0_dspkt_wvalid, direction: input, heiarchy: astob_egress0_dspkt_wvalid,
+        name: egress0_dspkt_wvalid, type: nonfluid, width: 1}
+  egress1:
+    dspkt:
+      rdata: {cname: egress1_dspkt_rdata, direction: output, heiarchy: astob_egress1_dspkt_rdata,
+        name: egress1_dspkt_rdata, type: fluid, width: 20}
+      rready: {cname: egress1_dspkt_rready, direction: input, heiarchy: astob_egress1_dspkt_rready,
+        name: egress1_dspkt_rready, type: nonfluid, width: 1}
+      rvalid: {cname: egress1_dspkt_rvalid, direction: output, heiarchy: astob_egress1_dspkt_rvalid,
+        name: egress1_dspkt_rvalid, type: nonfluid, width: 1}
+      sdata: {cname: egress1_dspkt_sdata, direction: input, heiarchy: astob_egress1_dspkt_sdata,
+        name: egress1_dspkt_sdata, type: fluid, width: 20}
+      smatch: {cname: egress1_dspkt_smatch, direction: input, heiarchy: astob_egress1_dspkt_smatch,
+        name: egress1_dspkt_smatch, type: nonfluid, width: 1}
+      wdata: {cname: egress1_dspkt_wdata, direction: input, heiarchy: astob_egress1_dspkt_wdata,
+        name: egress1_dspkt_wdata, type: fluid, width: 20}
+      wready: {cname: egress1_dspkt_wready, direction: output, heiarchy: astob_egress1_dspkt_wready,
+        name: egress1_dspkt_wready, type: nonfluid, width: 1}
+      wvalid: {cname: egress1_dspkt_wvalid, direction: input, heiarchy: astob_egress1_dspkt_wvalid,
+        name: egress1_dspkt_wvalid, type: nonfluid, width: 1}
+  egress2:
+    dspkt:
+      rdata: {cname: egress2_dspkt_rdata, direction: output, heiarchy: astob_egress2_dspkt_rdata,
+        name: egress2_dspkt_rdata, type: fluid, width: 20}
+      rready: {cname: egress2_dspkt_rready, direction: input, heiarchy: astob_egress2_dspkt_rready,
+        name: egress2_dspkt_rready, type: nonfluid, width: 1}
+      rvalid: {cname: egress2_dspkt_rvalid, direction: output, heiarchy: astob_egress2_dspkt_rvalid,
+        name: egress2_dspkt_rvalid, type: nonfluid, width: 1}
+      sdata: {cname: egress2_dspkt_sdata, direction: input, heiarchy: astob_egress2_dspkt_sdata,
+        name: egress2_dspkt_sdata, type: fluid, width: 20}
+      smatch: {cname: egress2_dspkt_smatch, direction: input, heiarchy: astob_egress2_dspkt_smatch,
+        name: egress2_dspkt_smatch, type: nonfluid, width: 1}
+      wdata: {cname: egress2_dspkt_wdata, direction: input, heiarchy: astob_egress2_dspkt_wdata,
+        name: egress2_dspkt_wdata, type: fluid, width: 20}
+      wready: {cname: egress2_dspkt_wready, direction: output, heiarchy: astob_egress2_dspkt_wready,
+        name: egress2_dspkt_wready, type: nonfluid, width: 1}
+      wvalid: {cname: egress2_dspkt_wvalid, direction: input, heiarchy: astob_egress2_dspkt_wvalid,
+        name: egress2_dspkt_wvalid, type: nonfluid, width: 1}
+  egress3:
+    dspkt:
+      rdata: {cname: egress3_dspkt_rdata, direction: output, heiarchy: astob_egress3_dspkt_rdata,
+        name: egress3_dspkt_rdata, type: fluid, width: 20}
+      rready: {cname: egress3_dspkt_rready, direction: input, heiarchy: astob_egress3_dspkt_rready,
+        name: egress3_dspkt_rready, type: nonfluid, width: 1}
+      rvalid: {cname: egress3_dspkt_rvalid, direction: output, heiarchy: astob_egress3_dspkt_rvalid,
+        name: egress3_dspkt_rvalid, type: nonfluid, width: 1}
+      sdata: {cname: egress3_dspkt_sdata, direction: input, heiarchy: astob_egress3_dspkt_sdata,
+        name: egress3_dspkt_sdata, type: fluid, width: 20}
+      smatch: {cname: egress3_dspkt_smatch, direction: input, heiarchy: astob_egress3_dspkt_smatch,
+        name: egress3_dspkt_smatch, type: nonfluid, width: 1}
+      wdata: {cname: egress3_dspkt_wdata, direction: input, heiarchy: astob_egress3_dspkt_wdata,
+        name: egress3_dspkt_wdata, type: fluid, width: 20}
+      wready: {cname: egress3_dspkt_wready, direction: output, heiarchy: astob_egress3_dspkt_wready,
+        name: egress3_dspkt_wready, type: nonfluid, width: 1}
+      wvalid: {cname: egress3_dspkt_wvalid, direction: input, heiarchy: astob_egress3_dspkt_wvalid,
+        name: egress3_dspkt_wvalid, type: nonfluid, width: 1}
+  '{ingress':
+    decoded[1], ingress:
+      decoded[2], ingress:
+        decoded[3]}:
+          cname: '{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}'
+          decoded[3]}: {cname: '{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}',
+            direction: input, heiarchy: 'astob_{ingress_decoded[1], ingress_decoded[2],
+              ingress_decoded[3]}', name: '{ingress_decoded[1], ingress_decoded[2],
+              ingress_decoded[3]}', type: nonfluid, width: 1}
+          direction: input
+          heiarchy: astob_{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}
+          name: '{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}'
+          type: nonfluid
+          width: 1
