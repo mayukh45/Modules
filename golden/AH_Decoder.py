@@ -109,10 +109,10 @@ for i in range(NumClients):
 assign dec_err           = ~ (|decoded_binary);
 
 """
+if __name__ == "__main__":
+    if len(sys.argv) > 3:
+        decoder=Decoder(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5])
+    else:
+        decoder=Decoder(int(sys.argv[1]), int(sys.argv[2]))
 
-if len(sys.argv) > 3:
-    decoder=Decoder(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5])
-else:
-    decoder=Decoder(int(sys.argv[1]), int(sys.argv[2]))
-
-decoder.main()
+    decoder.main()

@@ -147,8 +147,8 @@ code = "\\n"+"|\\n ".join(["((fifo_loc["+str(SnoopWidth-1)+":0] == snoop_data) ?
 /f_f/
 """
 
-if len(sys.argv > 3):
+if len(sys.argv) > 3:
     snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])
 else:
-    snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])
+    snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]))
 snoopablefifo.main()
