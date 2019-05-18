@@ -161,8 +161,13 @@ else:
 /f_f/
 
 """
+if __name__ == "__main__":
+    if len(sys.argv) > 4:
+        muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
+    else:
+        muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4])
 
-muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
+
 muxdemux.main()
 
 
