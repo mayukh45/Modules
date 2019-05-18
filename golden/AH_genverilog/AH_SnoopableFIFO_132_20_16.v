@@ -3,10 +3,10 @@ module AH_SnoopableFIFO_132_20_16 (clk
 ,rstn
 ,wdata
 ,wvalid
-,wcredit
+,wready
 ,rdata
 ,rvalid
-,rcredit
+,rready
 ,sdata
 ,svalid
 ,smatch);
@@ -15,17 +15,17 @@ input clk;
 input rstn;
 input [131:0] wdata;
 input wvalid;
-output wcredit;
+output wready;
 output [131:0] rdata;
 output rvalid;
-input rcredit;
+input rready;
 input [131:0] sdata;
 input svalid;
 input smatch;
 
 reg [5:0] wr_pointer; // 6 = log2(32) + 1
 
-reg [5:0] rd_pointer; // 6 
+reg [5:0] rd_pointer; // 6
 
 
 

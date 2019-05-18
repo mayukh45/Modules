@@ -1,5 +1,21 @@
  echo "Processing...."
 
+## A bunch of decoder commandlines --
+python3 AH_Decoder.py  24 12                     ../../../smartasic2/refbuses/decoder.yaml decoder decode_apertures.yaml
+python3 AH_Decoder.py  12 8                      ../../../smartasic2/refbuses/decoder.yaml decoder decode_apertures.yaml
+python3 AH_Decoder.py  57 30                     ../../../smartasic2/refbuses/decoder.yaml decoder decode_apertures.yaml
+python3 AH_Decoder.py  96 15                     ../../../smartasic2/refbuses/decoder.yaml decoder decode_apertures.yaml
+
+## A Bunch of Multiplexor commandlines --
+## TODO: Add here both mux and demux mode
+## TODO: Add here both binary and 1-hot encoded select lines, though most likely 1-hot
+## select lines aren't going to be used.
+ python3 AH_Multiplexor.py 34  8  1 0            ../../../smartasic2/refbuses/mux_demux.yaml demux
+ python3 AH_Multiplexor.py 85  16 1 0            ../../../smartasic2/refbuses/mux_demux.yaml demux
+ python3 AH_Multiplexor.py 109 25 1 0            ../../../smartasic2/refbuses/mux_demux.yaml demux
+ python3 AH_Multiplexor.py 258 12 1 0            ../../../smartasic2/refbuses/mux_demux.yaml demux
+ python3 AH_Multiplexor.py 9   19 1 0            ../../../smartasic2/refbuses/mux_demux.yaml demux
+
 ## python3 AH_CAM.py  camdepth camwidth snoopwidth path_of_yaml bus_name
   python3 AH_CAM.py 10  16  8                    ../../../smartasic2/refbuses/astoc.yaml              astoc
   python3 AH_CAM.py 20  128 68                   ../../../smartasic2/refbuses/astoc.yaml              astoc

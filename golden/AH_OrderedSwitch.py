@@ -55,6 +55,10 @@ class OrderedSwitch(BasicModule):
 // 20 -> upstream packet size.
 // 10 -> address or downstream decodable field width.
 // 12 -> id or ordering and upstream-response decodable field width.
+
+// These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
+
+
 module AH_ordered_switch_4_25_20_10_12 (
 clk,
 rstn,
@@ -176,9 +180,20 @@ input           egress3_us_pkt_ready;
 //In current approach, the apertures will be built inside decoder.
 //Now ap_00001 can be a nomenclature on full Ahant's library.
 
+
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+// These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
+
+
 AH_decoder_4_10 u_decoder_4_10_ap_00001 (
-    .decode_field       (ingress_ds_pkt[24:24-9]),
-    .decode_output      (ingress_decoded[3:0])
+    .ingress_pkt_field      (ingress_ds_pkt[24:24-9]),
+    .decoded_binary         (ingress_decoded[3:0])
+    .dec_err                ()
 );
 
 u_demux_4_25 = AH_demux(4, 25)
@@ -190,29 +205,34 @@ u_demux.port_connect()
  3. call class_instance.port_connect method - it prints the ports in veirlog syntax and updates on calling
  class the wire dictionary, and it's own port dictionary may be.
 
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
 
 AH_demux_4_25 u_demux_4_25 (
     .select             (ingress_decoded[3:0])
-    .ingress_pkt        (ingress_ds_pkt),
-    .ingress_pkt_valid  (ingress_ds_pkt_valid),
-    .ingress_pkt_ready  (ingress_ds_pkt_ready),
+    .ing_data           (ingress_ds_pkt),
+    .ing_valid          (ingress_ds_pkt_valid),
+    .ing_ready          (ingress_ds_pkt_ready),
 
-    .egress0_pkt        (egress0_ds_pkt),
-    .egress0_pkt_valid  (egress0_ds_pkt_valid_pre),
-    .egress0_pkt_ready  (egress0_ds_pkt_ready),
+    .egr0_data          (egress0_ds_pkt),
+    .egr0_valid         (egress0_ds_pkt_valid_pre),
+    .egr0_ready         (egress0_ds_pkt_ready),
 
-    .egress1_pkt        (egress1_ds_pkt),
-    .egress1_pkt_valid  (egress1_ds_pkt_valid_pre),
-    .egress1_pkt_ready  (egress1_ds_pkt_ready),
+    .egr1_data          (egress1_ds_pkt),
+    .egr1_valid         (egress1_ds_pkt_valid_pre),
+    .egr1_ready         (egress1_ds_pkt_ready),
 
 
-    .egress2_pkt        (egress2_ds_pkt),
-    .egress2_pkt_valid  (egress2_ds_pkt_valid_pre),
-    .egress2_pkt_ready  (egress2_ds_pkt_ready),
+    .egr2_data          (egress2_ds_pkt),
+    .egr2_valid         (egress2_ds_pkt_valid_pre),
+    .egr2_ready         (egress2_ds_pkt_ready),
 
-    .egress3_pkt        (egress3_ds_pkt),
-    .egress3_pkt_valid  (egress3_ds_pkt_valid_pre),
-    .egress3_pkt_ready  (egress3_ds_pkt_ready),
+    .egr3_data          (egress3_ds_pkt),
+    .egr3_valid         (egress3_ds_pkt_valid_pre),
+    .egr3_ready         (egress3_ds_pkt_ready),
 );
 
 // 25 --> width of fifo
@@ -338,7 +358,13 @@ AH_arbrr_4 u_arbrr_4 (
 );
 
 //===================================================================================
-AH_decoder_4_20 u_decoder_4_20 (
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+AH_demux_4_20           u_demux_4_20 (
     .select             (egress_arbed[3:0]),
 
     .egress_pkt         (ingress_us_pkt),

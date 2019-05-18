@@ -49,7 +49,7 @@ class Multiplexor(BasicModule,BusParser):
         print("I am going to operate on this dict again")
         self.dyaml("2.yaml")
 
-        print("This is the self.IsDemux value --"+self.IsDemux)
+        #print("This is the self.IsDemux value --"+self.IsDemux)
 
         if self.IsDemux is False:
             for i in range (self.NumClients):
@@ -108,7 +108,7 @@ class Multiplexor(BasicModule,BusParser):
 
         if path_of_yaml is None:
               path_of_yaml = "../../../smartasic2/refbuses/mux_demux.yaml"
-              bus_name = "mux_demux"
+              bus_name = "demux"
 
         self.curName = "mux" if self.IsDemux is None else "demux"
 
@@ -162,7 +162,7 @@ else:
 
 """
 if __name__ == "__main__":
-    if len(sys.argv) > 4:
+    if len(sys.argv) > 5:
         muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
     else:
         muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4])

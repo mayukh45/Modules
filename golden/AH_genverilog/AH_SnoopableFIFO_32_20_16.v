@@ -25,7 +25,7 @@ input smatch;
 
 reg [5:0] wr_pointer; // 6 = log2(32) + 1
 
-reg [5:0] rd_pointer; // 6 
+reg [5:0] rd_pointer; // 6
 
 
 
