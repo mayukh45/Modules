@@ -18,7 +18,15 @@ obj4.smart_conn("astob", "sn_", "egress0_ds_pkt_")
 
 u_demux_4_25.smart_connectionop("astob", None,"egres(.)_dspkt_valid","egress${1}_dspkt_valid_pre")
 
+u_demux_4_25.smart_connectionop("astob", None,"egres(.)_(dspkt)_(valid)","${3}_${2}_egress${1}")
 
+
+"egress(0)_dspkt_valid/egress{1}_dspkt_valid_pre"
+
+"{0} a good {1}".format("have","day")
+mo.group(1)
+
+/1\
 
 import copy
 import yaml

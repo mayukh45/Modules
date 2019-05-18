@@ -1,40 +1,22 @@
-demux:
-    egress0:
-        egr0_data:
-            direction: output
-            type: fluid
-            width: 18
-        egr0_ready:
-            direction: input
-            type: nonfluid
-            width: 1
-        egr0_valid:
-            direction: output
-            type: nonfluid
-            width: 1
-    egress1:
-        egr1_data:
-            direction: output
-            type: fluid
-            width: 18
-        egr1_ready:
-            direction: input
-            type: nonfluid
-            width: 1
-        egr1_valid:
-            direction: output
-            type: nonfluid
-            width: 1
-    ingress:
-        ing_data:
-            direction: input
-            type: fluid
-            width: 18
-        ing_ready:
-            direction: output
-            type: nonfluid
-            width: 1
-        ing_valid:
-            direction: input
-            type: nonfluid
-            width: 1
+decoder:
+    dec_err:
+        cname: dec_err
+        direction: output
+        heiarchy: decoder_dec_err
+        name: dec_err
+        type: fluid
+        width: 1
+    decoded_binary:
+        cname: decoded_binary
+        direction: output
+        heiarchy: decoder_decoded_binary
+        name: decoded_binary
+        type: fluid
+        width: 3
+    ingress_pkt_field:
+        cname: ingress_pkt_field
+        direction: input
+        heiarchy: decoder_ingress_pkt_field
+        name: ingress_pkt_field
+        type: fluid
+        width: 32

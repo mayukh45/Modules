@@ -17,7 +17,7 @@ class Multiplexor(BasicModule,BusParser):
         self.variable_dict['IsBinary']=self.IsBinary
         self.variable_dict['EncodedDepth']=self.EncodedDepth
 
-    #It's assumed that the original mux-demux yaml file will have 2 egress ports at least. The rest has to be added. 
+    #It's assumed that the original mux-demux yaml file will have 2 egress ports at least. The rest has to be added.
     # Then the yaml is demux - so ingress and egress keys swap name if we need to provide a mux
     def add_ports_from_bus(self):
         #self.copy_flat("egress1", "egress"+str(i))
@@ -40,7 +40,7 @@ class Multiplexor(BasicModule,BusParser):
                 self.rename("demux.egress"+str(i)+".egr1_data" , "egr"+str(i)+"_data" )
                 self.rename("demux.egress"+str(i)+".egr1_valid", "egr"+str(i)+"_valid")
                 self.rename("demux.egress"+str(i)+".egr1_ready", "egr"+str(i)+"_ready")
-        
+
         self.widop_flat("ing_data",self.PortWidth)
         for i in range(0, self.NumClients-1):
             self.widop_flat("egr"+str(i)+"_data",self.PortWidth)
@@ -48,12 +48,12 @@ class Multiplexor(BasicModule,BusParser):
         print(self.dict)
         print("I am going to operate on this dict again")
         self.dyaml("2.yaml")
-       
+
         print("This is the self.IsDemux value --"+self.IsDemux)
 
         if self.IsDemux is False:
             for i in range (self.NumClients):
-                self.rename_flat("egress"+str(i), "ingress"+str(i)) 
+                self.rename_flat("egress"+str(i), "ingress"+str(i))
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_data" , "ing"+str(i)+"_data" )
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_valid", "ing"+str(i)+"_valid")
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_ready", "ing"+str(i)+"_ready")
@@ -61,7 +61,7 @@ class Multiplexor(BasicModule,BusParser):
         print(self.dict)
         print("I am going to operate on this dict again(2)")
         self.dyaml("3.yaml")
-        
+
         if not self.IsDemux:
             self.rename_flat("ingress", "egress")
             print(self.dict)
@@ -70,15 +70,15 @@ class Multiplexor(BasicModule,BusParser):
             self.rename("demux.egress.ing_data" , "egr_data" )
             self.rename("demux.egress.ing_valid", "egr_valid")
             self.rename("demux.egress.ing_ready", "egr_ready")
-            
+
             self.rename_flat("demux", "mux")
-        
+
         print(self.dict)
         self.dyaml("4.yaml")
         print("I am done with this dict")
         self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
-        
+
     def get_body(self):
         dynamicgenerator=DynamicGenerator(self.variable_dict,self.muxdemuxbody) # passing dictonary and snoopbody to split the body
         self.body+=dynamicgenerator.parse_body()
@@ -99,12 +99,16 @@ class Multiplexor(BasicModule,BusParser):
         print (self.get_verilog())
         return self.get_verilog()
 
-    def __init__(self, portwidth, numclients, isdemux, isbinary, path_of_yaml, bus_name):
+    def __init__(self, portwidth, numclients, isdemux, isbinary, path_of_yaml=None, bus_name=None):
         self.PortWidth = portwidth
         self.NumClients = numclients
         self.IsDemux = isdemux
         self.body = None
         self.IsBinary = isbinary
+
+        if path_of_yaml is None:
+              path_of_yaml = "../../../smartasic2/refbuses/mux_demux.yaml"
+              bus_name = "mux_demux"
 
         self.curName = "mux" if self.IsDemux is None else "demux"
 
@@ -116,7 +120,7 @@ class Multiplexor(BasicModule,BusParser):
         self.EncodedDepth = int(ceil(log2(numclients)))
         self.variable_dict={}
         self.Create_dic_of_variable()
-        BusParser.__init__(self, path_of_yaml, bus_name)
+        BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
         self.add_ports_from_bus()
 
         self.muxdemuxbody = """
@@ -128,17 +132,17 @@ code = ""
 
 if IsDemux:
     for i in range(NumClients):
-        code += "\\nwire assign egress"+str(i)+"_ds_pkt       = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt       : "+str(EncodedDepth)+"'d0;" 
-    
+        code += "\\nwire assign egress"+str(i)+"_ds_pkt       = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt       : "+str(EncodedDepth)+"'d0;"
+
     for i in range(NumClients) :
-        code += "\\nwire assign egress"+str(i)+"_ds_pkt_valid = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt_valid : "+str(EncodedDepth)+"'d0;" 
-    
+        code += "\\nwire assign egress"+str(i)+"_ds_pkt_valid = (demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? ingress_ds_pkt_valid : "+str(EncodedDepth)+"'d0;"
+
     code += "\\n"
     code += "\\nwire assign ingress_ds_pkt_ready          ="
-    
+
     for i in range(NumClients):
-        code += "\\n                                           ((demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? egress1_ds_pkt_ready ? 1'b0) | " 
-    
+        code += "\\n                                           ((demux_select== "+str(EncodedDepth)+"'d"+str(i)+") ? egress1_ds_pkt_ready ? 1'b0) | "
+
     code += "\\n                                            1'b0;"
 
 else:

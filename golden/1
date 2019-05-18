@@ -1,91 +1,34 @@
-Processing....
-['/home/mayukhs/Documents/smartasic2/Modules/golden', '/sharedtools/anaconda3/lib/python37.zip', '/sharedtools/anaconda3/lib/python3.7', '/sharedtools/anaconda3/lib/python3.7/lib-dynload', '/sharedtools/anaconda3/lib/python3.7/site-packages']
-AH_SnoopableFIFO_20_50_40 hello(
-.clk				(clk)
-.rstn				(rstn)
-.wdata				(egress0_dspkt_wdata)
-.wvalid				(egress0_dspkt_wvalid)
-.wready				(egress0_dspkt_wready)
-.rdata				(egress0_dspkt_rdata)
-.rvalid				(egress0_dspkt_rvalid)
-.rready				(egress0_dspkt_rready)
-.sdata				(egress0_dspkt_sdata)
-.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
-.smatch				(egress0_dspkt_smatch)
-)
-AH_SnoopableFIFO_20_50_40 hello(
-.clk				(clk)
-.rstn				(rstn)
-.wdata				(egress1_dspkt_wdata)
-.wvalid				(egress1_dspkt_wvalid)
-.wready				(egress1_dspkt_wready)
-.rdata				(egress1_dspkt_rdata)
-.rvalid				(egress1_dspkt_rvalid)
-.rready				(egress1_dspkt_rready)
-.sdata				(egress1_dspkt_sdata)
-.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
-.smatch				(egress1_dspkt_smatch)
-)
-AH_SnoopableFIFO_20_50_40 hello(
-.clk				(clk)
-.rstn				(rstn)
-.wdata				(egress2_dspkt_wdata)
-.wvalid				(egress2_dspkt_wvalid)
-.wready				(egress2_dspkt_wready)
-.rdata				(egress2_dspkt_rdata)
-.rvalid				(egress2_dspkt_rvalid)
-.rready				(egress2_dspkt_rready)
-.sdata				(egress2_dspkt_sdata)
-.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
-.smatch				(egress2_dspkt_smatch)
-)
-AH_SnoopableFIFO_20_50_40 hello(
-.clk				(clk)
-.rstn				(rstn)
-.wdata				(egress3_dspkt_wdata)
-.wvalid				(egress3_dspkt_wvalid)
-.wready				(egress3_dspkt_wready)
-.rdata				(egress3_dspkt_rdata)
-.rvalid				(egress3_dspkt_rvalid)
-.rready				(egress3_dspkt_rready)
-.sdata				(egress3_dspkt_sdata)
-.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
-.smatch				(egress3_dspkt_smatch)
-)
-11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-input clk;
-input rstn;
-input [19:0] egress0_dspkt_wdata;
-input egress0_dspkt_wvalid;
-output egress0_dspkt_wready;
-output [19:0] egress0_dspkt_rdata;
-output egress0_dspkt_rvalid;
-input egress0_dspkt_rready;
-input [19:0] egress0_dspkt_sdata;
-input egress0_dspkt_smatch;
-input {ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]};
-input {ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]};
-input [19:0] egress1_dspkt_wdata;
-input egress1_dspkt_wvalid;
-output egress1_dspkt_wready;
-output [19:0] egress1_dspkt_rdata;
-output egress1_dspkt_rvalid;
-input egress1_dspkt_rready;
-input [19:0] egress1_dspkt_sdata;
-input egress1_dspkt_smatch;
-input [19:0] egress2_dspkt_wdata;
-input egress2_dspkt_wvalid;
-output egress2_dspkt_wready;
-output [19:0] egress2_dspkt_rdata;
-output egress2_dspkt_rvalid;
-input egress2_dspkt_rready;
-input [19:0] egress2_dspkt_sdata;
-input egress2_dspkt_smatch;
-input [19:0] egress3_dspkt_wdata;
-input egress3_dspkt_wvalid;
-output egress3_dspkt_wready;
-output [19:0] egress3_dspkt_rdata;
-output egress3_dspkt_rvalid;
-input egress3_dspkt_rready;
-input [19:0] egress3_dspkt_sdata;
-input egress3_dspkt_smatch;
+5c5
+< # back to main file.
+---
+> # back to main file. 
+10c10
+< from datetime import datetime   #### import datatime
+---
+> from datetime import datetime   #### import datatime 
+17c17
+<         self.body_data=body_data
+---
+>         self.body_data=body_data            
+25c25
+< 
+---
+>         
+33c33
+<                 main_body+=split_body[b]
+---
+>                 main_body+=split_body[b] 
+47,50d46
+<             
+<             #Add package calls at top of the file.
+<             f.write("import yaml")
+< 
+69c65
+<     after processing all operation removing all temporary file
+---
+>     after processing all operation removing all temporary file  
+78c74
+<             raise Exception("file not found")
+---
+>             raise Exception("file not found")
+\ No newline at end of file

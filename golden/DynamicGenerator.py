@@ -44,6 +44,10 @@ class DynamicGenerator:
         code+="\n"+body_data+"\nprint(code)"
         self.temp_py_file="temp_"+time_current+".py"    # creting temporay pyhton based on time to handle mutithreading
         with open(self.temp_py_file,'w') as f:
+
+            #Add package calls at top of the file.
+            #f.write("import yaml")
+
             f.write(code)
             f.close()
         self.temp_txt_file="output_"+time_current+".txt"    # creating temporary text file from where we retrive output and processed to verilog file.

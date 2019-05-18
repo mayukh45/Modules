@@ -188,6 +188,28 @@ class BasicModule:
         dictionary[heiarchy[len(heiarchy) - 1]] = signal.__dict__
        # print("AFTER : "+ str(dictionary))
 
+    def find_and_replace(self, dictionary, pattern, replacement):
+    	parser = BusParser(data, list(data.keys())[0])
+    	def inner(data):
+            if isinstance(data, dict):
+                for k, v in data.items():
+                    if isinstance(v, dict) or isinstance(v, list) or isinstance(v, tuple):
+                        if 'direction' in v.keys():
+                            if re.match(pattern, v['cname']):
+                            	matches = [group for group in re.match(pattern , v['cname']).groups()][1:]
+                            	v['cname'] = replacement.format([*matches])
+                                
+                                
+
+                        inner(v)
+
+            elif isinstance(data, list) or isinstance(data, tuple):
+                for item in data:
+                    inner(item)
+
+        inner(data)
+
+
     def connport(self, data, pattern, port_dict):
         parser = BusParser(data, list(data.keys())[0])
         def inner(data):
