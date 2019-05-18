@@ -12,11 +12,11 @@ decoder:
         heiarchy: decoder_decoded_binary
         name: decoded_binary
         type: fluid
-        width: 3
+        width: 5
     ingress_pkt_field:
         cname: ingress_pkt_field
         direction: input
         heiarchy: decoder_ingress_pkt_field
         name: ingress_pkt_field
         type: fluid
-        width: 32
+        width: 10

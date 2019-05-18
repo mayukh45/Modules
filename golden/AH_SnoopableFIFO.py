@@ -52,7 +52,7 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
         if path_of_yaml is None:
-            path_of_yaml = "../../../smartasic2/refbuses/astob_for_order_switch.yaml"
+            path_of_yaml = "../../../smartasic2/refbuses/astob.yaml"
             bus_name = "astob"
 
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
@@ -146,9 +146,9 @@ assing snoop_match = 1'b0 |
 code = "\\n"+"|\\n ".join(["((fifo_loc["+str(SnoopWidth-1)+":0] == snoop_data) ? 1'b1 : 1'b0)" for i in range(FifoDepth)])
 /f_f/
 """
-
-if len(sys.argv) > 3:
-    snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])
-else:
-    snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]))
-snoopablefifo.main()
+if __name__ == "__main__":
+    if len(sys.argv) > 3:
+        snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])
+    else:
+        snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]))
+    snoopablefifo.main()
