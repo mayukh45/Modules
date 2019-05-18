@@ -168,7 +168,7 @@ if __name__ == "__main__":
         muxdemux=Multiplexor(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3], sys.argv[4])
 
 
-muxdemux.main()
+    muxdemux.main()
 
 
 
