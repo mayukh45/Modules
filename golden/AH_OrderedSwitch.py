@@ -11,39 +11,67 @@ print(sys.path)
 
 class OrderedSwitch(BasicModule):
 
+    def Create_dic_of_variable(self):
+       # self.variable_dict[]
+       # self.variable_dict[]
+       # self.variable_dict[]
+       # self.variable_dict[]
+        #self.variable_dict[]
+       # self.variable_dict[]
+
+        self.variable_dict = self.__dict__
+
+
     def get_body(self):
         object_dict = {}
-        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth , "../astob_for_order_switch.yaml", "astob")
-        object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
+
+        #=============================================================================
+        # First we create the snoopable FIFO basic object with connection rules
+        # and we update the dict
+        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth)
         spf1.smart_connectionop("astob", "wr_","egress0_dspkt_")
         spf1.smart_connectionop("astob",  "rd_", "egress0_dspkt_")
         spf1.smart_connectionop("astob",  "snoop_", "egress0_dspkt_")
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
-        #print(spf1.dict)
-
+        print(spf1.dict)
 
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
+        #=============================================================================
+
+
+        #=============================================================================
+        #A deep copy of each new snoopableFIFO object is created from first massaged
+        # object. The object_dict.update is called each time.
+
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
             curr_obj.smart_connectionop("astob", "egress0" , "egress"+str(i))
             print(curr_obj.get_object_declaration_str("hello"))
-            object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(
-                self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
+            object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
+
+        #=============================================================================
+        #Finally replace in body strings...
         c = 1
         for k,v in object_dict.items():
             self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
             c +=1
 
         obj_list = list(object_dict.values())
-        mux1 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
-        mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
+
+        #=============================================================================
+        mux1 = Multiplexor(self.NumberOfEgress, self.dsPktSize,1, 0)
+        #mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize,1,0)
         self.order_body.replace("demux_dec1", mux1.get_object_declaration_str("u_demux_4_25"))
         self.order_body.replace("demux_dec2", mux1.get_object_declaration_str("u_demux_4_25"))
+
+        #=============================================================================
         decoder = Decoder(self.NumberOfEgress, self.upPktSize)
         self.order_body.replace("decoder_dec", decoder.get_object_declaration_str("u_decoder_4_20"))
 
+
+        #=============================================================================
         obj_list.append(mux1)
-        obj_list.append(mux2)
+        #obj_list.append(mux2)
         obj_list.append(decoder)
 
         self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
@@ -60,7 +88,7 @@ class OrderedSwitch(BasicModule):
 
     def __init__(self, number_of_egress,ds_packet_size, ups_packet_size, ds_decodable_field_width, ups_response_decodable_field_width, snoopdepth):
         self.name = "AH_"+self.__class__.__name__+"_"+str(number_of_egress)+"_"+str(ds_packet_size)+"_"+str(ups_packet_size)+"_"+str(ds_decodable_field_width)+"_"+str(ups_response_decodable_field_width)
-        BasicModule.__init__(self, self.name)
+
         self.NumberOfEgress = number_of_egress
         self.dsPktSize = ds_packet_size
         self.SnoopDepth = snoopdepth
@@ -69,6 +97,7 @@ class OrderedSwitch(BasicModule):
         self.upResponseDecodableFieldWidth = ups_response_decodable_field_width
         self.dict = {}
         self.wire_dict = {}
+        BasicModule.__init__(self, self.name)
         self.order_body = """
 // 4 --> number of egress.
 // 25 -> ds packet size
@@ -183,17 +212,6 @@ AH_arbrr_4 u_arbrr_4 (
     //TODO: we need width-learning or something similar here.
     .grant              (egress_arbed[3:0]
                         ),
-
-    //.req0             (egress0_us_pkt_valid),
-    //.req1             (egress1_us_pkt_valid),
-    //.req2             (egress2_us_pkt_valid),
-    //.req3             (egress3_us_pkt_valid),
-
-    //.grant0           (egress0_us_pkt_valid_pre),
-    //.grant1           (egress0_us_pkt_valid_pre),
-    //.grant2           (egress0_us_pkt_valid_pre),
-    //.grant3           (egress0_us_pkt_valid_pre),
-
 );
 
 //===================================================================================
@@ -269,4 +287,5 @@ t.add_ports_from_bus()
 #print(yaml.dump(t.wire_dict))
 p , q = t.get_port_str()
 #print(p)
-print(q)
+##print(q)i
+print(t.order_body)

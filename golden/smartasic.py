@@ -119,8 +119,13 @@ class BasicModule:
 
     def add_ports_from_bus(self):
         self.Ports.clear()
-        self.add_port("clk", "input", "nonfluid",1,"clk", "clk")
-        self.add_port("rstn", "input","nonfluid",1,"rstn", "rstn")
+        #Some are combo modules alone - clock and reset aren't required.
+        #TODO: Is there a graceful way to not having clock-reset in every .yaml file.
+        # But at the same time combo modules are spared from adding.
+        # We need to work on this down the line.
+
+        #self.add_port("clk", "input", "nonfluid",1,"clk", "clk")
+        #self.add_port("rstn", "input","nonfluid",1,"rstn", "rstn")
 
 
     def get_object_declaration_str(self, obj_name):

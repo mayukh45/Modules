@@ -1,74 +1,22 @@
-demux:
-    egress0:
-        egr0_data:
-            cname: egress0_egr0_data
-            direction: output
-            heiarchy: demux_egress0_egr0_data
-            name: egr0_data
-            type: fluid
-            width: 18
-        egr0_ready:
-            cname: egress0_egr0_ready
-            direction: input
-            heiarchy: demux_egress0_egr0_ready
-            name: egr0_ready
-            type: nonfluid
-            width: 1
-        egr0_valid:
-            cname: egress0_egr0_valid
-            direction: output
-            heiarchy: demux_egress0_egr0_valid
-            name: egr0_valid
-            type: nonfluid
-            width: 1
-    egress1:
-        egr1_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 18
-        egr1_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr1_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    ingress:
-        ing_data:
-            cname: ingress_ing_data
-            direction: input
-            heiarchy: demux_ingress_ing_data
-            name: ing_data
-            type: fluid
-            width: 18
-        ing_ready:
-            cname: ingress_ing_ready
-            direction: output
-            heiarchy: demux_ingress_ing_ready
-            name: ing_ready
-            type: nonfluid
-            width: 1
-        ing_valid:
-            cname: ingress_ing_valid
-            direction: input
-            heiarchy: demux_ingress_ing_valid
-            name: ing_valid
-            type: nonfluid
-            width: 1
-    select:
-        cname: select
-        direction: input
-        heiarchy: demux_select
-        name: select
-        type: nonfluid
+decoder:
+    dec_err:
+        cname: dec_err
+        direction: output
+        heiarchy: decoder_dec_err
+        name: dec_err
+        type: fluid
         width: 1
+    decoded_binary:
+        cname: decoded_binary
+        direction: output
+        heiarchy: decoder_decoded_binary
+        name: decoded_binary
+        type: fluid
+        width: 2
+    ingress_pkt_field:
+        cname: ingress_pkt_field
+        direction: input
+        heiarchy: decoder_ingress_pkt_field
+        name: ingress_pkt_field
+        type: fluid
+        width: 25

@@ -274,6 +274,10 @@ u_demux_4_25.get_object_declaration_str('u_demux_4_25')
 // === // // to reflect all of them in module name. It's better to probably keep a param
 // === // // list inside and create a .h fle for the same also.
 // === //
+u
+
+r
+t
 // === // //===================================================================================
 // === // AH_snoopfifo_10_32_10 u_egress0_snoopfifo_25_32_12 (
 // === //     .clk                (clk),

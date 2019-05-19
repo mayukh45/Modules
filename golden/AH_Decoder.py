@@ -18,17 +18,18 @@ class Decoder(BasicModule,BusParser):
 
 
     def add_ports_from_bus(self):
-        print(self.dict)
+        BasicModule.add_ports_from_bus(self)
+        #print(self.dict)
         self.dyaml("1.yaml")
         print("I am going to operate on this dict now")
 
         self.widop_flat("ingress_pkt_field", self.PortWidth)
         self.widop_flat("decoded_binary", self.EncodedNumClients)
 
-        print(self.dict)
+       # print(self.dict)
         self.dyaml("4.yaml")
         print("I am done with this dict")
-        self.init_connections(self.dict)
+        #self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
@@ -65,19 +66,20 @@ class Decoder(BasicModule,BusParser):
 
         self.name = "AH_decoder_"+str(self.PortWidth)+"_"+str(self.NumClients)
         print("Just checking what is the file name..")
-        print (self.name)
+       # print (self.name)
 
-        BasicModule.__init__(self, self.name)
+       # BasicModule.__init__(self, self.name)
 
         self.body = ""
         self.variable_dict={}
         self.Create_dic_of_variable()
 
-        BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
-        self.add_ports_from_bus()
-
         self.decode_apertures_dict = self.load_dict(apertures_yaml)
 
+        BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
+        BasicModule.__init__(self, self.name)
+
+        #self.add_ports_from_bus()
         self.decoderbody = """
 
 // Ingress and Egress are short circuited based on condition

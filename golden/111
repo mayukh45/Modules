@@ -1,0 +1,254 @@
+['/home/mayukhs/Documents/smartasic2/Modules/golden', '/sharedtools/anaconda3/lib/python37.zip', '/sharedtools/anaconda3/lib/python3.7', '/sharedtools/anaconda3/lib/python3.7/lib-dynload', '/sharedtools/anaconda3/lib/python3.7/site-packages']
+{'astob': {'wr': {'wdata': {'direction': 'input', 'width': 25, 'type': 'fluid', 'cname': 'egress0_dspkt_wdata', 'heiarchy': 'astob_wr_wdata', 'name': 'wdata'}, 'wvalid': {'direction': 'input', 'width': 1, 'type': 'nonfluid', 'cname': 'egress0_dspkt_wvalid', 'heiarchy': 'astob_wr_wvalid', 'name': 'wvalid'}, 'wready': {'direction': 'output', 'width': 1, 'type': 'nonfluid', 'cname': 'egress0_dspkt_wready', 'heiarchy': 'astob_wr_wready', 'name': 'wready'}}, 'rd': {'rdata': {'direction': 'output', 'width': 25, 'type': 'fluid', 'cname': 'egress0_dspkt_rdata', 'heiarchy': 'astob_rd_rdata', 'name': 'rdata'}, 'rvalid': {'direction': 'output', 'width': 1, 'type': 'nonfluid', 'cname': 'egress0_dspkt_rvalid', 'heiarchy': 'astob_rd_rvalid', 'name': 'rvalid'}, 'rready': {'direction': 'input', 'width': 1, 'type': 'nonfluid', 'cname': 'egress0_dspkt_rready', 'heiarchy': 'astob_rd_rready', 'name': 'rready'}}, 'snoop': {'sdata': {'direction': 'input', 'width': 25, 'type': 'fluid', 'cname': 'egress0_dspkt_sdata', 'heiarchy': 'astob_snoop_sdata', 'name': 'sdata'}, 'svalid': {'direction': 'input', 'width': 1, 'type': 'nonfluid', 'cname': '{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}', 'heiarchy': 'astob_snoop_svalid', 'name': 'svalid'}, 'smatch': {'direction': 'input', 'width': 1, 'type': 'nonfluid', 'cname': 'egress0_dspkt_smatch', 'heiarchy': 'astob_snoop_smatch', 'name': 'smatch'}}}}
+AH_SnoopableFIFO_25_32_12 hello(
+.clk				(clk)
+.rstn				(rstn)
+.wdata				(egress1_dspkt_wdata)
+.wvalid				(egress1_dspkt_wvalid)
+.wready				(egress1_dspkt_wready)
+.rdata				(egress1_dspkt_rdata)
+.rvalid				(egress1_dspkt_rvalid)
+.rready				(egress1_dspkt_rready)
+.sdata				(egress1_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress1_dspkt_smatch)
+)
+AH_SnoopableFIFO_25_32_12 hello(
+.clk				(clk)
+.rstn				(rstn)
+.wdata				(egress2_dspkt_wdata)
+.wvalid				(egress2_dspkt_wvalid)
+.wready				(egress2_dspkt_wready)
+.rdata				(egress2_dspkt_rdata)
+.rvalid				(egress2_dspkt_rvalid)
+.rready				(egress2_dspkt_rready)
+.sdata				(egress2_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress2_dspkt_smatch)
+)
+AH_SnoopableFIFO_25_32_12 hello(
+.clk				(clk)
+.rstn				(rstn)
+.wdata				(egress3_dspkt_wdata)
+.wvalid				(egress3_dspkt_wvalid)
+.wready				(egress3_dspkt_wready)
+.rdata				(egress3_dspkt_rdata)
+.rvalid				(egress3_dspkt_rvalid)
+.rready				(egress3_dspkt_rready)
+.sdata				(egress3_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress3_dspkt_smatch)
+)
+Just checking what is the file name..
+AH_demux_4_25_0
+I am going to operate on this dict now
+I am going to operate on this dict again
+I am going to operate on this dict again(2)
+I am done with this dict
+I am going to operate on this dict now
+I am going to operate on this dict again
+I am going to operate on this dict again(2)
+I am done with this dict
+I am going to operate on this dict now
+I am going to operate on this dict again
+I am going to operate on this dict again(2)
+I am done with this dict
+I am going to operate on this dict now
+I am going to operate on this dict again
+I am going to operate on this dict again(2)
+I am done with this dict
+Just checking what is the file name..
+I am going to operate on this dict now
+I am done with this dict
+I am going to operate on this dict now
+I am done with this dict
+I am going to operate on this dict now
+I am done with this dict
+11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+// These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
+
+
+
+//
+===========================================================================================
+//
+===========================================================================================
+
+
+// ================================================
+
+// ============================================================================================================================
+// Identify the ADDR field or similar downstream field which can help decide
+// the direction of transaction
+
+// 4 --> decode arm, 13 --> decode-field (typically address) ID.
+
+//TODO:Here we are assuming that upper most field contains address.
+//It might not be so in most cases. So the ordered-switch does need to have
+//that passed as a parameter. We need to decide whether ordered switch
+//reflects the name there.
+
+//TODO: Again each address aperture will be different and there's no way we
+//can pass this as argument. Even if we do, somewhere we need to provide it.
+//In current approach, the apertures will be built inside decoder.
+//Now ap_00001 can be a nomenclature on full Ahant's library.
+
+
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+// These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
+
+
+//AH_decoder_4_10 u_decoder_4_10_ap_00001 (
+  //  .ingress_pkt_field      (ingress_ds_pkt[24:24-9]),
+ //   .decoded_binary         (ingress_decoded[3:0])
+ //   .dec_err                ()
+//);
+
+//decoder_obj
+
+//u_demux_4_25 = AH_demux(4, 25)
+//u_demux.port_connect()
+
+
+ 1. Instance the class of Python and create an object - pass the parms required
+ 2. Access the port dict - add stuffs to it may be so that it reprensts the connectivity picture
+ 3. call class_instance.port_connect method - it prints the ports in veirlog syntax and updates on calling
+ class the wire dictionary, and it's own port dictionary may be.
+
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+//demux_dec1
+// 25 --> width of fifo
+// 32 --> depth of FIFO - TODO: Again another parameter. It's not possible
+// to reflect all of them in module name. It's better to probably keep a param
+// list inside and create a .h fle for the same also.
+
+//===================================================================================
+//snoop_dec1
+wire assign egress0_ds_pkt_valid = ingress_decode[0] & !block_egress0_ds_pkt & egress0_ds_pkt_valid_pre;
+
+
+//===================================================================================
+//snoop_dec2
+wire assign egress1_ds_pkt_valid = ingress_decode[0] & !block_egress1_ds_pkt & egress1_ds_pkt_valid_pre;
+
+
+//===================================================================================
+//snoop_dec3
+wire assign egress2_ds_pkt_valid = ingress_decode[0] & !block_egress2_ds_pkt & egress2_ds_pkt_valid_pre;
+
+
+//===================================================================================
+//snoop_dec4
+wire assign egress3_ds_pkt_valid = ingress_decode[0] & !block_egress3_ds_pkt & egress3_ds_pkt_valid_pre;
+
+// TODO: Downstream path is complete more or less.
+// Upstream path needs to be done.
+
+
+//===================================================================================
+AH_arbrr_4 u_arbrr_4 (
+    .clk(clk),
+    .rstn(rstn),
+
+//TODO: Choose one of the implementation
+
+    .req                ({
+                        egress0_us_pkt_valid ,
+                        egress1_us_pkt_valid ,
+                        egress2_us_pkt_valid ,
+                        egress3_us_pkt_valid
+                        }),
+
+    //TODO: we need width-learning or something similar here.
+    .grant              (egress_arbed[3:0]
+                        ),
+
+    //.req0             (egress0_us_pkt_valid),
+    //.req1             (egress1_us_pkt_valid),
+    //.req2             (egress2_us_pkt_valid),
+    //.req3             (egress3_us_pkt_valid),
+
+    //.grant0           (egress0_us_pkt_valid_pre),
+    //.grant1           (egress0_us_pkt_valid_pre),
+    //.grant2           (egress0_us_pkt_valid_pre),
+    //.grant3           (egress0_us_pkt_valid_pre),
+
+);
+
+//===================================================================================
+// 4 --> number of egress.
+// 25 -> ds packet size
+// 20 -> upstream packet size.
+// 10 -> address or downstream decodable field width.
+// 12 -> id or ordering and upstream-response decodable field width.
+
+//demux_dec2
+//===================================================================================
+// While sending upstream response valid -
+// For each egress channel-
+//       if we find the guy has won grant and carries an entry with same trackable field(ID)
+//       as the one stored in FIFO, we let it go.
+
+
+wire assign snoopfifo_rd_legal   = 1'b0 |
+                                    (egress_arbed[0] & egress0_snoopfifo_rd_valid & (egress0_snoopfifo_rd[11:0] = ingress_us_pkt[11:0]) ) |
+                                    (egress_arbed[1] & egress1_snoopfifo_rd_valid & (egress1_snoopfifo_rd[11:0] = ingress_us_pkt[11:0]) ) |
+                                    (egress_arbed[2] & egress2_snoopfifo_rd_valid & (egress2_snoopfifo_rd[11:0] = ingress_us_pkt[11:0]) ) |
+                                    (egress_arbed[3] & egress3_snoopfifo_rd_valid & (egress3_snoopfifo_rd[11:0] = ingress_us_pkt[11:0]) ) |
+                                    );
+/f_f/
+code = "\n"+"\n".join(["(egress_arbed[0] & egress0_snoopfifo_rd_valid & (egress0_snoopfifo_rd[upResponseDecodableFieldWidth - 1:0] = ingress_us_pkt[:0]) )" for i in range(NumberOfEgress)])
+/f_f/
+
+wire assign ingress_us_pkt_valid = arbed_out_valid & snoop_fifo_rd_legal;
+wire assign arbed_out_ready      = ingress_us_pkt_ready & snoop_fifo_rd_legal;
+
+//TODO: watch out for timing in this area and think about simplifying the logic.
+
+wire assign egress0_snoopfifo_rd_ready = snoopfifo_rd_legal;
+wire assign egress1_snoopfifo_rd_ready = snoopfifo_rd_legal;
+wire assign egress2_snoopfifo_rd_ready = snoopfifo_rd_legal;
+wire assign egress3_snoopfifo_rd_ready = snoopfifo_rd_legal;
+
+
+endmodule
+
+
+
+// 25 --> width of fifo
+// 32 --> depth of FIFO - TODO: Again another parameter. It's not possible
+// to reflect all of them in module name. It's better to probably keep a param
+// list inside and create a .h fle for the same also.
+
+
+//Identify the ID or trackable field from downstream packet.Create snoop valid
+//and match signals from downstream request valid.
+
+
+// Instantiate the snoop FIFO - which can create a snoop match logic. Connect
+// the snoop match to decoder/demux output there. The decoder will have only
+// legal requests to egress arms forwarded downstream.
+
+
+// Instantiaate upstream decoder (based on trackable field as ID)
+//
+
+// Instantiate the upstream arbiter.
+

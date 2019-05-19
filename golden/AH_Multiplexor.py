@@ -20,32 +20,23 @@ class Multiplexor(BasicModule,BusParser):
     #It's assumed that the original mux-demux yaml file will have 2 egress ports at least. The rest has to be added.
     # Then the yaml is demux - so ingress and egress keys swap name if we need to provide a mux
     def add_ports_from_bus(self):
-        #self.copy_flat("egress1", "egress"+str(i))
-        print(self.dict)
+        #print(self.dict)
         self.dyaml("1.yaml")
+        BasicModule.add_ports_from_bus(self)
         print("I am going to operate on this dict now")
 
-        ##if(self.NumClients > 2):
-        ##    for i in range(2, self.NumClients-1):
-
-        ##print(self.dict)
-        ##self.dyaml("1_1.yaml")
-        ##print("I am going to operate on this dict (2)")
-        #self.rename("egress2.egr1_data" , "egress2.egr2_data" )
-
-
         if(self.NumClients > 2):
-            for i in range(2, self.NumClients-1):
+            for i in range(2, self.NumClients):
                 self.copy_flat("egress1", "egress"+str(i))
                 self.rename("demux.egress"+str(i)+".egr1_data" , "egr"+str(i)+"_data" )
                 self.rename("demux.egress"+str(i)+".egr1_valid", "egr"+str(i)+"_valid")
                 self.rename("demux.egress"+str(i)+".egr1_ready", "egr"+str(i)+"_ready")
 
         self.widop_flat("ing_data",self.PortWidth)
-        for i in range(0, self.NumClients-1):
+        for i in range(0, self.NumClients):
             self.widop_flat("egr"+str(i)+"_data",self.PortWidth)
 
-        print(self.dict)
+        #print(self.dict)
         print("I am going to operate on this dict again")
         self.dyaml("2.yaml")
 
@@ -58,13 +49,13 @@ class Multiplexor(BasicModule,BusParser):
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_valid", "ing"+str(i)+"_valid")
                 self.rename("demux.ingress"+str(i)+".egr"+str(i)+"_ready", "ing"+str(i)+"_ready")
 
-        print(self.dict)
+        #print(self.dict)
         print("I am going to operate on this dict again(2)")
         self.dyaml("3.yaml")
 
         if not self.IsDemux:
             self.rename_flat("ingress", "egress")
-            print(self.dict)
+            #print(self.dict)
             print("I am going to operate on this dict again(3)")
             self.dyaml("3_3.yaml")
             self.rename("demux.egress.ing_data" , "egr_data" )
@@ -73,7 +64,7 @@ class Multiplexor(BasicModule,BusParser):
 
             self.rename_flat("demux", "mux")
 
-        print(self.dict)
+        #print(self.dict)
         self.dyaml("4.yaml")
         print("I am done with this dict")
         self.init_connections(self.dict)
@@ -115,13 +106,14 @@ class Multiplexor(BasicModule,BusParser):
         self.name = "AH_"+self.curName+"_"+str(self.PortWidth)+"_"+str(self.NumClients)+"_"+str(self.IsBinary)
         print("Just checking what is the file name..")
         print (self.name)
-        BasicModule.__init__(self, self.name)
+        #BasicModule.__init__(self, self.name)
         self.body = ""
         self.EncodedDepth = int(ceil(log2(numclients)))
         self.variable_dict={}
         self.Create_dic_of_variable()
         BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
-        self.add_ports_from_bus()
+        BasicModule.__init__(self, self.name)
+        #self.add_ports_from_bus()
 
         self.muxdemuxbody = """
 

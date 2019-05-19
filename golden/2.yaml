@@ -6,7 +6,7 @@ demux:
             heiarchy: demux_egress0_egr0_data
             name: egr0_data
             type: fluid
-            width: 9
+            width: 20
         egr0_ready:
             cname: egress0_egr0_ready
             direction: input
@@ -28,7 +28,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 9
+            width: 20
         egr1_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -43,182 +43,6 @@ demux:
             name: egr1_valid
             type: nonfluid
             width: 1
-    egress10:
-        egr10_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr10_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr10_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress11:
-        egr11_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr11_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr11_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress12:
-        egr12_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr12_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr12_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress13:
-        egr13_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr13_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr13_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress14:
-        egr14_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr14_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr14_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress15:
-        egr15_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr15_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr15_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress16:
-        egr16_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr16_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr16_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress17:
-        egr17_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr17_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr17_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
     egress2:
         egr2_data:
             cname: egress1_egr1_data
@@ -226,7 +50,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 9
+            width: 20
         egr2_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -248,7 +72,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 9
+            width: 20
         egr3_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -263,138 +87,6 @@ demux:
             name: egr1_valid
             type: nonfluid
             width: 1
-    egress4:
-        egr4_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr4_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr4_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress5:
-        egr5_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr5_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr5_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress6:
-        egr6_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr6_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr6_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress7:
-        egr7_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr7_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr7_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress8:
-        egr8_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr8_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr8_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
-    egress9:
-        egr9_data:
-            cname: egress1_egr1_data
-            direction: output
-            heiarchy: demux_egress1_egr1_data
-            name: egr1_data
-            type: fluid
-            width: 9
-        egr9_ready:
-            cname: egress1_egr1_ready
-            direction: input
-            heiarchy: demux_egress1_egr1_ready
-            name: egr1_ready
-            type: nonfluid
-            width: 1
-        egr9_valid:
-            cname: egress1_egr1_valid
-            direction: output
-            heiarchy: demux_egress1_egr1_valid
-            name: egr1_valid
-            type: nonfluid
-            width: 1
     ingress:
         ing_data:
             cname: ingress_ing_data
@@ -402,7 +94,7 @@ demux:
             heiarchy: demux_ingress_ing_data
             name: ing_data
             type: fluid
-            width: 9
+            width: 20
         ing_ready:
             cname: ingress_ing_ready
             direction: output
