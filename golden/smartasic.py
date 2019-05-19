@@ -7,6 +7,7 @@ from pathlib import Path
 from BusParser import BusParser
 import re
 import yaml
+from DynamicGenerator import DynamicGenerator
 
 class Port:
 
@@ -46,6 +47,10 @@ class BasicModule:
         self.Ports = []
         self.results = []
         self.port_list = []
+        self.body = ""
+        self.variable_dict={}
+        self.Create_dic_of_variable()
+        self.add_ports_from_bus()
 
     def add_port(self, name, direction, type, width, heiarchy, cname):
         self.Ports.append(Port(name, direction, type, width, heiarchy, cname))
@@ -198,8 +203,8 @@ class BasicModule:
                             if re.match(pattern, v['cname']):
                                 matches = [group for group in re.match(pattern , v['cname']).groups()][1:]
                                 v['cname'] = replacement.format([*matches])
-                                
-                                
+
+
 
                         inner(v)
 
@@ -287,6 +292,27 @@ class BasicModule:
                 self.Ports.remove(port)
                 return
 
+    #============================================================================
+    # Below portion is for migrating the methods that can remain in base-class.
+    # Continuing this will keep code size in all classes under check.
+    #============================================================================
+    def main(self):
+        self.write_to_file(self.get_verilog())
+        return self.get_verilog()
+
+    def get_verilog(self):
+        modulecode=self.get_header()
+        self.get_body()
+        modulecode=modulecode.replace("BODY",self.body)
+        return modulecode
+
+
+
+    def get_body(self):
+        dynamicgenerator = DynamicGenerator(self.variable_dict, self.snoopbody) # passing dictonary   and snoopbody to split the body
+        self.body += dynamicgenerator.parse_body()
+
+
 
 class FIFO(BasicModule):
 
@@ -341,5 +367,3 @@ class FIFO(BasicModule):
 
     def __str__(self):
         return self.get_fifo_v()
-
-

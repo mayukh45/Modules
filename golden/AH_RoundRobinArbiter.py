@@ -13,7 +13,7 @@ class RoundRobinArbiter(BasicModule,BusParser):
         self.variable_dict['EncodedNum_Clients']=self.EncodedNum_Clients
         self.variable_dict['weight']=self.weight
 
-    def add_ports_from_bus(self, filepath, bus_name):
+    def add_ports_from_bus(self):
        # parser = BusParser(filepath, bus_name)
         self.widop_flat("req",self.Num_Clients)
         self.rename_flat('gnt',"grant")
@@ -45,18 +45,22 @@ class RoundRobinArbiter(BasicModule,BusParser):
         self.bus_name=bus_name
         self.Num_Clients=num_clients
         self.weight = weight
+        self.EncodedNum_Clients = int(ceil(log2(self.Num_Clients)))
+
         if weight==None:
             self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)
         else:
             self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)+"_"+str(weight)
-        BasicModule.__init__(self ,self.name)
-        self.EncodedNum_Clients = int(ceil(log2(self.Num_Clients)))
+
         BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
+        BasicModule.__init__(self ,self.name)
         self.variable_dict={}
         self.Create_dic_of_variable()
         self.body=""
-        self.add_ports_from_bus(path_of_yaml,bus_name)
+        self.add_ports_from_bus()
+        #self.add_ports_from_bus(path_of_yaml,bus_name)
         self.arbiter_body="""
+
 /f_f/
 if(weight != None):
     code="\\n".join(["input ["+str(weight)+":0] cfg_weight"+str(i)+";"  for i in range(Num_Clients)])

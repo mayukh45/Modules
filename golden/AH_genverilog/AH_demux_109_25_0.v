@@ -1,5 +1,6 @@
 
-module AH_demux_109_25_0 (ing_data
+module AH_demux_109_25_0 (select
+,ing_data
 ,ing_valid
 ,ing_ready
 ,egr0_data
@@ -75,6 +76,7 @@ module AH_demux_109_25_0 (ing_data
 ,egr23_valid
 ,egr23_ready);
 
+input select;
 input [108:0] ing_data;
 input ing_valid;
 output ing_ready;

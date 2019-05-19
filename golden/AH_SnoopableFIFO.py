@@ -36,34 +36,25 @@ class SnoopableFIFO(BasicModule,BusParser):
         self.body = self.body.replace("SNOOPWIDTH", str(self.SnoopWidth))
         dynamicgenerator.silentremove()
 
-    def get_verilog(self):
-        modulecode=self.get_header()
-        self.get_body()
-        modulecode=modulecode.replace("BODY",self.body)
-        return modulecode
-
-    def main(self):
-        self.write_to_file(self.get_verilog())
-        return self.get_verilog()
 
     def __init__(self, fifowidth, fifodepth, snoopwidth, path_of_yaml = None, bus_name = None):
 
         self.FifoWidth = fifowidth
         self.FifoDepth = fifodepth
         self.SnoopWidth = snoopwidth
+        self.EncodedDepth = int(ceil(log2(fifodepth)))
+
         if path_of_yaml is None:
             path_of_yaml = "../../../smartasic2/refbuses/astob.yaml"
             bus_name = "astob"
-
         self.name = "AH_"+self.__class__.__name__+"_"+str(fifowidth)+"_"+str(fifodepth)+"_"+str(snoopwidth)
-        BasicModule.__init__(self, self.name)
-        self.body = ""
-        self.EncodedDepth = int(ceil(log2(fifodepth)))
-        self.variable_dict={}
-        self.Create_dic_of_variable()
+
         BusParser.__init__(self, self.load_dict(path_of_yaml), bus_name)
-        self.add_ports_from_bus()
+        BasicModule.__init__(self, self.name)
+
         self.snoopbody="""
+
+
 reg [ENCODEDDEPTH:0] wr_pointer; // ENCODEDDEPTH + 1 = log2(32) + 1
 
 reg [ENCODEDDEPTH:0] rd_pointer; // ENCODEDDEPTH + 1
@@ -146,6 +137,8 @@ assing snoop_match = 1'b0 |
 code = "\\n"+"|\\n ".join(["((fifo_loc["+str(SnoopWidth-1)+":0] == snoop_data) ? 1'b1 : 1'b0)" for i in range(FifoDepth)])
 /f_f/
 """
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 3:
         snoopablefifo=SnoopableFIFO(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]),sys.argv[4],sys.argv[5])

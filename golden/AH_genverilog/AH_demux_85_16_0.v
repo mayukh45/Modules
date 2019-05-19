@@ -1,5 +1,6 @@
 
-module AH_demux_85_16_0 (ing_data
+module AH_demux_85_16_0 (select
+,ing_data
 ,ing_valid
 ,ing_ready
 ,egr0_data
@@ -48,6 +49,7 @@ module AH_demux_85_16_0 (ing_data
 ,egr14_valid
 ,egr14_ready);
 
+input select;
 input [84:0] ing_data;
 input ing_valid;
 output ing_ready;
