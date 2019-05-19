@@ -1,6 +1,8 @@
 import copy
 import yaml
 from AH_SnoopableFIFO import SnoopableFIFO
+from AH_Multiplexor import Multiplexor
+from AH_Decoder import Decoder
 from smartasic import BasicModule
 from BusParser import BusParser
 import sys
@@ -19,7 +21,7 @@ class OrderedSwitch(BasicModule):
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
         #print(spf1.dict)
 
-        print(spf1.get_object_declaration_str("hello"))
+
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
@@ -27,8 +29,26 @@ class OrderedSwitch(BasicModule):
             print(curr_obj.get_object_declaration_str("hello"))
             object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(
                 self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
+        c = 1
+        for k,v in object_dict.items():
+            self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
+            c +=1
 
-        self.dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
+        obj_list = list(object_dict.values())
+        mux1 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
+        mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
+        self.order_body.replace("demux_dec1", mux1.get_object_declaration_str("u_demux_4_25"))
+        self.order_body.replace("demux_dec2", mux1.get_object_declaration_str("u_demux_4_25"))
+        decoder = Decoder(self.NumberOfEgress, self.upPktSize)
+        self.order_body.replace("decoder_dec", decoder.get_object_declaration_str("u_decoder_4_20"))
+
+        obj_list.append(mux1)
+        obj_list.append(mux2)
+        obj_list.append(decoder)
+
+        self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
+
+        self.dict , self.wire_dict = self.populate_wire_and_ports(obj_list)
 
 
     def add_ports_from_bus(self):
@@ -59,109 +79,13 @@ class OrderedSwitch(BasicModule):
 // These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
 
 
-module AH_ordered_switch_4_25_20_10_12 (
-clk,
-rstn,
-
-// ================================================
-ingress_ds_pkt,
-ingress_ds_pkt_valid,
-ingress_ds_pkt_ready,
-
-ingress_us_pkt,
-ingress_us_pkt_valid,
-ingress_us_pkt_ready,
-
-// ================================================
-egress0_ds_pkt,
-egress0_ds_pkt_valid,
-egress0_ds_pkt_ready,
-
-egress0_us_pkt,
-egress0_us_pkt_valid,
-egress0_us_pkt_ready,
-
-// ================================================
-egress1_us_pkt,
-egress1_us_pkt_valid,
-egress1_us_pkt_ready,
-
-egress1_ds_pkt,
-egress1_ds_pkt_valid,
-egress1_ds_pkt_ready,
-
-// ===============================================
-egress2_ds_pkt,
-egress2_ds_pkt_valid,
-egress2_ds_pkt_ready,
-
-egress2_us_pkt,
-egress2_us_pkt_valid,
-egress2_us_pkt_ready,
-
-// ===============================================
-egress3_ds_pkt,
-egress3_ds_pkt_valid,
-egress3_ds_pkt_ready,
-
-egress3_us_pkt,
-egress3_us_pkt_valid,
-egress3_us_pkt_ready,
-
-);
 
 //
 ===========================================================================================
 //
 ===========================================================================================
 
-input clk;
-input rstn;
 
-// ================================================
-input [24:0]    ingress_ds_pkt_data;
-input           ingress_ds_pkt_valid;
-output          ingress_ds_pkt_ready;
-
-output [19:0]   ingress_us_pkt_data;
-output          ingress_us_pkt_valid;
-input           ingress_us_pkt_ready;
-
-// ================================================
-output [24:0]   egress0_ds_pkt;
-output          egress0_ds_pkt_valid;
-input           egress0_ds_pkt_ready;
-
-input [19:0]    egress0_us_pkt;
-input           egress0_us_pkt_valid;
-output          egress0_us_pkt_ready;
-
-// ================================================
-output [24:0]   egress1_ds_pkt;
-output          egress1_ds_pkt_valid;
-input           egress1_ds_pkt_ready;
-
-input [19:0]    egress1_us_pkt;
-input           egress1_us_pkt_valid;
-output          egress1_us_pkt_ready;
-
-// ================================================
-output [24:0]   egress2_ds_pkt;
-output          egress2_ds_pkt_valid;
-input           egress2_ds_pkt_ready;
-
-input [19:0]    egress2_us_pkt;
-input           egress2_us_pkt_valid;
-output          egress2_us_pkt_ready;
-
-// ================================================
-output [24:0]   egress3_ds_pkt;
-output          egress3_ds_pkt_valid;
-input           egress3_ds_pkt_ready;
-
-output [19:0]   egress3_us_pkt;
-output          egress3_us_pkt_valid;
-input           egress3_us_pkt_ready;
 // ================================================
 
 // ============================================================================================================================
@@ -190,14 +114,16 @@ input           egress3_us_pkt_ready;
 // These numbers are unique - if you look into decoder instnce and demux instance - you will find them onlye
 
 
-AH_decoder_4_10 u_decoder_4_10_ap_00001 (
-    .ingress_pkt_field      (ingress_ds_pkt[24:24-9]),
-    .decoded_binary         (ingress_decoded[3:0])
-    .dec_err                ()
-);
+//AH_decoder_4_10 u_decoder_4_10_ap_00001 (
+  //  .ingress_pkt_field      (ingress_ds_pkt[24:24-9]),
+ //   .decoded_binary         (ingress_decoded[3:0])
+ //   .dec_err                ()
+//);
 
-u_demux_4_25 = AH_demux(4, 25)
-u_demux.port_connect()
+//decoder_obj
+
+//u_demux_4_25 = AH_demux(4, 25)
+//u_demux.port_connect()
 
 
  1. Instance the class of Python and create an object - pass the parms required
@@ -211,116 +137,29 @@ u_demux.port_connect()
 // 10 -> address or downstream decodable field width.
 // 12 -> id or ordering and upstream-response decodable field width.
 
-AH_demux_4_25 u_demux_4_25 (
-    .select             (ingress_decoded[3:0])
-    .ing_data           (ingress_ds_pkt),
-    .ing_valid          (ingress_ds_pkt_valid),
-    .ing_ready          (ingress_ds_pkt_ready),
-
-    .egr0_data          (egress0_ds_pkt),
-    .egr0_valid         (egress0_ds_pkt_valid_pre),
-    .egr0_ready         (egress0_ds_pkt_ready),
-
-    .egr1_data          (egress1_ds_pkt),
-    .egr1_valid         (egress1_ds_pkt_valid_pre),
-    .egr1_ready         (egress1_ds_pkt_ready),
-
-
-    .egr2_data          (egress2_ds_pkt),
-    .egr2_valid         (egress2_ds_pkt_valid_pre),
-    .egr2_ready         (egress2_ds_pkt_ready),
-
-    .egr3_data          (egress3_ds_pkt),
-    .egr3_valid         (egress3_ds_pkt_valid_pre),
-    .egr3_ready         (egress3_ds_pkt_ready),
-);
-
+//demux_dec1
 // 25 --> width of fifo
 // 32 --> depth of FIFO - TODO: Again another parameter. It's not possible
 // to reflect all of them in module name. It's better to probably keep a param
 // list inside and create a .h fle for the same also.
 
 //===================================================================================
-AH_snoopfifo_10_32_10 u_egress0_snoopfifo_25_32_12 (
-    .clk                (clk),
-    .rstn               (rstn),
-
-    .wr_data            (egress0_ds_pkt),
-    .wr_valid           (egress0_ds_pkt_valid),
-    .wr_ready           (egress0_ds_pkt_ready),
-
-    .rd_data            (egress0_snoopfifo_rd),
-    .rd_valid           (egress0_snoopfifo_rd_valid),
-    .rd_ready           (egress0_snoopfifo_rd_ready),
-
-    .snoop_data         (egress0_ds_pkt),
-    .snoop_valid        ({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}),
-    .snoop_match        (block_egress0_ds_pkt),
-
-);
+//snoop_dec1
 wire assign egress0_ds_pkt_valid = ingress_decode[0] & !block_egress0_ds_pkt & egress0_ds_pkt_valid_pre;
 
 
 //===================================================================================
-AH_snoopfifo_10_32_10 u_egress1_snoopablefifo_25_32_12 (
-    .clk                (clk),
-    .rstn               (rstn),
-
-    .wr_data            (egress1_ds_pkt),
-    .wr_valid           (egress1_ds_pkt_valid),
-    .wr_ready           (egress1_ds_pkt_ready),
-
-    .rd_data            (egress1_snoopfifo_rd),
-    .rd_valid           (egress1_snoopfifo_rd_valid),
-    .rd_ready           (egress1_snoopfifo_rd_ready),
-
-    .snoop_data         (egress1_ds_pkt),
-    .snoop_valid        ({ingress_decoded[2], ingress_decoded[3], ingress_decoded[0]}),
-    .snoop_match        (block_egress1_ds_pkt),
-
-);
+//snoop_dec2
 wire assign egress1_ds_pkt_valid = ingress_decode[0] & !block_egress1_ds_pkt & egress1_ds_pkt_valid_pre;
 
 
 //===================================================================================
-AH_snoopfifo_10_32_10 u_egress2_snoopablefifo_25_32_12 (
-    .clk                (clk),
-    .rstn               (rstn),
-
-    .wr_data            (egress2_ds_pkt),
-    .wr_valid           (egress2_ds_pkt_valid),
-    .wr_ready           (egress2_ds_pkt_ready),
-
-    .rd_data            (egress2_snoopfifo_rd),
-    .rd_valid           (egress2_snoopfifo_rd_valid),
-    .rd_ready           (egress2_snoopfifo_rd_ready),
-
-    .snoop_data         (egress2_ds_pkt),
-    .snoop_valid        ({ingress_decoded[3], ingress_decoded[0], ingress_decoded[1]}),
-    .snoop_match        (block_egress2_ds_pkt),
-
-);
+//snoop_dec3
 wire assign egress2_ds_pkt_valid = ingress_decode[0] & !block_egress2_ds_pkt & egress2_ds_pkt_valid_pre;
 
 
 //===================================================================================
-AH_snoopfifo_10_32_10 u_egress3_snoopablefifo_25_32_12 (
-    .clk                (clk),
-    .rstn               (rstn),
-
-    .wr_data            (egress3_ds_pkt),
-    .wr_valid           (egress3_ds_pkt_valid),
-    .wr_ready           (egress3_ds_pkt_ready),
-
-    .rd_data            (egress3_snoopfifo_rd),
-    .rd_valid           (egress3_snoopfifo_rd_valid),
-    .rd_ready           (egress3_snoopfifo_rd_ready),
-
-    .snoop_data         (egress3_ds_pkt),
-    .snoop_valid        ({ingress_decoded[0], ingress_decoded[1], ingress_decoded[2]}),
-    .snoop_match        (block_egress3_ds_pkt),
-
-);
+//snoop_dec4
 wire assign egress3_ds_pkt_valid = ingress_decode[0] & !block_egress3_ds_pkt & egress3_ds_pkt_valid_pre;
 
 // TODO: Downstream path is complete more or less.
@@ -364,29 +203,7 @@ AH_arbrr_4 u_arbrr_4 (
 // 10 -> address or downstream decodable field width.
 // 12 -> id or ordering and upstream-response decodable field width.
 
-AH_demux_4_20           u_demux_4_20 (
-    .select             (egress_arbed[3:0]),
-
-    .egress_pkt         (ingress_us_pkt),
-    .eegress_pkt_valid  (arbed_out_valid),
-    .degress_pkt_ready  (arbed_out_ready),
-
-    .ingress0_pkt       (egress0_us_pkt),
-    .ingress0_pkt_valid (egress0_us_pkt_valid),
-    .ingress0_pkt_ready (egress0_us_pkt_ready),
-
-    .ingress1_pkt       (egress1_us_pkt),
-    .ingress1_pkt_valid (egress1_us_pkt_valid),
-    .ingress1_pkt_ready (egress1_us_pkt_ready),
-
-    .ingress2_pkt       (egress2_us_pkt),
-    .ingress2_pkt_valid (egress2_us_pkt_valid),
-    .ingress2_pkt_ready (egress2_us_pkt_ready),
-
-    .ingress3_pkt       (egress3_us_pkt),
-    .ingress3_pkt_valid (egress3_us_pkt_valid),
-    .ingress3_pkt_ready (egress3_us_pkt_ready),
-);
+//demux_dec2
 //===================================================================================
 // While sending upstream response valid -
 // For each egress channel-
