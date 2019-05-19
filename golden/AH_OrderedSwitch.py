@@ -1,6 +1,8 @@
 import copy
 import yaml
 from AH_SnoopableFIFO import SnoopableFIFO
+from AH_Multiplexor import Multiplexor
+from AH_Decoder import Decoder
 from smartasic import BasicModule
 from BusParser import BusParser
 import sys
@@ -19,7 +21,7 @@ class OrderedSwitch(BasicModule):
         spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
         #print(spf1.dict)
 
-        print(spf1.get_object_declaration_str("hello"))
+
         object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
         for i in range(1, self.NumberOfEgress):
             curr_obj = copy.deepcopy(spf1)
@@ -27,8 +29,26 @@ class OrderedSwitch(BasicModule):
             print(curr_obj.get_object_declaration_str("hello"))
             object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(
                 self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
+        c = 1
+        for k,v in object_dict.items():
+            self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
+            c +=1
 
-        self.dict , self.wire_dict = self.populate_wire_and_ports(object_dict.values())
+        obj_list = list(object_dict.values())
+        mux1 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
+        mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize)
+        self.order_body.replace("demux_dec1", mux1.get_object_declaration_str("u_demux_4_25"))
+        self.order_body.replace("demux_dec2", mux1.get_object_declaration_str("u_demux_4_25"))
+        decoder = Decoder(self.NumberOfEgress, self.upPktSize)
+        self.order_body.replace("decoder_dec", decoder.get_object_declaration_str("u_decoder_4_20"))
+
+        obj_list.append(mux1)
+        obj_list.append(mux2)
+        obj_list.append(decoder)
+
+        self.order_body.replace("snoop_dec" + str(c), v.get_object_declaration_str(k))
+
+        self.dict , self.wire_dict = self.populate_wire_and_ports(obj_list)
 
 
     def add_ports_from_bus(self):
