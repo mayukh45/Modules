@@ -14,7 +14,7 @@ class RoundRobinArbiter(BasicModule,BusParser):
         self.variable_dict['weight']=self.weight
 
     def add_ports_from_bus(self):
-       # parser = BusParser(filepath, bus_name)
+        BasicModule.add_ports_from_bus(self)
         self.widop_flat("req",self.Num_Clients)
         self.rename_flat('gnt',"grant")
         self.widop_flat("grant",self.Num_Clients)
@@ -22,23 +22,24 @@ class RoundRobinArbiter(BasicModule,BusParser):
         self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
-        dynamicgenerator=DynamicGenerator(self.variable_dict,self.arbiter_body)
+        dynamicgenerator=DynamicGenerator(self.variable_dict,self.body)
         self.body+=dynamicgenerator.parse_body()
+        #BasicModule.get_body
         self.body= self.body.replace("ENCODEDNUMCLIENTS - 1", str(self.EncodedNum_Clients - 1))
         self.body= self.body.replace("ENCODEDNUMCLIENTS", str(self.EncodedNum_Clients))
         self.body = self.body.replace("NUMCLIENTS - 1", str(self.Num_Clients - 1))
         self.body = self.body.replace("NUMCLIENTS", str(self.Num_Clients))
         dynamicgenerator.silentremove()
 
-    def get_verilog(self):
-        modulecode=self.get_header()
-        self.get_body()
-        modulecode=modulecode.replace("BODY",self.body)
-        return modulecode
+    ##def get_verilog(self):
+    ##    modulecode=self.get_header()
+    ##    self.get_body()
+    ##    modulecode=modulecode.replace("BODY",self.body)
+    ##    return modulecode
 
-    def main(self):
-        self.write_to_file(self.get_verilog())
-        return self.get_verilog()
+    ##def main(self):
+    ##    self.write_to_file(self.get_verilog())
+    ##    return self.get_verilog()
 
 
     def __init__(self,num_clients,path_of_yaml=None,bus_name=None,weight=None):
@@ -46,7 +47,9 @@ class RoundRobinArbiter(BasicModule,BusParser):
         self.Num_Clients=num_clients
         self.weight = weight
         self.EncodedNum_Clients = int(ceil(log2(self.Num_Clients)))
-
+        if path_of_yaml == None:
+            path_of_yaml = "../../../smartasic2/refbuses/arbiter.yaml"
+            bus_name = "arbiter"
         if weight==None:
             self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)
         else:
@@ -54,12 +57,14 @@ class RoundRobinArbiter(BasicModule,BusParser):
 
         BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
         BasicModule.__init__(self ,self.name)
-        self.variable_dict={}
-        self.Create_dic_of_variable()
-        self.body=""
-        self.add_ports_from_bus()
+
+        #self.variable_dict={}
+        #self.Create_dic_of_variable()
+        #self.body=""
+        #self.add_ports_from_bus()
         #self.add_ports_from_bus(path_of_yaml,bus_name)
-        self.arbiter_body="""
+
+        self.body="""
 
 /f_f/
 if(weight != None):
@@ -169,14 +174,14 @@ if(weight!=None):
         code += "assign nweight"+str(i)+" = refresh_weights ? cfg_weight"+str(i)+" :  (req["+str(i)+"] & gnt["+str(i)+"]) ? weight"+str(i)+" - 1'b1 :   weight"+str(i)+";\\n"
 /f_f/
 """
-
-if len(sys.argv) > 4:
+if __name__ == "__main__":
+    if len(sys.argv) > 4:
 
     #print(RoundRobinArbiter(int(sys.argv[1]),sys.argv[2], sys.argv[3],int(sys.argv[4])))
-    roundrobinarbiter=RoundRobinArbiter(int(sys.argv[1]),sys.argv[2], sys.argv[3],int(sys.argv[4]))
-else:
+        roundrobinarbiter=RoundRobinArbiter(int(sys.argv[1]),sys.argv[2], sys.argv[3],int(sys.argv[4]))
+    else:
     #print(RoundRobinArbiter(int(sys.argv[1]), sys.argv[2], sys.argv[3]))
-    roundrobinarbiter=RoundRobinArbiter(int(sys.argv[1]), sys.argv[2], sys.argv[3])
-roundrobinarbiter.main()
+        roundrobinarbiter=RoundRobinArbiter(int(sys.argv[1]))
+    roundrobinarbiter.main()
 
 

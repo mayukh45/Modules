@@ -88,6 +88,7 @@ class BasicModule:
    #====================================================================================================================================================
 
     def get_all_key_value_pairs(self, data):
+         self.Ports.clear()
          def inner(data):
              if isinstance(data, dict):
                  # print("I found a dictionary")
@@ -102,6 +103,10 @@ class BasicModule:
                              # TODO: I need to find the values of 'width', 'direction' and of course
                              # 'signal' here. If I can print them, I can just call self.add_port method
                              # here with them.
+
+            #                 print("I am going see what name and cname values I pass to port-class\n")
+           #                  print(str(v['name'])+"_|_|_|_|_"+str(v['cname']))
+
                              self.add_port(v['name'], v['direction'], v['type'], v['width'], v['heiarchy'],  v['cname'])
 
                              #  print("I have found direction, must be at a signal.")
@@ -118,7 +123,10 @@ class BasicModule:
          return self.results
 
     def add_ports_from_bus(self):
-        self.Ports.clear()
+        pass
+        # print("\n I am checking whether this BasicModule add_ports_from_bus gets executed anywhere..\n\n")
+
+       # self.Ports.clear()
         #Some are combo modules alone - clock and reset aren't required.
         #TODO: Is there a graceful way to not having clock-reset in every .yaml file.
         # But at the same time combo modules are spared from adding.
@@ -129,7 +137,7 @@ class BasicModule:
 
 
     def get_object_declaration_str(self, obj_name):
-        self.add_ports_from_bus()
+        self.get_all_key_value_pairs(self.dict)
         code = "\n".join(["."+ports.name + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
@@ -244,6 +252,7 @@ class BasicModule:
         return yaml.load(open(filepath).read())
 
     def get_header(self):
+        self.get_all_key_value_pairs(self.dict)
         mytemplate = module_template
         mytemplate = mytemplate.replace("MODULENAME", self.name)
         portlist, portdecl = self.get_port_str()
@@ -314,7 +323,7 @@ class BasicModule:
 
 
     def get_body(self):
-        dynamicgenerator = DynamicGenerator(self.variable_dict, self.snoopbody) # passing dictonary   and snoopbody to split the body
+        dynamicgenerator = DynamicGenerator(self.variable_dict, self.body) # passing dictonary   and snoopbody to split the body
         self.body += dynamicgenerator.parse_body()
 
 

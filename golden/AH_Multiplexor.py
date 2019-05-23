@@ -64,9 +64,9 @@ class Multiplexor(BasicModule,BusParser):
 
             self.rename_flat("demux", "mux")
 
-        #print(self.dict)
+       # print(self.dict)
         self.dyaml("4.yaml")
-        print("I am done with this dict")
+        print("I am done with this dict which is final.")
         self.init_connections(self.dict)
         self.get_all_key_value_pairs(self.dict)
 
@@ -90,7 +90,7 @@ class Multiplexor(BasicModule,BusParser):
         print (self.get_verilog())
         return self.get_verilog()
 
-    def __init__(self, portwidth, numclients, isdemux, isbinary, path_of_yaml=None, bus_name=None):
+    def __init__(self,numclients,portwidth, isdemux, isbinary, path_of_yaml=None, bus_name=None):
         self.PortWidth = portwidth
         self.NumClients = numclients
         self.IsDemux = isdemux

@@ -1,114 +1,8 @@
-import copy
-import yaml
-from AH_RoundRobinArbiter import RoundRobinArbiter
-from AH_SnoopableFIFO import SnoopableFIFO
-from AH_Multiplexor import Multiplexor
-from AH_Decoder import Decoder
-from smartasic import BasicModule
-from BusParser import BusParser
-import sys
-print(sys.path)
+
+module AH_OrderedSwitch_4_5_6_7_8 ();
 
 
-class OrderedSwitch(BasicModule):
 
-    def Create_dic_of_variable(self):
-        self.variable_dict = self.__dict__
-
-
-    def get_body(self):
-        object_dict = {}
-
-        #=============================================================================
-        # First we create the snoopable FIFO basic object with connection rules
-        # and we update the dict
-        spf1 = SnoopableFIFO(self.dsPktSize, self.SnoopDepth, self.upResponseDecodableFieldWidth)
-        spf1.smart_connectionop("astob", "wr_","egress0_dspkt_")
-        spf1.smart_connectionop("astob",  "rd_", "egress0_dspkt_")
-        spf1.smart_connectionop("astob",  "snoop_", "egress0_dspkt_")
-        spf1.add_connection_flat("svalid","{ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]}")
-        #print(spf1.dict)
-
-        object_dict.update({"u_egress0_snoopablefifo_"+str(self.dsPktSize)+"_"+str(self.SnoopDepth)+"_"+str(self.upResponseDecodableFieldWidth) : spf1})
-        #=============================================================================
-
-
-        #=============================================================================
-        #A deep copy of each new snoopableFIFO object is created from first massaged
-        # object. The object_dict.update is called each time.
-
-        for i in range(1, self.NumberOfEgress):
-            curr_obj = copy.deepcopy(spf1)
-            curr_obj.smart_connectionop("astob", "egress0" , "egress"+str(i))
-           # print(curr_obj.get_object_declaration_str("hello"))
-            object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
-
-        #=============================================================================
-        #Finally replace in body strings...
-        c = 1
-        #=============================================================================
-
-        mux1 = Multiplexor(self.NumberOfEgress, self.dsPktSize,1,1)
-        mux1.smart_connectionop("demux", "egr[0-9]{1,10}" , "uspkt")
-        mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize,1,0)
-        mux2.smart_connectionop("demux","egr[0-9]{1,10}", "dspkt")
-
-        self.body = self.body.replace("//demux_dec1", mux1.get_object_declaration_str("u_demux_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsPktSize)))
-
-        self.body = self.body.replace("//demux_dec2", mux1.get_object_declaration_str("u_demux_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsPktSize)))
-
-        #=============================================================================
-        decoder = Decoder(self.NumberOfEgress, self.upPktSize)
-        self.body = self.body.replace("//decoder_dec", decoder.get_object_declaration_str("u_decoder_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsDecodableFieldWidth)))
-
-        #============================================================================
-
-        arbiter = RoundRobinArbiter(self.NumberOfEgress)
-        ar_req_code =  "{"+"\n".join(["egress"+str(i)+"_us_pkt_valid," for i in range(self.NumberOfEgress)])+"}"
-        arbiter.add_connection_flat("req",ar_req_code)
-        arbiter.add_connection_flat("grant","egress_arbed["+str(self.NumberOfEgress-1)+":0]")
-        #print(arbiter.get_object_declaration_str("hh"))
-        self.body = self.body.replace("//arbiter_dec" , arbiter.get_object_declaration_str("u_arbiter_4"))
-        #============================================================================
-
-        snoop_dec = ""
-        for k,v in object_dict.items():
-            snoop_dec += v.get_object_declaration_str(k)
-
-        self.body =  self.body.replace("//snoop_decs", snoop_dec)
-
-
-        obj_list = list(object_dict.values())
-
-        #=============================================================================
-        obj_list.append(mux1)
-        #obj_list.append(mux2)
-        obj_list.append(decoder)
-
-        self.dict , self.wire_dict = self.populate_wire_and_ports(obj_list)
-
-
-    def add_ports_from_bus(self):
-        self.get_all_key_value_pairs(self.dict)
-
-    def __init__(self, number_of_egress,ds_packet_size, ups_packet_size, ds_decodable_field_width, ups_response_decodable_field_width, snoopdepth):
-
-        self.NumberOfEgress                 = number_of_egress
-        self.dsPktSize                      = ds_packet_size
-        self.SnoopDepth                     = snoopdepth
-        self.upPktSize                      = ups_packet_size
-        self.dsDecodableFieldWidth          = ds_decodable_field_width
-        self.upResponseDecodableFieldWidth  = ups_response_decodable_field_width
-
-        self.name = "AH_"+self.__class__.__name__+"_"+str(number_of_egress)+"_"+str(ds_packet_size)+"_"+str(ups_packet_size)+"_"+str(ds_decodable_field_width)+"_"+str(ups_response_decodable_field_width)
-
-        self.dict = {}
-        self.wire_dict = {}
-        BasicModule.__init__(self, self.name)
-        self.body = """
 
 
 // 4 --> number of egress.
@@ -178,14 +72,71 @@ AH_decoder_4_10 u_decoder_4_10_ap_00001 (
 // 10 -> address or downstream decodable field width.
 // 12 -> id or ordering and upstream-response decodable field width.
 
-//demux_dec1
+AH_demux_5_4_1 u_demux_4_5(
+.select				(select)
+.ing_data				(ingress_ing_data)
+.ing_valid				(ingress_ing_valid)
+.ing_ready				(ingress_ing_ready)
+.egr0_data				(egress0_uspkt_data)
+.egr0_valid				(egress0_uspkt_valid)
+.egr0_ready				(egress0_uspkt_ready)
+.egr1_data				(egress1_uspkt_data)
+.egr1_valid				(egress1_uspkt_valid)
+.egr1_ready				(egress1_uspkt_ready)
+.egr2_data				(egress2_uspkt_data)
+.egr2_valid				(egress2_uspkt_valid)
+.egr2_ready				(egress2_uspkt_ready)
+.egr3_data				(egress3_uspkt_data)
+.egr3_valid				(egress3_uspkt_valid)
+.egr3_ready				(egress3_uspkt_ready)
+)
 // 25 --> width of fifo
 // 32 --> depth of FIFO - TODO: Again another parameter. It's not possible
 // to reflect all of them in module name. It's better to probably keep a param
 // list inside and create a .h fle for the same also.
 
 //===================================================================================
-//snoop_decs
+AH_SnoopableFIFO_5_9_8 u_egress0_snoopablefifo_5_9_8(
+.wdata				(egress0_dspkt_wdata)
+.wvalid				(egress0_dspkt_wvalid)
+.wready				(egress0_dspkt_wready)
+.rdata				(egress0_dspkt_rdata)
+.rvalid				(egress0_dspkt_rvalid)
+.rready				(egress0_dspkt_rready)
+.sdata				(egress0_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress0_dspkt_smatch)
+)AH_SnoopableFIFO_5_9_8 u_egress1_snoopablefifo_5_9_8(
+.wdata				(egress1_dspkt_wdata)
+.wvalid				(egress1_dspkt_wvalid)
+.wready				(egress1_dspkt_wready)
+.rdata				(egress1_dspkt_rdata)
+.rvalid				(egress1_dspkt_rvalid)
+.rready				(egress1_dspkt_rready)
+.sdata				(egress1_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress1_dspkt_smatch)
+)AH_SnoopableFIFO_5_9_8 u_egress2_snoopablefifo_5_9_8(
+.wdata				(egress2_dspkt_wdata)
+.wvalid				(egress2_dspkt_wvalid)
+.wready				(egress2_dspkt_wready)
+.rdata				(egress2_dspkt_rdata)
+.rvalid				(egress2_dspkt_rvalid)
+.rready				(egress2_dspkt_rready)
+.sdata				(egress2_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress2_dspkt_smatch)
+)AH_SnoopableFIFO_5_9_8 u_egress3_snoopablefifo_5_9_8(
+.wdata				(egress3_dspkt_wdata)
+.wvalid				(egress3_dspkt_wvalid)
+.wready				(egress3_dspkt_wready)
+.rdata				(egress3_dspkt_rdata)
+.rvalid				(egress3_dspkt_rvalid)
+.rready				(egress3_dspkt_rready)
+.sdata				(egress3_dspkt_sdata)
+.svalid				({ingress_decoded[1], ingress_decoded[2], ingress_decoded[3]})
+.smatch				(egress3_dspkt_smatch)
+)
 wire assign egress3_ds_pkt_valid = ingress_decode[0] & !block_egress3_ds_pkt & egress3_ds_pkt_valid_pre;
 wire assign egress2_ds_pkt_valid = ingress_decode[0] & !block_egress2_ds_pkt & egress2_ds_pkt_valid_pre;
 wire assign egress1_ds_pkt_valid = ingress_decode[0] & !block_egress1_ds_pkt & egress1_ds_pkt_valid_pre;
@@ -200,7 +151,13 @@ wire assign egress0_ds_pkt_valid = ingress_decode[0] & !block_egress0_ds_pkt & e
 
 //===================================================================================
 
-//arbiter_dec
+AH_RoundRobinArbiter_4 u_arbiter_4(
+.req				({egress0_us_pkt_valid,
+egress1_us_pkt_valid,
+egress2_us_pkt_valid,
+egress3_us_pkt_valid,})
+.gnt				(egress_arbed[3:0])
+)
 ===================================================================================
 // 4 --> number of egress.
 // 25 -> ds packet size
@@ -208,7 +165,24 @@ wire assign egress0_ds_pkt_valid = ingress_decode[0] & !block_egress0_ds_pkt & e
 // 10 -> address or downstream decodable field width.
 // 12 -> id or ordering and upstream-response decodable field width.
 
-//demux_dec2
+AH_demux_5_4_1 u_demux_4_5(
+.select				(select)
+.ing_data				(ingress_ing_data)
+.ing_valid				(ingress_ing_valid)
+.ing_ready				(ingress_ing_ready)
+.egr0_data				(egress0_uspkt_data)
+.egr0_valid				(egress0_uspkt_valid)
+.egr0_ready				(egress0_uspkt_ready)
+.egr1_data				(egress1_uspkt_data)
+.egr1_valid				(egress1_uspkt_valid)
+.egr1_ready				(egress1_uspkt_ready)
+.egr2_data				(egress2_uspkt_data)
+.egr2_valid				(egress2_uspkt_valid)
+.egr2_ready				(egress2_uspkt_ready)
+.egr3_data				(egress3_uspkt_data)
+.egr3_valid				(egress3_uspkt_valid)
+.egr3_ready				(egress3_uspkt_ready)
+)
 //===================================================================================
 // While sending upstream response valid -
 // For each egress channel-
@@ -223,7 +197,7 @@ wire assign snoopfifo_rd_legal   = 1'b0 |
                                     (egress_arbed[3] & egress3_snoopfifo_rd_valid & (egress3_snoopfifo_rd[11:0] = ingress_us_pkt[11:0]) ) |
                                     );
 /f_f/
-code = "\\n"+"\\n".join(["(egress_arbed[0] & egress0_snoopfifo_rd_valid & (egress0_snoopfifo_rd[upResponseDecodableFieldWidth - 1:0] = ingress_us_pkt[:0]) )" for i in range(NumberOfEgress)])
+code = "\n"+"\n".join(["(egress_arbed[0] & egress0_snoopfifo_rd_valid & (egress0_snoopfifo_rd[upResponseDecodableFieldWidth - 1:0] = ingress_us_pkt[:0]) )" for i in range(NumberOfEgress)])
 /f_f/
 
 wire assign ingress_us_pkt_valid = arbed_out_valid & snoop_fifo_rd_legal;
@@ -260,19 +234,5 @@ endmodule
 //
 
 // Instantiate the upstream arbiter.
-"""
 
-
-t = OrderedSwitch(int(sys.argv[1]), int(sys.argv[2]),int(sys.argv[3]) ,int(sys.argv[4]), int(sys.argv[5]), int(sys.argv[6]))
-t.main()
-#with open('../order_port.yaml','w') as f:
-
- #   f.write(yaml.dump(t.dict))
-#print(yaml.dump(t.dict))
-#print("1"*500)
-t.add_ports_from_bus()
-#print(yaml.dump(t.wire_dict))
-p , q = t.get_port_str()
-#print(p)
-##print(q)i
-
+endmodule

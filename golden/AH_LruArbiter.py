@@ -16,40 +16,45 @@ class LruArbiter(BasicModule,BusParser):
     def Create_dic_of_variable(self):
         self.variable_dict['Num_Clients']=self.Num_Clients
 
-    def add_ports_from_bus(self, filepath, bus_name):
-       # parser = BusParser(filepath, bus_name)
+    def add_ports_from_bus(self):
+        BasicModule.add_ports_from_bus(self)
         self.widop_flat("req",self.Num_Clients)
         self.widop_flat("gnt",self.Num_Clients)
         self.widop_flat("gnt_busy",self.Num_Clients)
         self.get_all_key_value_pairs(self.dict)
 
     def get_body(self):
-        dynamicgenerator=DynamicGenerator(self.variable_dict,self.LruArbiterBody)
+        dynamicgenerator=DynamicGenerator(self.variable_dict,self.body)
         self.body+=dynamicgenerator.parse_body()
         self.body = self.body.replace("NUMCLIENTS - 1", str(self.Num_Clients -1))
         dynamicgenerator.silentremove()
 
-    def get_verilog(self):
-        modulecode=self.get_header()
-        self.get_body()
-        modulecode=modulecode.replace("BODY",self.body)
-        return modulecode
+    #def get_verilog(self):
+    #    modulecode=self.get_header()
+    #    self.get_body()
+    #    modulecode=modulecode.replace("BODY",self.body)
+    #    return modulecode
 
-    def main(self):
-        self.write_to_file(self.get_verilog())
-        return self.get_verilog()
+    #def main(self):
+    #    self.write_to_file(self.get_verilog())
+    #    return self.get_verilog()
 
     def __init__(self,num_clients,path_of_yaml=None,bus_name=None):
         self.bus_name=bus_name
         self.Num_Clients=num_clients
-        self.variable_dict={}
+
+        if path_of_yaml is None:
+            path_of_yaml = "../../../smartasic2/refbuses/arbiter.yaml"
+            bus_name = "arbiter"
+
         self.name="AH_"+self.__class__.__name__+"_"+str(num_clients)
+
         BasicModule.__init__(self, self.name)
         BusParser.__init__(self,self.load_dict(path_of_yaml),bus_name)
-        self.body=""
-        self.Create_dic_of_variable()
-        self.add_ports_from_bus(path_of_yaml,bus_name)
-        self.LruArbiterBody = """
+
+        #self.Create_dic_of_variable()
+        #self.add_ports_from_bus(path_of_yaml,bus_name)
+        self.body = """
 /f_f/
 code = "\\n"+"\\n".join(["req ["+str(Num_Clients-1)+":0] req"+str(i)+"_used_status;" for i in range(Num_Clients)])
 /f_f/

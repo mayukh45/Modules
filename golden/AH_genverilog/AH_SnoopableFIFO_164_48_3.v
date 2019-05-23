@@ -1,7 +1,5 @@
 
-module AH_SnoopableFIFO_164_48_3 (clk
-,rstn
-,wdata
+module AH_SnoopableFIFO_164_48_3 (wdata
 ,wvalid
 ,wready
 ,rdata
@@ -11,8 +9,6 @@ module AH_SnoopableFIFO_164_48_3 (clk
 ,svalid
 ,smatch);
 
-input clk;
-input rstn;
 input [163:0] wdata;
 input wvalid;
 output wready;
@@ -22,6 +18,8 @@ input rready;
 input [163:0] sdata;
 input svalid;
 input smatch;
+
+
 
 reg [6:0] wr_pointer; // 7 = log2(32) + 1
 

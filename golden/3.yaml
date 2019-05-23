@@ -6,7 +6,7 @@ demux:
             heiarchy: demux_egress0_egr0_data
             name: egr0_data
             type: fluid
-            width: 20
+            width: 6
         egr0_ready:
             cname: egress0_egr0_ready
             direction: input
@@ -28,7 +28,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 20
+            width: 6
         egr1_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -50,7 +50,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 20
+            width: 6
         egr2_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -72,7 +72,7 @@ demux:
             heiarchy: demux_egress1_egr1_data
             name: egr1_data
             type: fluid
-            width: 20
+            width: 6
         egr3_ready:
             cname: egress1_egr1_ready
             direction: input
@@ -87,6 +87,28 @@ demux:
             name: egr1_valid
             type: nonfluid
             width: 1
+    egress4:
+        egr4_data:
+            cname: egress1_egr1_data
+            direction: output
+            heiarchy: demux_egress1_egr1_data
+            name: egr1_data
+            type: fluid
+            width: 6
+        egr4_ready:
+            cname: egress1_egr1_ready
+            direction: input
+            heiarchy: demux_egress1_egr1_ready
+            name: egr1_ready
+            type: nonfluid
+            width: 1
+        egr4_valid:
+            cname: egress1_egr1_valid
+            direction: output
+            heiarchy: demux_egress1_egr1_valid
+            name: egr1_valid
+            type: nonfluid
+            width: 1
     ingress:
         ing_data:
             cname: ingress_ing_data
@@ -94,7 +116,7 @@ demux:
             heiarchy: demux_ingress_ing_data
             name: ing_data
             type: fluid
-            width: 20
+            width: 6
         ing_ready:
             cname: ingress_ing_ready
             direction: output
