@@ -17,7 +17,7 @@ class BusParser:
 
     def widop_flat(self, key, width):
         """Wrapper function for non heiarchical operations"""
-        print("widop_flat function is called with key "+str(key)+" and width "+str(width))
+        #print("widop_flat function is called with key "+str(key)+" and width "+str(width))
         self.widop(self.get_path(key),width)
 
     def flipop_flat(self, key):
@@ -43,7 +43,7 @@ class BusParser:
     def rename_flat(self, key, new_name):
         """Wrapper function for non heiarchical operations"""
 
-        print("I need do rename flat operation - with key "+str(key)+" and new name as"+str(new_name))
+        #print("I need do rename flat operation - with key "+str(key)+" and new name as"+str(new_name))
         self.rename(self.get_path(key),new_name)
 
     def copy_flat(self, key, new_name):
@@ -74,7 +74,7 @@ class BusParser:
         self.smart_connectionop(self.get_path(key), pattern_in_cname, replacement)
 
     def widop(self, exp, width):
-        print("widop_flat function is called with  exp "+str(exp)+" and width "+str(width))
+        #print("widop_flat function is called with  exp "+str(exp)+" and width "+str(width))
         """Changes width of a fluid port"""
         heiarchy = exp.split(".")
         temp = self.dict.copy()
@@ -93,7 +93,7 @@ class BusParser:
         for levels in heiarchy:
             temp = temp[levels]
 
-        #print(heiarchy[len(heiarchy)-1])
+        ##print(heiarchy[len(heiarchy)-1])
 
         self.flip(temp)
 
@@ -111,12 +111,12 @@ class BusParser:
                 u['direction'] = 'output' if u['direction'] == 'input' else 'input'
         return u
 
-    def print(self):
+    def #print(self):
         """
         Prints the current dictionary
         :return: None
         """
-        print(self.dict)
+        #print(self.dict)
 
     def dyaml(self, filename):
         """
@@ -209,7 +209,7 @@ class BusParser:
         heiarchy = exp.split(".")
         temp = self.dict.copy()
         for i in range(len(heiarchy)-1):
-           # print(temp)
+           # #print(temp)
             temp = temp[heiarchy[i]]
 
         del temp[heiarchy[len(heiarchy)-1]]
@@ -231,11 +231,11 @@ class BusParser:
         temp = self.dict.copy()
         for i in range(len(heiarchy)-2):
             temp = temp [heiarchy[i]]
-        #print(temp)
+        ##print(temp)
         if not node in list(temp[heiarchy[len(heiarchy)-2]].keys()):
             temp[heiarchy[len(heiarchy)-2]][node] = {heiarchy[len(heiarchy)-1]:sub_dict}
         else:
-            #print("1"*52)
+            ##print("1"*52)
             temp[heiarchy[len(heiarchy)-2]][node].update({heiarchy[len(heiarchy)-1]:sub_dict})
 
     def rename(self,exp,new_name):
@@ -245,7 +245,7 @@ class BusParser:
         :param new_name: New name of the node.
         :return: None
         """
-        print("I need do rename operation - with expression "+str(exp)+" and new name as"+str(new_name))
+        #print("I need do rename operation - with expression "+str(exp)+" and new name as"+str(new_name))
 
         heiarchy = exp.split(".")
         temp = self.dict.copy()
@@ -319,7 +319,7 @@ class BusParser:
                 for k in temp_dict.keys():
                     if k == key:
                         return path + "." + k
-                 #   print(path + "." + k)
+                 #   #print(path + "." + k)
                     qu.put(path + "." + k)
 
     def get_subdict(self,exp,u):
@@ -356,12 +356,12 @@ class BusParser:
                 u[k] = self.smart_connection(u.get(k), pattern_in_cname, replacement)
 
             else:
-               # print ("I am going to change cname now")
-               # print(str(u['cname'])+"____"+str(pattern_in_cname))
+               # #print ("I am going to change cname now")
+               # #print(str(u['cname'])+"____"+str(pattern_in_cname))
                 x = re.search(str(pattern_in_cname),u['cname'] )
-               # print(str(x))
+               # #print(str(x))
                 u.update({"cname": re.sub(str(pattern_in_cname), str(replacement), u['cname'])})
-               # print("I have done the replacement"+str(u['cname'])+"\n")
+               # #print("I have done the replacement"+str(u['cname'])+"\n")
         return u
 
     def init_connections(self, data):

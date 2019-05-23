@@ -137,11 +137,17 @@ class BasicModule:
 
 
     def get_object_declaration_str(self, obj_name):
+        """
+        Prints the  object declaration in verilog.
+         """
         self.get_all_key_value_pairs(self.dict)
         code = "\n".join(["."+ports.name + "\t\t\t\t" + "("+ports.cname+")" for ports in self.Ports])
         return self.name + " " + obj_name + "(\n"+code+"\n)"
 
     def populate_wire_and_ports(self, args):
+        """
+        Poplulates wire and port dictionary of the class which instantiates the smaller modules.
+        """
         wire_dict = {}
         port_dict = {}
         args = list(args)
@@ -186,12 +192,10 @@ class BasicModule:
         return port_dict , wire_dict
 
     def create_dict_branch(self, exp, dictionary, signal):
-        ##print("SIGNAL :"+str(signal))
-       # print("BEFORE : "+str(dictionary))
+        """Creates a branch in a dictionary"""
         signal.__dict__['name'] = signal.__dict__['cname']
         signal.__dict__['heiarchy'] = exp
         heiarchy = exp.split("_")
-       # print("HIER : "+str(heiarchy))
         j = 0
         for j in range(len(heiarchy)):
             if list(dictionary.keys()).count(heiarchy[j]) > 0:
@@ -207,6 +211,7 @@ class BasicModule:
        # print("AFTER : "+ str(dictionary))
 
     def find_and_replace(self, data, pattern, replacement):
+        """Finds and replaces regex in signal cnames"""
         parser = BusParser(data, list(data.keys())[0])
         def inner(data):
             if isinstance(data, dict):
@@ -229,6 +234,7 @@ class BasicModule:
 
 
     def connport(self, data, pattern, port_dict):
+        """Forcefully changes wires to ports"""
         parser = BusParser(data, list(data.keys())[0])
         def inner(data):
             if isinstance(data, dict):
@@ -249,6 +255,7 @@ class BasicModule:
         inner(data)
 
     def load_dict(self, filepath):
+        """returns dictionary from a yaml file"""
         return yaml.load(open(filepath).read())
 
     def get_header(self):

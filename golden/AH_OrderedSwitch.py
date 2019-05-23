@@ -44,7 +44,7 @@ class OrderedSwitch(BasicModule):
             object_dict.update({"u_egress"+str(i)+"_snoopablefifo_" + str(self.dsPktSize) + "_" + str(self.SnoopDepth) + "_" + str(self.upResponseDecodableFieldWidth): curr_obj})
 
         #=============================================================================
-        #Finally replace in body strings...
+        #Now two mux objects are created and necessary changes in cnames are done.
         c = 1
         #=============================================================================
 
@@ -53,43 +53,45 @@ class OrderedSwitch(BasicModule):
         mux2 = Multiplexor(self.NumberOfEgress, self.dsPktSize,1,0)
         mux2.smart_connectionop("demux","egr[0-9]{1,10}", "dspkt")
 
-        self.body = self.body.replace("//demux_dec1", mux1.get_object_declaration_str("u_demux_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsPktSize)))
-
-        self.body = self.body.replace("//demux_dec2", mux1.get_object_declaration_str("u_demux_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsPktSize)))
-
         #=============================================================================
+        #decoder is instantiated
+        # =============================================================================
         decoder = Decoder(self.NumberOfEgress, self.upPktSize)
-        self.body = self.body.replace("//decoder_dec", decoder.get_object_declaration_str("u_decoder_"
-            +str(self.NumberOfEgress)+"_"+str(self.dsDecodableFieldWidth)))
+
 
         #============================================================================
-
+        #arbiter is instantiated.
+        # =============================================================================
         arbiter = RoundRobinArbiter(self.NumberOfEgress)
         ar_req_code =  "{"+"\n".join(["egress"+str(i)+"_us_pkt_valid," for i in range(self.NumberOfEgress)])+"}"
         arbiter.add_connection_flat("req",ar_req_code)
         arbiter.add_connection_flat("grant","egress_arbed["+str(self.NumberOfEgress-1)+":0]")
         #print(arbiter.get_object_declaration_str("hh"))
-        self.body = self.body.replace("//arbiter_dec" , arbiter.get_object_declaration_str("u_arbiter_4"))
         #============================================================================
 
         snoop_dec = ""
         for k,v in object_dict.items():
             snoop_dec += v.get_object_declaration_str(k)
 
+        # =============================================================================
+        #String replacements in order body
+        # =============================================================================
         self.body =  self.body.replace("//snoop_decs", snoop_dec)
+        self.body = self.body.replace("//arbiter_dec" , arbiter.get_object_declaration_str("u_arbiter_4"))
+        self.body = self.body.replace("//decoder_dec", decoder.get_object_declaration_str("u_decoder_"+ str(self.NumberOfEgress) + "_" + str(self.dsDecodableFieldWidth)))
+        self.body = self.body.replace("//demux_dec1", mux1.get_object_declaration_str("u_demux_"+ str(self.NumberOfEgress) + "_" + str(self.dsPktSize)))
 
-
-        obj_list = list(object_dict.values())
+        self.body = self.body.replace("//demux_dec2", mux1.get_object_declaration_str("u_demux_"+ str(self.NumberOfEgress) + "_" + str(self.dsPktSize)))
 
         #=============================================================================
+        #Everyting is added to obj_list
+        #=============================================================================
+        obj_list = list(object_dict.values())
         obj_list.append(mux1)
-        #obj_list.append(mux2)
+        obj_list.append(mux2)
         obj_list.append(decoder)
 
         self.dict , self.wire_dict = self.populate_wire_and_ports(obj_list)
-
 
     def add_ports_from_bus(self):
         self.get_all_key_value_pairs(self.dict)
